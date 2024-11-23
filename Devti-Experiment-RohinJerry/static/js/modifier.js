@@ -1,7 +1,7 @@
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=5 //This determine the number of learning trial you want in total
+  n_learning_trial=2 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
   n_goaldir_trial=2 //how many goal directed planning you want
@@ -19,26 +19,25 @@ checkfail=0 //this is to start the attentioncheck
 checkthreshold=2 //this is to add the threshold for attentioncheck
 
 //Text for instruction
-instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>There is a new airline, AerBorn Airlines, that is offering flights to various destinations. You are a travel agent who is trying to help your clients make various travel arrangements.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Your job is to try and learn as many direct flights offered by AerBorn Airlines as possible so you could advise your clients to make their travel plans as efficiently as possible. To do this, your supervisor has asked you to study the daily flight paths taken by AerBorn Airlines. </p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will be shown two cities, which indicates a direct flight taken by AerBorn Airlines. For example:</p><br /><img src= '../static/images/LosAngeles.png' width='150' height='150' style='margin-right:200px'></img><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><p></p><br /><p style ='font-size: 50px;line-height:1.5'>indicates that AerBorn Airlines flew directly (nonstop) both from Los Angeles to New York City and New York City to Los Angeles</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see a series of these city-pairs and will try to learn as many of them as possible to best advise your future clients for travel. After studying the information, you will be asked to help your clients book travel to various destinations via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>This game will test your memory. The game will be broken up into <strong>LEARNING</strong> and <strong>REMEMBERING</strong> parts.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>During the <strong>LEARNING</strong> part, you will see pairs of made up objects presented on the screen. These are pretend objects that don’t exist in the real world. During the <strong>LEARNING</strong> part, <i><u>you should try your hardest to remember that the two objects go together.</i></u> You do not need to press any buttons during the learning part – just try to learn the pairs presented to you on the computer screen.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Each pair will be on the screen for <strong>three and a half seconds</strong>. A plus sign will appear for a short time, followed by another pair. You do not need to do anything when the plus sign is on the screen; just wait for the next pair to appear. <strong><u>The best way that we’ve found for people to remember these pairs is to create a story or phrase relating the two objects. </strong> </u> <p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, if you are presented with this pair:</p><img src= '../static/images/introEX.png' width='700' height='500'></img><p style ='font-size: 50px;line-height:1.5'>It may help you to imagine the two items interacting. For example, you could imagine them being stacked on top of one another. Or, you might like to use words to help you remember the pair.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>First, you will see a series of practice images before moving on to the next task</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>While you are studying the flight paths, we will also ask you to do a simple color change task to make sure you are following instructions and paying attention to each trial.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To make sure that you are paying attention on each trial, you will see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 50px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_8="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Only the first response will be taken, and please try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>In the REMEMBERING phase, you will be tested on your memory of these pairs, so try your best to remember these pairs.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 
-instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5","instruct_6","instruct_7","instruct_8"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
-instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,instruct_7,instruct_8} // IF you want to add or decrease number of page for instruct, just delete or add var here.
+instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5","instruct_6"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
+instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6} // IF you want to add or decrease number of page for instruct, just delete or add var here.
 
 
 //Text for direct memory instruction
-instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Great! We will move on to the main task now, remember to memorize the city-pairings to the best of your ability.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'><strong>REMEMBERING</strong> phase: Your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong>LEARNING</strong>.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 // instruct_dir_1 is for post test learning phase
-instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Now that you have studied the various flights offered by AerBorn Airlines, you will be tested on your knowledge of what you just studied. On each trial, you will see a location and will have to select which city you can fly nonstop to via AerBorn Airlines.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_dir_3 = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see the starting location on top, and 3 city options below it. Press '1' on your keyboard for the left image, '2' for the middle, and '3' for the right. Please select only the city to which AerBorn Airlines flies directly (nonstop).</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-dir_instructnames = ["instruct_dir_2","instruct_dir_3"] //Same for above, if you want to delete or add, just decrease or add the var
-dir_instruct={instruct_dir_2,instruct_dir_3} //same for above
+instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, if you had studied the following pair in <strong>LEARNING</strong>:</p><img src= '../static/images/introEX.png' width='700' height='500'><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 50px;line-height:1.5'>You would press 's', as the hot pink image on the left was paired with the green image at the top<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
+instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To pick the object on the left, press “s”. To pick the object in the middle, press “g”, and to pick the object on the right, press “k.”</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3", "instruct_dir_4"] //Same for above, if you want to delete or add, just decrease or add the var
+dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4} //same for above
 
 //Text for shortest path instruction
 instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>In this next portion, you will be meeting with various clients who are looking for recommendations for travel. On each trial, you will see 3 locations:</p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
@@ -60,22 +59,14 @@ instruct_mem_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 mem_instructnames = ["instruct_mem_1","instruct_mem_2","instruct_mem_3","instruct_mem_4","instruct_mem_5","instruct_mem_6"]
 mem_instruct={instruct_mem_1,instruct_mem_2,instruct_mem_3,instruct_mem_4,instruct_mem_5,instruct_mem_6} 
 
-//learning phse
+//learning phase
 
-imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
+//generate triadLists
+practiceTriads = []
 
-imageIndex= [[0,1], [1,3], [4,3], [11,3], [1,2], [2,3], [2,10], [11,10], [2,5], [5,6], [5,8], [10,8], [6,7], [8,7], [8,9], [7,9]]
 
-list_left=[imageList[imageIndex[0][0]],imageList[imageIndex[1][0]],imageList[imageIndex[2][0]],imageList[imageIndex[3][0]],imageList[imageIndex[4][0]],imageList[imageIndex[5][0]],imageList[imageIndex[6][0]],imageList[imageIndex[7][0]],imageList[imageIndex[8][0]],imageList[imageIndex[9][0]],imageList[imageIndex[10][0]],imageList[imageIndex[11][0]],imageList[imageIndex[12][0]],imageList[imageIndex[13][0]],imageList[imageIndex[14][0]],imageList[imageIndex[15][0]]]
-list_right=[imageList[imageIndex[0][1]],imageList[imageIndex[1][1]],imageList[imageIndex[2][1]],imageList[imageIndex[3][1]],imageList[imageIndex[4][1]],imageList[imageIndex[5][1]],imageList[imageIndex[6][1]],imageList[imageIndex[7][1]],imageList[imageIndex[8][1]],imageList[imageIndex[9][1]],imageList[imageIndex[10][1]],imageList[imageIndex[11][1]],imageList[imageIndex[12][1]],imageList[imageIndex[13][1]],imageList[imageIndex[14][1]],imageList[imageIndex[15][1]]]
-learn_left=[]
-learn_right=[]
-
-let arr = [];
-for (let i = 0; i < 16; i++) {
-  for (let j = 0; j < 8; j++) {
-    arr.push(i);
-  }
+for (let i = 1;i<5;i++){
+  practiceTriads.push([`practice/object-0${i}a.png`, `practice/object-0${i}b.png`])
 }
 
 function shuffle(array) {
@@ -86,12 +77,81 @@ function shuffle(array) {
   return array;
 }
 
+triadList = []
+aList = []
+bList = []
+cList = []
+
+for (let i = 1;i<16;i++){
+  if (i <10){
+    triadList.push([`object_0${i}a.png`, `object_0${i}b.png`, `object_0${i}c.png`])
+  }else{
+    triadList.push([`object_${i}a.png`,`object_${i}b.png`,`object_${i}c.png`])
+  }
+  aList.push(triadList[i-1][0])
+  bList.push(triadList[i-1][1])
+  cList.push(triadList[i-1][2])
+}
+
+let triadArr = [];
+for (let i = 0; i < 15; i++) {
+  triadArr.push(i);
+}
+shuffle(triadArr)
+
+learn_left=[]
+learn_right=[]
+
+//need to add blockeed v interleaved
+for (let j = 0;j<4;j++){
+  for (let i = 0;i<15;i++){
+    if (Math.random() < 0.5)  {
+      learn_left.push(aList[triadArr[i]])
+      learn_right.push(bList[triadArr[i]])
+    } else {
+      learn_left.push(bList[triadArr[i]])
+      learn_right.push(aList[triadArr[i]])
+    }
+  }
+  shuffle(triadArr)
+}
+
+for (let j = 0;j<4;j++){
+  for (let i = 0;i<15;i++){
+    if (Math.random() < 0.5)  {
+      learn_left.push(bList[triadArr[i]])
+      learn_right.push(cList[triadArr[i]])
+    } else {
+      learn_left.push(cList[triadArr[i]])
+      learn_right.push(bList[triadArr[i]])
+    }
+  }
+  shuffle(triadArr)
+}
+
+imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
+
+imageIndex= [[0,1], [1,3], [4,3], [11,3], [1,2], [2,3], [2,10], [11,10], [2,5], [5,6], [5,8], [10,8], [6,7], [8,7], [8,9], [7,9]]
+
+list_left=[imageList[imageIndex[0][0]],imageList[imageIndex[1][0]],imageList[imageIndex[2][0]],imageList[imageIndex[3][0]],imageList[imageIndex[4][0]],imageList[imageIndex[5][0]],imageList[imageIndex[6][0]],imageList[imageIndex[7][0]],imageList[imageIndex[8][0]],imageList[imageIndex[9][0]],imageList[imageIndex[10][0]],imageList[imageIndex[11][0]],imageList[imageIndex[12][0]],imageList[imageIndex[13][0]],imageList[imageIndex[14][0]],imageList[imageIndex[15][0]]]
+list_right=[imageList[imageIndex[0][1]],imageList[imageIndex[1][1]],imageList[imageIndex[2][1]],imageList[imageIndex[3][1]],imageList[imageIndex[4][1]],imageList[imageIndex[5][1]],imageList[imageIndex[6][1]],imageList[imageIndex[7][1]],imageList[imageIndex[8][1]],imageList[imageIndex[9][1]],imageList[imageIndex[10][1]],imageList[imageIndex[11][1]],imageList[imageIndex[12][1]],imageList[imageIndex[13][1]],imageList[imageIndex[14][1]],imageList[imageIndex[15][1]]]
+
+
+let arr = [];
+for (let i = 0; i < 16; i++) {
+  for (let j = 0; j < 8; j++) {
+    arr.push(i);
+  }
+}
+
+
+
 let randomizedArray = shuffle(arr);
 
-for (var i = 0; i < randomizedArray.length; i++){
-    learn_left.push(list_left[randomizedArray[i]])
-    learn_right.push(list_right[randomizedArray[i]])
-}
+// for (var i = 0; i < randomizedArray.length; i++){
+//     learn_left.push(list_left[randomizedArray[i]])
+//     learn_right.push(list_right[randomizedArray[i]])
+// }
 
 var correctNode = []
 var correctDirectNodes = 0
@@ -360,18 +420,33 @@ let directShort = []
 let directFar = []
 var directNodes = 0
 
-for(let i = 1;i<13;i++){
-  for(let j = 0;j<graph.getDirectNeighbors(i).length;j++){
-    graph.getTriplet(i)
-    directLeft.push(directNodes[0])
-    directUp.push(directNodes[1])
-    directMid.push(directNodes[2])
-    directRight.push(directNodes[3])
-    directCorrect.push(correctDirectNodes)
-    directShort.push(shortDirectNodes)
-    directFar.push(farDirectNodes)
+for(let i = 0;i<15;i++){
+  directUp.push(aList[i])
+  incorrectArr = i
+  wrongA = i
+  while (i == incorrectArr) {
+    incorrectArr = Math.floor(Math.random() * 14)
+  } 
+  while (i == wrongA) {
+    wrongA = Math.floor(Math.random() * 14)
+  } 
+  threeIndex = Math.floor(Math.random() * 3)+1
+  if (threeIndex == 1){
+    directLeft.push(bList[i])
+    directCorrect.push(bList[i])
+    directMid.push(bList[incorrectArr])
+    directRight.push(aList[wrongA])
+  } else if (threeIndex == 2){
+    directRight.push(bList[i])
+    directCorrect.push(bList[i])
+    directLeft.push(bList[incorrectArr])
+    directMid.push(aList[wrongA])
+  } else {
+    directMid.push(bList[i])
+    directCorrect.push(bList[i])
+    directRight.push(bList[incorrectArr])
+    directLeft.push(aList[wrongA])
   }
-  
 }
 
 let directarr = [];
@@ -391,11 +466,11 @@ let room_direct_short=[]
 
 
 for(let i = 0;i<directLeft.length;i++){
-  room_direct_up.push(imageList[directUp[directarr[i]]-1])
-  room_direct_left.push(imageList[directLeft[directarr[i]]-1])
-  room_direct_right.push(imageList[directRight[directarr[i]]-1])
-  room_direct_mid.push(imageList[directMid[directarr[i]]-1])
-  room_direct_correct.push(imageList[directCorrect[directarr[i]]-1])
+  room_direct_up.push(directUp[directarr[i]])
+  room_direct_left.push(directLeft[directarr[i]])
+  room_direct_right.push(directRight[directarr[i]])
+  room_direct_mid.push(directMid[directarr[i]])
+  room_direct_correct.push(directCorrect[directarr[i]])
   room_direct_short.push(imageList[directShort[directarr[i]]-1])
   room_direct_far.push(imageList[directFar[directarr[i]]-1])
 }

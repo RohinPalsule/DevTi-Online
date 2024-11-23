@@ -233,8 +233,8 @@ var thecrossant_break={
     thecrossant_black.trial_duration=2000-removecolor
     curr_learning_trial=curr_learning_trial+1,
     learn_phase.stimulus=create_learning_trial(learn_left,learn_right,curr_learning_trial)
-    learn_phase.trial_duration=colordetretime+1500
-    learn_phase.stimulus_duration=colordetretime+1500
+    learn_phase.trial_duration=3500
+    learn_phase.stimulus_duration=3500
     thecrossant_black.stimulus=create_memory_ten('black')
     thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
     attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,n_learning_trial,learn_break,thecrossant,thecrossant_black,thecrossant_break)
@@ -261,8 +261,8 @@ var learn_phase = {
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   stimulus:create_learning_trial(learn_left,learn_right,curr_learning_trial),
-  stimulus_duration:colordetretime+1500,
-  trial_duration:colordetretime+1500,
+  stimulus_duration:3500,
+  trial_duration:3500,
   on_finish: function(data) {
     data.trial_type = 'learn_phase(without_color)';
     data.stimulus='black_plus_sign'
