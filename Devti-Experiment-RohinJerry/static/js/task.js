@@ -184,7 +184,7 @@ var prac_thecrossant_black={
       learnsum += value;
     });
 
-    data.cumulative_accuracy = learnsum / praclearningcorrectness.length;
+    data.practice_cumulative_accuracy = learnsum / praclearningcorrectness.length;
 }
 }
 

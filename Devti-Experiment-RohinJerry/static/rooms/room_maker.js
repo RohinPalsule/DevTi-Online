@@ -102,9 +102,14 @@ function timelinepresent(intro, instructnames,directmemory_phase) {
     timelinetemp.push(intro[i]);
   }
 
-  for (let i = 0; i < directmemory_phase.length;i++) {
-    timelinetemp.push(directmemory_phase[i]);
+  if (Array.isArray(directmemory_phase)) {
+    for (let i = 0; i < directmemory_phase.length;i++) {
+      timelinetemp.push(directmemory_phase[i]);
+    }
+  } else {
+    timelinetemp.push(directmemory_phase)
   }
+
 
   
   jsPsych.addNodeToEndOfTimeline({ timeline: timelinetemp }, jsPsych.resumeExperiment);
