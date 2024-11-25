@@ -73,12 +73,197 @@ for (let i = 0; i < instructnames.length; i++) {
 
 
 intro_learn=createfulintro(instruct,instructnames)
+postprac_learn=createfulintro(post_instruct, post_instructnames)
 intro_mem=createfulintro(mem_instruct,mem_instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 intro_short=createfulintro(short_instruct,short_instructnames)
 
 //Instruction page end
 
+// practice phase
+
+var prac_curr_learning_trial=0
+var colordetretime=colorStart()
+var removecolor=colorStop(colordetretime)
+var timetakenforpluswindow=removecolor
+
+var prac_thecrossant= {
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 500,
+  trial_duration: 500,
+  response_ends_trial: false,
+  stimulus:create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial]),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.stimulus=prac_pluscolor[prac_curr_learning_trial]
+    data.stimulus_left=learn_left[prac_curr_learning_trial]
+    data.stimulus_right=learn_right[prac_curr_learning_trial]
+    data.trial_type='prac_rt_plussign_withcolor'
+    console.log(colordetretime)
+    kp=data.key_press
+  }
+}
+praclearningcorrectness = []
+var prac_thecrossant_black={
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 2000-removecolor,
+  trial_duration: 2000-removecolor,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type ='prac_rt_thecrossant_black'
+    data.stimulus='black_plus_sign'
+    op=data.key_press
+    if (kp){
+      data.rt=null
+    if(kp!=prac_pluscheck[prac_curr_learning_trial]) {
+      checkfail=checkfail+1
+      data.accuracy = 0
+      praclearningcorrectness.push(0)
+      if(checkfail>=checkthreshold&&checkfail<4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [warning_page,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      }else if(checkfail>4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        //end experiment
+      }
+    }else{
+      checkfail=0
+      data.accuracy = 1
+      praclearningcorrectness.push(1)
+    }
+  }else if(op){
+    data.rt=data.rt+100+timetakenforpluswindow
+    if(op!=prac_pluscheck[prac_curr_learning_trial]) {
+      checkfail=checkfail+1
+      data.accuracy = 0
+      praclearningcorrectness.push(0)
+      if(checkfail>=checkthreshold&&checkfail<4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [warning_page,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      }else if(checkfail>4){
+        jsPsych.endCurrentTimeline(),
+        jsPsych.addNodeToEndOfTimeline({
+        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        //end experiment
+      }
+    }else{
+      checkfail=0
+      data.accuracy = 1
+      praclearningcorrectness.push(1)
+    }
+  }else{
+    checkfail=checkfail+1
+    if(checkfail>=checkthreshold&&checkfail<4){
+      jsPsych.endCurrentTimeline(),
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [warning_page,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+    }else if(checkfail>4){
+      jsPsych.endCurrentTimeline(),
+      jsPsych.addNodeToEndOfTimeline({
+      timeline:[TaskFailed],},jsPsych.resumeExperiment)
+      //end experiment
+    }
+  }
+  let learnsum = 0;
+    praclearningcorrectness.forEach(function(value) {
+      learnsum += value;
+    });
+
+    data.cumulative_accuracy = learnsum / praclearningcorrectness.length;
+}
+}
+
+var TaskFailed = {
+  type: 'html-keyboard-response',
+  stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
+            '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
+  choices: ['Esc'],
+  on_finish: function(data){
+    window.close();
+  }
+};
+
+var prac_thecrossant_break={
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 100,
+  trial_duration: 100,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type='color_black'
+    data.stimulus='black_plus_sign'
+    timetakenforpluswindow=removecolor
+    colordetretime=colorStart()
+    removecolor=colorStop(colordetretime)
+    prac_learn_phase_color.stimulus_duration= removecolor
+    prac_learn_phase_color.trial_duration=removecolor
+    prac_thecrossant_black.stimulus_duration= 2000-removecolor
+    prac_thecrossant_black.trial_duration=2000-removecolor
+    prac_curr_learning_trial=prac_curr_learning_trial+1,
+    prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
+    prac_learn_phase.trial_duration=3500
+    prac_learn_phase.stimulus_duration=3500
+    prac_thecrossant_black.stimulus=create_memory_ten('black')
+    prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
+    attentioncheck_learningphase(prac_learn_phase,sfa,prac_curr_learning_trial,n_prac_learning_trial,post_break,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
+    
+  }
+}
+
+var prac_learn_phase = {
+  type: 'html-keyboard-responsefl',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial),
+  stimulus_duration:3500,
+  trial_duration:3500,
+  on_finish: function(data) {
+    data.trial_type = 'learn_phase(without_color)';
+    data.stimulus='black_plus_sign'
+    data.stimulus_left=learn_left[prac_curr_learning_trial],
+    data.stimulus_right=learn_right[prac_curr_learning_trial],
+    sfa=1
+  }
+}
+
+var prac_learn_phase_color = {
+  type: 'html-keyboard-responsefl',
+  choices: jsPsych.NO_KEYS,
+  response_ends_trial: false,
+  stimulus:create_memory_ten(),
+  stimulus_duration:removecolor,
+  trial_duration:removecolor,
+  on_finish: function(data) {
+    data.stimulus=prac_pluscolor[prac_curr_learning_trial]
+    data.stimulus_left=learn_left[prac_curr_learning_trial]
+    data.stimulus_right=learn_right[prac_curr_learning_trial]
+    data.trial_type = 'black_cross(without_color)';
+    sfa=1
+  }
+}
+
+
+
+// practice phase end
 
 // learning phase
 var curr_learning_trial=0
@@ -356,16 +541,15 @@ correctness = []
 var curr_shortest_trial=0
 var shortestpath_phase = {
   type: 'html-keyboard-responsefl',
-  choices: ['1','2'],
+  choices: ['1','2','3'],
   response_ends_trial: false,
-  stimulus:create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial),
+  stimulus:create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid,room_shortest_right,curr_shortest_trial),
   stimulus_duration:7500,
   trial_duration:7500,
   on_load: function() {
-    // Reveal other rooms after 1500 ms
     setTimeout(function() {
-      for(let i = 0;i<document.getElementsByClassName('bottomshortest').length;i++){
-        document.getElementsByClassName('bottomshortest')[i].style.visibility = 'visible';
+      for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+        document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
       }
     }, randomDelay);
   },
@@ -373,6 +557,7 @@ var shortestpath_phase = {
     data.trial_type = 'shortestpath_phase';
     data.stimulus=room_shortest_up[curr_shortest_trial];
     data.stimulus_left=room_shortest_left[curr_shortest_trial];
+    data.stimulus_middle=room_shortest_mid[curr_shortest_trial];
     data.stimulus_right=room_shortest_right[curr_shortest_trial]
     data.stimulus_correct=room_shortest_correct[curr_shortest_trial];
     if ((data.key_press == 49 && data.stimulus_left == data.stimulus_correct)||(data.key_press == 50 && data.stimulus_right == data.stimulus_correct)) {
@@ -381,30 +566,6 @@ var shortestpath_phase = {
     } else {
       data.accuracy = 0
       correctness.push(0)
-    }
-    let onedifflength = twothree.length + threefour.length + fourfive.length
-    let twodifflength = twofour.length + threefive.length
-    let threedifflength = twofive.length
-    if (cumulativearr[curr_shortest_trial] < onedifflength){
-      data.condition = 'One Edge Diff'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
-      data.condition = 'Two Edge Diff'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
-      data.condition = 'Three Edge Diff'
-    }
-
-    if (cumulativearr[curr_shortest_trial] < twothree.length){
-      data.specific_pairs = "Two Edge Three Edge"
-    } else if (cumulativearr[curr_shortest_trial] >= twothree.length && cumulativearr[curr_shortest_trial] < twothree.length + threefour.length){
-      data.specific_pairs = 'Three Edge Four Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= twothree.length + threefour.length && cumulativearr[curr_shortest_trial] < onedifflength){
-      data.specific_pairs = 'Four Edge Five Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength && cumulativearr[curr_shortest_trial] < onedifflength + twofour.length){
-      data.specific_pairs = 'Two Edge Four Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twofour.length && cumulativearr[curr_shortest_trial] < onedifflength + twodifflength){
-      data.specific_pairs = 'Three Edge Five Edge'
-    } else if (cumulativearr[curr_shortest_trial] >= onedifflength + twodifflength){
-      data.specific_pairs = 'Two Edge Five Edge'
     }
 
 
@@ -416,7 +577,7 @@ var shortestpath_phase = {
     data.cumulative_accuracy = sum / correctness.length;
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
-    shortestpath_phase.stimulus=create_shortestpath_trial(room_shortest_up,room_shortest_left,room_shortest_right,curr_shortest_trial)
+    shortestpath_phase.stimulus=create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid, room_shortest_right,curr_shortest_trial)
     attentioncheck(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial,dir_break)
   }
 }
@@ -488,6 +649,7 @@ function createPhase3(numberoftrial){
 
 
 phase3=createPhase3(n_goaldir_trial)
+post_break=createbreak(postprac_learn,post_instructnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
 learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
@@ -509,8 +671,11 @@ var thank_you = {
 //time line here
 timeline.push(welcome)
 timelinepushintro(intro_learn,instructnames)
-timeline.push(learn_phase)
-timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
+timeline.push(prac_learn_phase)
+timeline.push(prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
+// timelinepushintro(postprac_learn,post_instructnames)
+// timeline.push(learn_phase)
+// timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
 
 jsPsych.init({
   timeline: timeline,

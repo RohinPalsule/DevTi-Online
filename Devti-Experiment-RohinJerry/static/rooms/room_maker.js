@@ -101,7 +101,11 @@ function timelinepresent(intro, instructnames,directmemory_phase) {
   for (let i = 0; i < instructnames.length; i++) {
     timelinetemp.push(intro[i]);
   }
-  timelinetemp.push(directmemory_phase);
+
+  for (let i = 0; i < directmemory_phase.length;i++) {
+    timelinetemp.push(directmemory_phase[i]);
+  }
+
   
   jsPsych.addNodeToEndOfTimeline({ timeline: timelinetemp }, jsPsych.resumeExperiment);
 }
@@ -110,6 +114,18 @@ function timelinepresent(intro, instructnames,directmemory_phase) {
 //random number
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
+}
+var prac_pluscheck=[]
+var prac_pluscolor=[]
+for (let i=0 ; i<n_prac_learning_trial;i++){
+  plusdeter = randomIntFromInterval(1, 2)
+  if (plusdeter==1){
+    prac_pluscolor.push(atcheckcolor[0])
+    prac_pluscheck.push(49)
+  }else if(plusdeter==2){
+    prac_pluscolor.push(atcheckcolor[1])
+    prac_pluscheck.push(50)
+  }
 }
 var pluscheck=[]
 var pluscolor=[]

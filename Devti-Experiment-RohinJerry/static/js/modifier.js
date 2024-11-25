@@ -1,10 +1,11 @@
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=2 //This determine the number of learning trial you want in total
+  n_learning_trial=3 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
-  n_goaldir_trial=2 //how many goal directed planning you want
+  n_goaldir_trial=1 //how many goal directed planning you want
+  n_prac_learning_trial = 1
 }else{
   n_learning_trial=3 //This determine the number of learning trial you want in total
   n_direct_trial=10 //how many direct trial you want
@@ -20,32 +21,39 @@ checkthreshold=2 //this is to add the threshold for attentioncheck
 
 //Text for instruction
 instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>Welcome!</b></p><p style ='font-size: 50px;line-height:1.5'>This game will test your memory. The game will be broken up into <strong>LEARNING</strong> and <strong>REMEMBERING</strong> parts.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>During the <strong>LEARNING</strong> part, you will see pairs of made up objects presented on the screen. These are pretend objects that don’t exist in the real world. During the <strong>LEARNING</strong> part, <i><u>you should try your hardest to remember that the two objects go together.</i></u> You do not need to press any buttons during the learning part – just try to learn the pairs presented to you on the computer screen.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Each pair will be on the screen for <strong>three and a half seconds</strong>. A plus sign will appear for a short time, followed by another pair. You do not need to do anything when the plus sign is on the screen; just wait for the next pair to appear. <strong><u>The best way that we’ve found for people to remember these pairs is to create a story or phrase relating the two objects. </strong> </u> <p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>During the <strong>LEARNING</strong> part, you will see pairs of made up objects presented on the screen. These are pretend objects that don’t exist in the real world. During the <strong>LEARNING</strong> part, you should try your hardest to remember that the two objects go together. You do not need to press any buttons during the learning part – just try to learn the pairs presented to you on the computer screen.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Each pair will be on the screen for <strong>three and a half seconds</strong>. A plus sign will appear for a short time, followed by another pair. You do not need to do anything when the plus sign is on the screen; just wait for the next pair to appear. <strong>The best way that we’ve found for people to remember these pairs is to create a story or phrase relating the two objects. </strong><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, if you are presented with this pair:</p><img src= '../static/images/introEX.png' width='700' height='500'></img><p style ='font-size: 50px;line-height:1.5'>It may help you to imagine the two items interacting. For example, you could imagine them being stacked on top of one another. Or, you might like to use words to help you remember the pair.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>First, you will see a series of practice images before moving on to the next task</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You will see each pair 4 times while playing this game, which means you will have four chances to teach each pair to yourself. The game will be broken into 8 LEARNING and REMEMBERING parts. Each learning part will be followed by a remembering part.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>In the REMEMBERING phase, you will be tested on your memory of these pairs, so try your best to remember these pairs.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Now we will do a practice of the LEARNING and REMEMBERING parts<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 
-instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5","instruct_6"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
-instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6} // IF you want to add or decrease number of page for instruct, just delete or add var here.
+instructnames = ["instruct_1","instruct_2","instruct_3","instruct_4","instruct_5","instruct_6","instruct_7"]// IF you want to add or decrease number of page for instruct, just delete or add var name here.
+instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,instruct_7} // IF you want to add or decrease number of page for instruct, just delete or add var here.
 
+// practice trials
+
+post_instruct_8="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To make sure that you are paying attention on each trial, you will see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 50px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+post_instruct_9="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Only the first response will be taken, and please try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+
+post_instructnames = ["post_instruct_8","post_instruct_9"]
+post_instruct = {post_instruct_8,post_instruct_9}
 
 //Text for direct memory instruction
 instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'><strong>REMEMBERING</strong> phase: Your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong>LEARNING</strong>.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 // instruct_dir_1 is for post test learning phase
 instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, if you had studied the following pair in <strong>LEARNING</strong>:</p><img src= '../static/images/introEX.png' width='700' height='500'><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 50px;line-height:1.5'>You would press 's', as the hot pink image on the left was paired with the green image at the top<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
-instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To pick the object on the left, press “s”. To pick the object in the middle, press “g”, and to pick the object on the right, press “k.”</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 50px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
+instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>To pick the object on the left, press “1”. To pick the object in the middle, press “2”, and to pick the object on the right, press “3”.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3", "instruct_dir_4"] //Same for above, if you want to delete or add, just decrease or add the var
 dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4} //same for above
 
 //Text for shortest path instruction
-instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>In this next portion, you will be meeting with various clients who are looking for recommendations for travel. On each trial, you will see 3 locations:</p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_short_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>The top city is where your client is located. You want to recommend a vacation destination that will require the fewest number of layovers (stops) from where the client is located. </p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><p></p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_short_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, imagine you studied the following flight paths: </p><br /><img src= '../static/images/Shortest.png' width='750' height='300'></img><p></p><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
-instruct_short_4="<div style='margin-left:150px ;margin-right: 200px ;text-justify: auto'><img src= '../static/images/studyinstruction2.png' width='1200' height='600'></div><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>"
-//<img src= '../static/images/MappedShortest.png' width='600' height='320'><img src= '../static/images/shortestIMG.png' width='500' height='300'></img><br /><p style ='font-size: 50px;line-height:1.5'>You should recommend flying to Detroit, since it requires fewer layovers from your client's location ( NYC > LA > Detroit, vs. NYC > LA > Austin > St. Louis) </p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
-instruct_short_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Press the '1' key to recommend the city on the LEFT, and the '2' key to recommend the city on the RIGHT. If you are unsure of which destination is better, just try your best to make an educated guess.</p><img src= '../static/images/NewYorkCity.png' width='150' height='150'></img><br /><img src= '../static/images/StLouis.png' width='120' height='150' style='margin-right:200px'></img>&nbsp&nbsp&nbsp&nbsp<img src= '../static/images/Detroit.png' width='120' height='150'></img><br /><p style ='font-size: 50px;line-height:1.5;margin-top:50px'>Remember, you want to recommend the destination that requires fewer layovers.</p><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
+instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>You may have noticed that some objects were paired with more than one other object.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_short_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>For example, if you studied the following pairs: </p><img src= '../static/images/introEX3.png' width='700' height='500'><p style ='font-size: 50px;line-height:1.5'>Because the hot pink and peach objects are both paired with the same green object, we say that they are “friends”. So, even though you didn’t see the hot pink and peach objects together, they are still a kind of pair. <p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_short_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Now we will test you on these kinds of pairs. This REMEMBERING part will be the same as the ones you have done before.<p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
+instruct_short_4="<div style='margin-left:150px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>According to the pairs we just showed you, if you saw this: </p><img src= '../static/images/introEX4.png' width='700' height='500'><p style ='font-size: 50px;line-height:1.5'> Since the top and right objects shared a common pair, you would click '3'.</p><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>"
+instruct_short_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'>Press the '1' key to choose the object on the LEFT, the '2' key to choose the object in the MIDDLE, and the '3' key to choose the object on the RIGHT. If you are unsure of your answer, just try your best to make an educated guess.</p><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
 short_instructnames = ["instruct_short_1","instruct_short_2","instruct_short_3","instruct_short_4","instruct_short_5"]
 short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_short_4,instruct_short_5} 
 
@@ -64,10 +72,36 @@ mem_instruct={instruct_mem_1,instruct_mem_2,instruct_mem_3,instruct_mem_4,instru
 //generate triadLists
 practiceTriads = []
 
+practiceTriadList = []
+PRACaList = []
+PRACbList = []
 
 for (let i = 1;i<5;i++){
-  practiceTriads.push([`practice/object-0${i}a.png`, `practice/object-0${i}b.png`])
+  practiceTriads.push([`practice/object_0${i}a.png`, `practice/object_0${i}b.png`])
+
+  PRACaList.push(practiceTriads[i-1][0])
+  PRACbList.push(practiceTriads[i-1][1])
 }
+let practiceTriadArr = [];
+for (let i = 0; i < 4; i++) {
+  practiceTriadArr.push(i);
+}
+shuffle(practiceTriadArr)
+
+prac_learn_left=[]
+prac_learn_right=[]
+
+for (let i = 0;i<4;i++){
+  if (Math.random() < 0.5)  {
+    prac_learn_left.push(PRACaList[practiceTriadArr[i]])
+    prac_learn_right.push(PRACbList[practiceTriadArr[i]])
+  } else {
+    prac_learn_left.push(PRACbList[practiceTriadArr[i]])
+    prac_learn_right.push(PRACaList[practiceTriadArr[i]])
+  }
+}
+
+
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -114,9 +148,6 @@ for (let j = 0;j<4;j++){
     }
   }
   shuffle(triadArr)
-}
-
-for (let j = 0;j<4;j++){
   for (let i = 0;i<15;i++){
     if (Math.random() < 0.5)  {
       learn_left.push(bList[triadArr[i]])
@@ -477,98 +508,130 @@ for(let i = 0;i<directLeft.length;i++){
 
 
 //Shoretst Path judge phase
-twothree = graph.getCustomTriplets(2,3)
-threefour = graph.getCustomTriplets(3,4)
-fourfive = graph.getCustomTriplets(4,5)
+// twothree = graph.getCustomTriplets(2,3)
+// threefour = graph.getCustomTriplets(3,4)
+// fourfive = graph.getCustomTriplets(4,5)
 
-twofour = graph.getCustomTriplets(2,4)
-threefive = graph.getCustomTriplets(3,5)
+// twofour = graph.getCustomTriplets(2,4)
+// threefive = graph.getCustomTriplets(3,5)
 
-twofive = graph.getCustomTriplets(2,5)
+// twofive = graph.getCustomTriplets(2,5)
 
 
-let onediff = twothree.concat(threefour,fourfive)
-let onediffcorrect = correctNode
-correctNode = []
-let twodiff = twofour.concat(threefive)
-let twodiffcorrect = correctNode
-correctNode = []
-let threediff = twofive
-let threediffcorrect = correctNode
+// let onediff = twothree.concat(threefour,fourfive)
+// let onediffcorrect = correctNode
+// correctNode = []
+// let twodiff = twofour.concat(threefive)
+// let twodiffcorrect = correctNode
+// correctNode = []
+// let threediff = twofive
+// let threediffcorrect = correctNode
 
-cumulativediff = onediff.concat(twodiff,threediff)
-let cumulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
+// cumulativediff = onediff.concat(twodiff,threediff)
+// let cumulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
 
-let onediffarr = [];
-let cumulativearr = []
-  for (let i = 0; i < onediff.length; i++) {
-    onediffarr.push(i);
-    cumulativearr.push(i)
-  }
-let twodiffarr = [];
-for (let i = onediff.length; i < onediff.length + twodiff.length; i++) {
-  twodiffarr.push(i);
-  cumulativearr.push(i)
-}
-let threediffarr = [];
-for (let i = 0; i < threediff.length; i++) {
-  threediffarr.push(i);
-  cumulativearr.push(i)
-}
+// let onediffarr = [];
+// let cumulativearr = []
+//   for (let i = 0; i < onediff.length; i++) {
+//     onediffarr.push(i);
+//     cumulativearr.push(i)
+//   }
+// let twodiffarr = [];
+// for (let i = onediff.length; i < onediff.length + twodiff.length; i++) {
+//   twodiffarr.push(i);
+//   cumulativearr.push(i)
+// }
+// let threediffarr = [];
+// for (let i = 0; i < threediff.length; i++) {
+//   threediffarr.push(i);
+//   cumulativearr.push(i)
+// }
 
-cumulativearr=shuffle(cumulativearr)
+// cumulativearr=shuffle(cumulativearr)
 
-onediffarr = shuffle(onediffarr);
-twodiffarr = shuffle(twodiffarr);
-threediffarr = shuffle(threediffarr);
+// onediffarr = shuffle(onediffarr);
+// twodiffarr = shuffle(twodiffarr);
+// threediffarr = shuffle(threediffarr);
+
 let correctShortList = []
 let upList = []
 let leftList = []
 let rightList = []
-for (let i = 0;i<30;i++){
-  upList.push(cumulativediff[cumulativearr[i]][1])
-  leftList.push(cumulativediff[cumulativearr[i]][0])
-  rightList.push(cumulativediff[cumulativearr[i]][2])
-  correctShortList.push(cumulativeCorrect[cumulativearr[i]])
-  // upList.push(onediff[onediffarr[i]][1])
-  // leftList.push(onediff[onediffarr[i]][0])
-  // rightList.push(onediff[onediffarr[i]][2])
-  // correctShortList.push(onediffcorrect[onediffarr[i]])
-  // upList.push(twodiff[twodiffarr[i]][1])
-  // leftList.push(twodiff[twodiffarr[i]][0])
-  // rightList.push(twodiff[twodiffarr[i]][2])
-  // correctShortList.push(twodiffcorrect[twodiffarr[i]])
-  // upList.push(threediff[threediffarr[i]][1])
-  // leftList.push(threediff[threediffarr[i]][0])
-  // rightList.push(threediff[threediffarr[i]][2])
-  // correctShortList.push(threediffcorrect[threediffarr[i]])
-}
+let middleList = []
+let testnum = 0
+let testnum2 = 0
 
-// let shortestpatharray = [];
-// for (let i = 0; i < 30; i++) {
-//   shortestpatharray.push(i);
-// }
-// shortestpatharray = shuffle(shortestpatharray)
-// shortestpatharray = shuffle(shortestpatharray)
-// shortUp = []
-// shortLeft = []
-// shortRight = []
-// shortCorrect = []
+for (let i = 0;i<15;i++){
+  incorrectShortArr = i
+  wrongShortA = i
+  while (i == incorrectShortArr) {
+    incorrectShortArr = Math.floor(Math.random() * 14)
+  } 
+  while (i == wrongShortA) {
+    wrongShortA = Math.floor(Math.random() * 14)
+  } 
+  if (Math.random() > 0.5){
+    upList.push(aList[i])
+    correctShortList.push(cList[i])
+    testnum = Math.floor(Math.random()*3) + 1
+    if ( testnum == 1){
+      leftList.push(cList[i])
+      middleList.push(bList[incorrectShortArr])
+      rightList.push(cList[wrongShortA])
+    } else if (testnum == 2){
+      leftList.push(bList[wrongShortA])
+      middleList.push(cList[i])
+      rightList.push(cList[incorrectShortArr])
+    } else if (testnum == 3){
+      leftList.push(bList[incorrectShortArr])
+      middleList.push(cList[wrongShortA])
+      rightList.push(cList[i])
+    }
+  }else{
+    upList.push(cList[i])
+    correctShortList.push(aList[i])
+    testnum2 = Math.floor(Math.random()*3) + 1
+    if (testnum2 == 1){
+      leftList.push(aList[i])
+      middleList.push(bList[incorrectShortArr])
+      rightList.push(aList[wrongShortA])
+    } else if (testnum2 == 2){
+      leftList.push(aList[wrongShortA])
+      middleList.push(aList[i])
+      rightList.push(bList[incorrectShortArr])
+    } else if (testnum2 == 3){
+      leftList.push(aList[incorrectShortArr])
+      middleList.push(bList[wrongShortA])
+      rightList.push(aList[i])
+    }
+  }
+}
 // for (let i = 0;i<30;i++){
-//   shortUp.push(upList[shortestpatharray[i]])
-//   shortLeft.push(leftList[shortestpatharray[i]])
-//   shortRight.push(rightList[shortestpatharray[i]])
-//   shortCorrect.push(correctShortList[shortestpatharray[i]])
+//   upList.push(cumulativediff[cumulativearr[i]][1])
+//   leftList.push(cumulativediff[cumulativearr[i]][0])
+//   rightList.push(cumulativediff[cumulativearr[i]][2])
+//   correctShortList.push(cumulativeCorrect[cumulativearr[i]])
 // }
+
+let shortarr = []
+  for (let i = 0; i < leftList.length; i++) {
+    shortarr.push(i)
+  }
+
+shortarr = shuffle(shortarr)
+
 var room_shortest_right = []
 var room_shortest_left = []
 var room_shortest_up = []
 var  room_shortest_correct = []
+var room_shortest_mid = []
+
 for (let i = 0;i<n_shortest_trial;i++){
-  room_shortest_up.push(imageList[upList[i]-1])
-  room_shortest_left.push(imageList[leftList[i]-1])
-  room_shortest_right.push(imageList[rightList[i]-1])
-  room_shortest_correct.push(imageList[correctShortList[i]-1])
+  room_shortest_up.push(upList[shortarr[i]])
+  room_shortest_left.push(leftList[shortarr[i]])
+  room_shortest_mid.push(middleList[shortarr[i]])
+  room_shortest_right.push(rightList[shortarr[i]])
+  room_shortest_correct.push(correctShortList[shortarr[i]])
 }
 
 
