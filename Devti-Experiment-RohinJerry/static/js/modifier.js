@@ -161,6 +161,32 @@ for (let j = 0;j<4;j++){
   shuffle(triadArr)
 }
 
+// Breaking down phases
+learn1_ab_left = learn_left.slice(0,15)
+learn1_ab_right = learn_right.slice(0,15)
+
+learn1_bc_left = learn_left.slice(15,30)
+learn1_bc_right = learn_right.slice(15,30)
+
+learn2_ab_left = learn_left.slice(30,45)
+learn2_ab_right = learn_right.slice(30,45)
+
+learn2_bc_left = learn_left.slice(45,60)
+learn2_bc_right = learn_right.slice(45,60)
+
+learn3_ab_left = learn_left.slice(60,75)
+learn3_ab_right = learn_right.slice(60,75)
+
+learn3_bc_left = learn_left.slice(75,90)
+learn3_bc_right = learn_right.slice(75,90)
+
+learn4_ab_left = learn_left.slice(90,105)
+learn4_ab_right = learn_right.slice(90,105)
+
+learn4_bc_left = learn_left.slice(105,120)
+learn4_bc_right = learn_right.slice(105,120)
+
+
 imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
 
 imageIndex= [[0,1], [1,3], [4,3], [11,3], [1,2], [2,3], [2,10], [11,10], [2,5], [5,6], [5,8], [10,8], [6,7], [8,7], [8,9], [7,9]]
