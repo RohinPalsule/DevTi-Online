@@ -1,7 +1,7 @@
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=3 //This determine the number of learning trial you want in total
+  n_learning_trial=2 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
   n_goaldir_trial=1 //how many goal directed planning you want
@@ -39,6 +39,20 @@ post_instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justif
 
 post_instructnames = ["post_instruct_1"]
 post_instruct = {post_instruct_1}
+
+// Learning text
+
+learning_text = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>LEARNING</b><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+
+learningnames = ["learning_text"]
+learning_instruct = {learning_text}
+
+// Remembering text
+
+remembering_text = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>REMEMBERING</b><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+
+rememberingnames = ["remembering_text"]
+remembering_instruct = {remembering_text}
 
 //Text for direct memory instruction
 instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 50px;line-height:1.5'><strong>REMEMBERING</strong> phase: Your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong>LEARNING</strong>.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",

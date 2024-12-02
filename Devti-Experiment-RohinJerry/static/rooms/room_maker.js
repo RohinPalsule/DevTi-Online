@@ -174,6 +174,125 @@ function createbreak(intro_dir,instructnames,directmemory_phase){
   return thebreak
 }
 
+// Creating direct num list
+
+var room_gen_direct_left=[]
+var room_gen_direct_mid=[]
+var room_gen_direct_right=[]
+var room_gen_direct_up=[]
+var room_gen_direct_correct=[]
+
+function gen_directList(trialType) {
+  let genRight = []
+  let genMid = []
+  let genLeft = []
+  let genUp = []
+  let genCorrect = []
+  if (trialType =='ab') {
+    for(let i = 0;i<15;i++){
+      genUp.push(aList[i])
+      incorrectArr = i
+      wrongA = i
+      while (i == incorrectArr) {
+        incorrectArr = Math.floor(Math.random() * 14)
+      } 
+      while (i == wrongA) {
+        wrongA = Math.floor(Math.random() * 14)
+      } 
+      threeIndex = Math.floor(Math.random() * 3)+1
+      if (threeIndex == 1){
+        genLeft.push(bList[i])
+        genCorrect.push(bList[i])
+        genMid.push(bList[incorrectArr])
+        genRight.push(aList[wrongA])
+      } else if (threeIndex == 2){
+        genRight.push(bList[i])
+        genCorrect.push(bList[i])
+        genLeft.push(bList[incorrectArr])
+        genMid.push(aList[wrongA])
+      } else {
+        genMid.push(bList[i])
+        genCorrect.push(bList[i])
+        genRight.push(bList[incorrectArr])
+        genLeft.push(aList[wrongA])
+      }
+    }
+  } else if (trialType == 'bc') {
+    var bcArrayCorrect = []
+    var bcArrayTop = []
+
+    for(let i = 0;i<15;i++){
+      if (Math.random() > 0.5){
+        bcArrayTop = bList
+        bcArrayCorrect = cList
+      } else {
+        bcArrayTop = cList
+        bcArrayCorrect = bList
+      }
+      genUp.push(bcArrayTop[i])
+      incorrectArr = i
+      wrongA = i
+      while (i == incorrectArr) {
+        incorrectArr = Math.floor(Math.random() * 14)
+      } 
+      while (i == wrongA) {
+        wrongA = Math.floor(Math.random() * 14)
+      } 
+      threeIndex = Math.floor(Math.random() * 3)+1
+      if (threeIndex == 1){
+        genLeft.push(bcArrayCorrect[i])
+        genCorrect.push(bcArrayCorrect[i])
+        genMid.push(bcArrayCorrect[incorrectArr])
+        genRight.push(bcArrayTop[wrongA])
+      } else if (threeIndex == 2){
+        genRight.push(bcArrayCorrect[i])
+        genCorrect.push(bcArrayCorrect[i])
+        genLeft.push(bcArrayCorrect[incorrectArr])
+        genMid.push(bcArrayTop[wrongA])
+      } else {
+        genMid.push(bcArrayCorrect[i])
+        genCorrect.push(bcArrayCorrect[i])
+        genRight.push(bcArrayCorrect[incorrectArr])
+        genLeft.push(bcArrayTop[wrongA])
+      }
+    }
+  }
+
+  let genarr = [];
+  for (let i = 0; i < genLeft.length; i++) {
+    genarr.push(i);
+  }
+  genarr = shuffle(genarr)
+  genarr = shuffle(genarr)
+  genarr = shuffle(genarr)
+  room_gen_direct_left=[]
+  room_gen_direct_mid=[]
+  room_gen_direct_right=[]
+  room_gen_direct_up=[]
+  room_gen_direct_correct=[]
+
+
+  for(let i = 0;i<genLeft.length;i++){
+    room_gen_direct_up.push(genUp[genarr[i]])
+    room_gen_direct_left.push(genLeft[genarr[i]])
+    room_gen_direct_right.push(genRight[genarr[i]])
+    room_gen_direct_mid.push(genMid[genarr[i]])
+    room_gen_direct_correct.push(genCorrect[genarr[i]])
+  }
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+
+
+
+var num_of_learn_blocks = 0
 // Calling the learning blocks
 function generate_learning_block(img_left, img_right, num_of_trials) {
   generate_random_color()
@@ -321,8 +440,23 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
       learn_phase.stimulus_duration=3500
       thecrossant_black.stimulus=create_memory_ten('black')
       thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
-      attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+
+      num_of_learn_blocks += 1
+      if (num_of_learn_blocks % 0) {
+        gen_directList('ab')
+      } else {
+        gen_directList('bc')
+      }
+      if (num_of_learn_blocks < 4) {
+        generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial)
+        learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
+        attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+      }
       
+      if (num_of_learn_blocks >=4){
+        attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+        num_of_learn_blocks = 10
+      } 
     }
   }
 
@@ -361,3 +495,79 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
 
   // learning phase end
 } 
+
+
+// Generate remembering
+let num_of_rem_blocks=0
+function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_trials){
+  curr_direct_trial = 0
+  directmemory_phase = {
+    type: 'html-keyboard-responsefl',
+    choices: ['1','2','3'],
+    response_ends_trial: false,
+    stimulus:create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial),
+    stimulus_duration:6500,//5 second for now, we will discuss it 
+    trial_duration:6500,//5 second for now 
+    on_load: function() {
+      // Reveal other rooms after 1500 ms
+      setTimeout(function() {
+        for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+          document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
+        }
+      }, randomDelay);
+    },
+    on_finish: function(data) {
+      data.trial_type = 'directmemory_phase';
+      data.stimulus=imgUp[curr_direct_trial];
+      data.stimulus_down_left=imgLeft[curr_direct_trial],
+      data.stimulus_down_mid=imgMid[curr_direct_trial]
+      data.stimulus_down_right=imgRight[curr_direct_trial];
+      data.stimulus_correct=room_direct_correct[curr_direct_trial];
+      data.stimulus_short=room_direct_short[curr_direct_trial];
+      data.stimulus_far=room_direct_far[curr_direct_trial];
+      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
+        data.accuracy = 1
+        directcorrectness.push(1)
+        data.weighted_accuracy = 1
+      } else {
+        data.accuracy = 0
+        directcorrectness.push(0)
+        data.weighted_accuracy = 0
+      }
+
+      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
+        data.missedtrial = 'closer'
+        data.weighted_accuracy = 0.5
+      } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
+        data.missedtrial = 'closer'
+        data.weighted_accuracy = 0.5
+      }
+      
+      let directsum = 0;
+      directcorrectness.forEach(function(value) {
+        directsum += value;
+      });
+
+      data.cumulative_accuracy = directsum / directcorrectness.length;
+      sfa=data.key_press,
+      curr_direct_trial=curr_direct_trial+1,
+      directmemory_phase.stimulus=create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial)
+
+        num_of_rem_blocks += 1
+        if (num_of_rem_blocks < 3) {
+          generate_learning_block(learn1_bc_left, learn1_bc_right, n_learning_trial)
+          post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
+          attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
+        }
+        else if (num_of_rem_blocks == 3) {
+          attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
+        }
+        // attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
+  
+      // attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
+    }
+  }
+}

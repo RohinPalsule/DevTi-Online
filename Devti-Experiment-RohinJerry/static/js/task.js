@@ -49,6 +49,7 @@ var TaskFailed = {}
 var thecrossant_break = {}
 var learn_phase = {}
 var learn_phase_color = {}
+var directmemory_phase = {}
 
 //welcome page
 var welcome = {
@@ -88,6 +89,8 @@ for (let i = 0; i < instructnames.length; i++) {
 
 intro_learn=createfulintro(instruct,instructnames)
 postprac_learn=createfulintro(post_instruct, post_instructnames)
+learning_intro_text=createfulintro(learning_instruct,learningnames)
+remembering_intro_text=createfulintro(remembering_instruct,rememberingnames)
 intro_mem=createfulintro(mem_instruct,mem_instructnames)
 intro_dir=createfulintro(dir_instruct,dir_instructnames)
 intro_short=createfulintro(short_instruct,short_instructnames)
@@ -285,63 +288,8 @@ var prac_learn_phase_color = {
 var directcorrectness = []
 //Direct Memory test
 var curr_direct_trial=0
-var directmemory_phase = {
-  type: 'html-keyboard-responsefl',
-  choices: ['1','2','3'],
-  response_ends_trial: false,
-  stimulus:create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial),
-  stimulus_duration:6500,//5 second for now, we will discuss it 
-  trial_duration:6500,//5 second for now 
-  on_load: function() {
-    // Reveal other rooms after 1500 ms
-    setTimeout(function() {
-      for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
-        document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
-      }
-    }, randomDelay);
-  },
-  on_finish: function(data) {
-    data.trial_type = 'directmemory_phase';
-    data.stimulus=room_direct_up[curr_direct_trial];
-    data.stimulus_down_left=room_direct_left[curr_direct_trial],
-    data.stimulus_down_mid=room_direct_mid[curr_direct_trial]
-    data.stimulus_down_right=room_direct_right[curr_direct_trial];
-    data.stimulus_correct=room_direct_correct[curr_direct_trial];
-    data.stimulus_short=room_direct_short[curr_direct_trial];
-    data.stimulus_far=room_direct_far[curr_direct_trial];
-    if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
-      data.accuracy = 1
-      directcorrectness.push(1)
-      data.weighted_accuracy = 1
-    } else {
-      data.accuracy = 0
-      directcorrectness.push(0)
-      data.weighted_accuracy = 0
-    }
 
-    if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
-      data.missedtrial = 'closer'
-      data.weighted_accuracy = 0.5
-    } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
-    (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
-      data.missedtrial = 'closer'
-      data.weighted_accuracy = 0.5
-    }
-    
-    let directsum = 0;
-    directcorrectness.forEach(function(value) {
-      directsum += value;
-    });
 
-    data.cumulative_accuracy = directsum / directcorrectness.length;
-    sfa=data.key_press,
-    curr_direct_trial=curr_direct_trial+1,
-    directmemory_phase.stimulus=create_direct_trial(room_direct_up,room_direct_left,room_direct_mid,room_direct_right,curr_direct_trial)
-    attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
-  }
-}
 //Direct Memory test end
 
 correctness = []
@@ -456,8 +404,9 @@ function createPhase3(numberoftrial){
 
 phase3=createPhase3(n_goaldir_trial)
 generate_learning_block(learn_left, learn_right, n_learning_trial)
+//generate_remembering_block(room_direct_up, room_direct_left, room_direct_mid, room_direct_right, n_direct_trial)
 post_break=createbreak(postprac_learn,post_instructnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
-learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
+// learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
