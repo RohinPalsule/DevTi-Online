@@ -558,17 +558,22 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
       curr_direct_trial=curr_direct_trial+1,
       directmemory_phase.stimulus=create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial)
 
+      if (curr_direct_trial == n_direct_trial) {
         num_of_rem_blocks += 1
         if (num_of_rem_blocks < 7) {
           generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial)
           post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
         }
-        else if (num_of_rem_blocks == 7) {
+        else if (num_of_rem_blocks >= 7) {
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
         }
-        // attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
-  
+      }else {
+        attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
+      }
+      
+      // attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
+
       // attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
     }
   }
