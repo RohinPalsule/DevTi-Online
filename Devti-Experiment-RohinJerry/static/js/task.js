@@ -396,7 +396,13 @@ var shortestpath_phase = {
     sfa=data.key_press,
     curr_shortest_trial=curr_shortest_trial+1,
     shortestpath_phase.stimulus=create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid, room_shortest_right,curr_shortest_trial)
-    attentioncheck(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial,dir_break)
+    if (curr_shortest_trial == n_shortest_trial){
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [thank_you],
+      }, jsPsych.resumeExperiment)
+    } else {
+      attentioncheck(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial,dir_break)
+    }
   }
 }
 //Shortest Path memory end

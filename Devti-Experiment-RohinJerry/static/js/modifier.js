@@ -1,7 +1,7 @@
 //debug moode on/off
 debugmode= true
 if (debugmode==true){
-  n_learning_trial=2 //This determine the number of learning trial you want in total
+  n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=1 //how many shortest path you want
   n_goaldir_trial=1 //how many goal directed planning you want
@@ -262,6 +262,9 @@ learn4_ab_right = learn_right.slice(90,105)
 
 learn4_bc_left = learn_left.slice(105,120)
 learn4_bc_right = learn_right.slice(105,120)
+
+leftLearnList = [learn1_bc_left,learn2_ab_left,learn2_bc_left,learn3_ab_left,learn3_bc_left,learn4_ab_left,learn4_bc_left]
+rightLearnList = [learn1_bc_right,learn2_ab_right,learn2_bc_right,learn3_ab_right,learn3_bc_right,learn4_ab_right,learn4_bc_right]
 
 
 imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']

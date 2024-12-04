@@ -447,13 +447,13 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
       } else {
         gen_directList('bc')
       }
-      if (num_of_learn_blocks < 4) {
+      if (num_of_learn_blocks < 8) {
         generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial)
         learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
         attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
       }
       
-      if (num_of_learn_blocks >=4){
+      if (num_of_learn_blocks >=8){
         attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
         num_of_learn_blocks = 10
       } 
@@ -495,6 +495,8 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
 
   // learning phase end
 } 
+
+
 
 
 // Generate remembering
@@ -557,12 +559,12 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
       directmemory_phase.stimulus=create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial)
 
         num_of_rem_blocks += 1
-        if (num_of_rem_blocks < 3) {
-          generate_learning_block(learn1_bc_left, learn1_bc_right, n_learning_trial)
+        if (num_of_rem_blocks < 7) {
+          generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial)
           post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
         }
-        else if (num_of_rem_blocks == 3) {
+        else if (num_of_rem_blocks == 7) {
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
         }
         // attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
