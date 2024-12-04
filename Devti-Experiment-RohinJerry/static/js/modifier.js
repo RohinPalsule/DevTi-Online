@@ -6,6 +6,7 @@ if (debugmode==true){
   n_shortest_trial=1 //how many shortest path you want
   n_goaldir_trial=1 //how many goal directed planning you want
   n_prac_learning_trial = 1
+  n_prac_direct_trial = 1
 }else{
   n_learning_trial=3 //This determine the number of learning trial you want in total
   n_direct_trial=10 //how many direct trial you want
@@ -116,6 +117,68 @@ for (let i = 0;i<4;i++){
   }
 }
 
+
+let prac_directRight = []
+let prac_directMid = []
+let prac_directLeft = []
+let prac_directUp = []
+let prac_directCorrect = []
+let prac_directShort = []
+let prac_directFar = []
+var prac_directNodes = 0
+
+for(let i = 0;i<prac_learn_left.length;i++){
+  prac_directUp.push(PRACaList[i])
+  incorrectArr = i
+  wrongA = i
+  while (i == incorrectArr) {
+    incorrectArr = Math.floor(Math.random() * 4)
+  } 
+  while (i == wrongA) {
+    wrongA = Math.floor(Math.random() * 4)
+  } 
+  threeIndex = Math.floor(Math.random() * 3)+1
+  if (threeIndex == 1){
+    prac_directLeft.push(PRACbList[i])
+    prac_directCorrect.push(PRACbList[i])
+    prac_directMid.push(PRACbList[incorrectArr])
+    prac_directRight.push(PRACaList[wrongA])
+  } else if (threeIndex == 2){
+    prac_directRight.push(PRACbList[i])
+    prac_directCorrect.push(PRACbList[i])
+    prac_directLeft.push(PRACbList[incorrectArr])
+    prac_directMid.push(PRACaList[wrongA])
+  } else {
+    prac_directMid.push(PRACbList[i])
+    prac_directCorrect.push(PRACbList[i])
+    prac_directRight.push(PRACbList[incorrectArr])
+    prac_directLeft.push(PRACaList[wrongA])
+  }
+}
+
+let prac_directarr = [];
+  for (let i = 0; i < prac_directLeft.length; i++) {
+    prac_directarr.push(i);
+  }
+prac_directarr = shuffle(prac_directarr)
+prac_directarr = shuffle(prac_directarr)
+prac_directarr = shuffle(prac_directarr)
+let room_prac_direct_left=[]
+let room_prac_direct_mid=[]
+let room_prac_direct_right=[]
+let room_prac_direct_up=[]
+let room_prac_direct_correct=[]
+let room_prac_direct_far=[]
+let room_prac_direct_short=[]
+
+
+for(let i = 0;i<prac_directLeft.length;i++){
+  room_prac_direct_up.push(prac_directUp[prac_directarr[i]])
+  room_prac_direct_left.push(prac_directLeft[prac_directarr[i]])
+  room_prac_direct_right.push(prac_directRight[prac_directarr[i]])
+  room_prac_direct_mid.push(prac_directMid[prac_directarr[i]])
+  room_prac_direct_correct.push(prac_directCorrect[prac_directarr[i]])
+}
 
 
 function shuffle(array) {

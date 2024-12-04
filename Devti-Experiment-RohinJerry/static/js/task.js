@@ -89,6 +89,7 @@ for (let i = 0; i < instructnames.length; i++) {
 
 intro_learn=createfulintro(instruct,instructnames)
 postprac_learn=createfulintro(post_instruct, post_instructnames)
+remembering_prac=createfulintro(dir_instruct,dir_instructnames)
 learning_intro_text=createfulintro(learning_instruct,learningnames)
 remembering_intro_text=createfulintro(remembering_instruct,rememberingnames)
 intro_mem=createfulintro(mem_instruct,mem_instructnames)
@@ -241,7 +242,7 @@ var prac_thecrossant_break={
     prac_learn_phase.stimulus_duration=3500
     prac_thecrossant_black.stimulus=create_memory_ten('black')
     prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
-    attentioncheck_learningphase(prac_learn_phase,sfa,prac_curr_learning_trial,n_prac_learning_trial,post_break,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
+    attentioncheck_learningphase(prac_learn_phase,sfa,prac_curr_learning_trial,n_prac_learning_trial,remembering_instruct_break,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
     
   }
 }
@@ -278,6 +279,67 @@ var prac_learn_phase_color = {
   }
 }
 
+
+// practice remembering
+prac_directcorrectness = []
+prac_curr_direct_trial = 0
+  prac_directmemory_phase = {
+    type: 'html-keyboard-responsefl',
+    choices: ['1','2','3'],
+    response_ends_trial: false,
+    stimulus:create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial),
+    stimulus_duration:6500,//5 second for now, we will discuss it 
+    trial_duration:6500,//5 second for now 
+    on_load: function() {
+      // Reveal other rooms after 1500 ms
+      setTimeout(function() {
+        for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+          document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
+        }
+      }, randomDelay);
+    },
+    on_finish: function(data) {
+      data.trial_type = 'directmemory_phase';
+      data.stimulus=room_prac_direct_up[prac_curr_direct_trial];
+      data.stimulus_down_left=room_prac_direct_left[prac_curr_direct_trial],
+      data.stimulus_down_mid=room_prac_direct_mid[prac_curr_direct_trial]
+      data.stimulus_down_right=room_prac_direct_right[prac_curr_direct_trial];
+      data.stimulus_correct=room_direct_correct[prac_curr_direct_trial];
+      data.stimulus_short=room_direct_short[prac_curr_direct_trial];
+      data.stimulus_far=room_direct_far[prac_curr_direct_trial];
+      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
+        data.accuracy = 1
+        prac_directcorrectness.push(1)
+        data.weighted_accuracy = 1
+      } else {
+        data.accuracy = 0
+        prac_directcorrectness.push(0)
+        data.weighted_accuracy = 0
+      }
+
+      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
+        data.missedtrial = 'closer'
+        data.weighted_accuracy = 0.5
+      } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
+      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
+        data.missedtrial = 'closer'
+        data.weighted_accuracy = 0.5
+      }
+      
+      let directsum = 0;
+      prac_directcorrectness.forEach(function(value) {
+        directsum += value;
+      });
+
+      data.cumulative_accuracy = directsum / prac_directcorrectness.length;
+      sfa=data.key_press,
+      prac_curr_direct_trial=prac_curr_direct_trial+1,
+      prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
+      attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break)    
+    }
+  }
 
 
 // practice phase end
@@ -406,7 +468,7 @@ phase3=createPhase3(n_goaldir_trial)
 generate_learning_block(learn_left, learn_right, n_learning_trial)
 //generate_remembering_block(room_direct_up, room_direct_left, room_direct_mid, room_direct_right, n_direct_trial)
 post_break=createbreak(postprac_learn,post_instructnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
-// learn_break=createbreak(intro_dir,dir_instructnames,directmemory_phase)
+remembering_instruct_break=createbreak(remembering_prac,dir_instructnames,prac_directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
