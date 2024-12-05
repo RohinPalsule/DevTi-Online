@@ -284,12 +284,12 @@ var prac_learn_phase_color = {
 prac_directcorrectness = []
 prac_curr_direct_trial = 0
   prac_directmemory_phase = {
-    type: 'html-keyboard-responsefl',
+    type: 'html-keyboard-response',
     choices: ['1','2','3'],
-    response_ends_trial: false,
+    response_ends_trial: true,
     stimulus:create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial),
-    stimulus_duration:6500,//5 second for now, we will discuss it 
-    trial_duration:6500,//5 second for now 
+    // stimulus_duration:6500,//5 second for now, we will discuss it 
+    // trial_duration:6500,//5 second for now 
     on_load: function() {
       // Reveal other rooms after 1500 ms
       setTimeout(function() {
@@ -298,6 +298,7 @@ prac_curr_direct_trial = 0
         }
       }, randomDelay);
     },
+    
     on_finish: function(data) {
       data.trial_type = 'directmemory_phase';
       data.stimulus=room_prac_direct_up[prac_curr_direct_trial];
@@ -358,9 +359,9 @@ correctness = []
 //Shortest Path memory test
 var curr_shortest_trial=0
 var shortestpath_phase = {
-  type: 'html-keyboard-responsefl',
+  type: 'html-keyboard-response',
   choices: ['1','2','3'],
-  response_ends_trial: false,
+  response_ends_trial: true,
   stimulus:create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid,room_shortest_right,curr_shortest_trial),
   stimulus_duration:7500,
   trial_duration:7500,

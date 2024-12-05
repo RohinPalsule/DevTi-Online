@@ -135,7 +135,7 @@ for (let i=0 ; i<n_prac_learning_trial;i++){
 function generate_random_color(){
   pluscheck=[]
   pluscolor=[]
-  for (let i=0 ; i<n_learning_trial;i++){
+  for (let i=0 ; i<n_learning_trial*8;i++){
     plusdeter = randomIntFromInterval(1, 2)
     if (plusdeter==1){
       pluscolor.push(atcheckcolor[0])
@@ -441,22 +441,23 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
       thecrossant_black.stimulus=create_memory_ten('black')
       thecrossant.stimulus=create_learningcolor_trial(curr_learning_trial,pluscolor[curr_learning_trial])
 
-      num_of_learn_blocks += 1
-      if (num_of_learn_blocks % 0) {
-        gen_directList('ab')
+      if (curr_learning_trial == num_of_trials){
+        num_of_learn_blocks += 1
+        // console.log(num_of_learn_blocks)
+        if (num_of_learn_blocks % 2 == 0) {
+          gen_directList('bc')
+        } else {
+          gen_directList('ab')
+        }
+        if (num_of_learn_blocks < 9) {
+          generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial)
+          learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
+          attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+        }
       } else {
-        gen_directList('bc')
-      }
-      if (num_of_learn_blocks < 8) {
-        generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial)
-        learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
-        attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
+        attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,post_break,thecrossant,thecrossant_black,thecrossant_break)
       }
       
-      if (num_of_learn_blocks >=8){
-        attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
-        num_of_learn_blocks = 10
-      } 
     }
   }
 
@@ -504,12 +505,12 @@ let num_of_rem_blocks=0
 function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_trials){
   curr_direct_trial = 0
   directmemory_phase = {
-    type: 'html-keyboard-responsefl',
+    type: 'html-keyboard-response',
     choices: ['1','2','3'],
-    response_ends_trial: false,
+    response_ends_trial: true,
     stimulus:create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial),
-    stimulus_duration:6500,//5 second for now, we will discuss it 
-    trial_duration:6500,//5 second for now 
+    // stimulus_duration:6500,//5 second for now, we will discuss it 
+    // trial_duration:6500,//5 second for now 
     on_load: function() {
       // Reveal other rooms after 1500 ms
       setTimeout(function() {
@@ -556,16 +557,18 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
       data.cumulative_accuracy = directsum / directcorrectness.length;
       sfa=data.key_press,
       curr_direct_trial=curr_direct_trial+1,
+      console.log(curr_direct_trial)
       directmemory_phase.stimulus=create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial)
 
-      if (curr_direct_trial == n_direct_trial) {
+      if (curr_direct_trial == num_of_trials) {
         num_of_rem_blocks += 1
-        if (num_of_rem_blocks < 7) {
+        // console.log(num_of_rem_blocks)
+        if (num_of_rem_blocks < 8) {
           generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial)
           post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
         }
-        else if (num_of_rem_blocks >= 7) {
+        else if (num_of_rem_blocks >= 8) {
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
         }
       }else {
