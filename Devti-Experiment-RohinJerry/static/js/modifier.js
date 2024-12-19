@@ -2,11 +2,11 @@
 debugmode= true
 if (debugmode==true){
   n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=5 //how many direct trial you want
+  n_direct_trial=1 //how many direct trial you want
   n_shortest_trial=2 //how many shortest path you want
   n_goaldir_trial=2 //how many goal directed planning you want
-  n_prac_learning_trial = 2
-  n_prac_direct_trial = 2
+  n_prac_learning_trial = 1
+  n_prac_direct_trial = 1
 }else{
   n_learning_trial=3 //This determine the number of learning trial you want in total
   n_direct_trial=10 //how many direct trial you want
@@ -41,7 +41,6 @@ instruct_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: au
 instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>Each pair will be on the screen for <strong>three and a half seconds</strong>. The best way that we’ve found for people to remember these pairs is to create a story or phrase relating the two objects.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>For example, if you are presented with this pair:</p><img src= '../static/images/introEX.png' width='600' height='400'></img><p style ='font-size: 40px;line-height:1.5'>It may help you to imagine the two items interacting. For example, you could imagine them being stacked on top of one another. Or, you might like to use words to help you remember the pair.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>To make sure that you are paying attention on each trial, you will see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 40px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>For example, if you are presented with this pair:</p><img src= '../static/images/introEX.png' width='700' height='500'></img><p style ='font-size: 40px;line-height:1.5'>It may help you to imagine the two items interacting. For example, you could imagine them being stacked on top of one another. Or, you might like to use words to help you remember the pair.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>You will see each pair 4 times while playing this game, which means you will have four chances to teach each pair to yourself. The game will be broken into 8 <strong>LEARNING</strong> and <strong>REMEMBERING</strong> parts. Each learning part will be followed by a remembering part.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>In the <strong>REMEMBERING</strong> phase, you will be tested on your memory of these pairs, so try your best to remember these pairs.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_8="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>Now we will do a practice of the <strong>LEARNING</strong> and <strong>REMEMBERING</strong> parts. Make sure to remember the two objects as a pair, and additioanlly respond 1 when the cross flashes blue, and 2 when it flashes green. Please respond as quickly and as accurately as possible.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
@@ -73,7 +72,30 @@ dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4,instru
 instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>You may have noticed that some objects were paired with more than one other object.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_short_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>For example, if you studied the following pairs: </p><img src= '../static/images/introEX3.png' width='700' height='500'><p style ='font-size: 40px;line-height:1.5'>Because the hot pink and peach objects are both paired with the same green object, we say that they are “friends”. So, even though you didn’t see the hot pink and peach objects together, they are still a kind of pair. <p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_short_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>Now we will test you on these kinds of pairs. This REMEMBERING part will be the same as the ones you have done before.<p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
-instruct_short_4="<div style='margin-left:150px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>According to the pairs we just showed you, if you saw this: </p><img src= '../static/images/introEX4.png' width='700' height='500'><p style ='font-size: 40px;line-height:1.5'> Since the top and right objects shared a common pair, you would click '3'.</p><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>"
+
+
+
+instruct_short_4=`
+<div id = "test" style='margin-left:150px; margin-right:200px; text-justify:auto'>
+  <p style='font-size:40px; line-height:1.5'>According to the pairs we just showed you, if you saw this:</p>
+  <img src='../static/images/introEX4.png' width='700' height='500'>
+  <p style='font-size:40px; line-height:1.5'>Given the example above, which image choice would you choose?</p>
+  
+  <!-- Checkbox options -->
+  <form id="choices-form" style="font-size:30px; margin-top:20px">
+    <label><input type="radio" name="response" value="1">Left (1)</label><br>
+    <label><input type="radio" name="response" value="2"> Middle (2)</label><br>
+    <label><input type="radio" name="response" value="3"> Right (3)</label><br>
+  </form>
+  
+  <p id="feedbackP" style='font-size:30px; margin-top:20px; color:green; visibility:hidden'>Correct!</p>
+  <p id="feedbackN" style='font-size:30px; margin-top:20px; color:red; visibility:hidden'>Try again!</p>
+  
+  <button id="advance-button" style="font-size: 18px; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; visibility:hidden">Continue</button>
+</div>
+`
+
+
 instruct_short_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 40px;line-height:1.5'>Press the '1' key to choose the object on the LEFT, the '2' key to choose the object in the MIDDLE, and the '3' key to choose the object on the RIGHT. If you are unsure of your answer, just try your best to make an educated guess.</p><br /><p style= 'font-size:25px;margin-top:50px'>[press the spacebar to continue]</p>",
 short_instructnames = ["instruct_short_1","instruct_short_2","instruct_short_3","instruct_short_4","instruct_short_5"]
 short_instruct={instruct_short_1,instruct_short_2,instruct_short_3,instruct_short_4,instruct_short_5} 

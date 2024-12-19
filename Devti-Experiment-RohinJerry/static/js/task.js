@@ -63,26 +63,85 @@ var welcome = {
   }
 }
 //welcome page end
-
+var form = null
+var radios = null
+var feedbackN = null
+var feedbackP = null
+var continuePrompt = null
+var checkedBox = null
+var loadNum = 0
 //Instruction page
+
 function createinstruct(instruct_1,number){
   var intro={
     type: 'html-keyboard-response',
-    choices: ['space'],
+    choices: ['spacebar'],
     stimulus: instruct_1,
     on_finish: function (data) {
-      data.trial_type = 'intro_'+number;
+      data.trial_type = 'intro_'+ number;
       data.stimulus='instruct'
     }
   }
   return intro
 }
 
+var advanceButton = null
+
+function createQuestioninstruct(instruct_1,number){
+  var intro={
+    type: 'html-keyboard-response',
+    choices: jsPsych.NO_KEYS,
+    stimulus: instruct_1,
+    on_load: function() {
+      form = document.getElementById('choices-form');
+      radios = form.querySelectorAll('input[type="radio"]');
+      feedbackN = document.getElementById('feedbackN');
+      feedbackP = document.getElementById('feedbackP');
+      advanceButton = document.getElementById('advance-button');
+      radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          checkedBox = Array.from(radios).find(rb => rb.checked);
+          if (checkedBox) {
+            if (checkedBox.value === '3') {
+              feedbackN.style.visibility = 'hidden';
+              feedbackP.style.visibility = 'visible';
+              advanceButton.style.visibility = 'visible';
+            } else {
+              feedbackN.style.visibility = 'visible';
+              feedbackP.style.visibility = 'hidden';
+              advanceButton.style.visibility = 'hidden';
+            }
+          }
+        });
+      });
+
+      advanceButton.addEventListener('click', function() {
+        jsPsych.finishTrial();
+      });
+    },
+    on_finish: function(data){
+      data.trial_type = 'intro_'+ number;
+      data.stimulus='instruct'
+      const formData = new FormData(form);
+      const selectedResp = formData.getAll('response');
+      data.selected_options = selectedResp;
+      console.log('Selected options:', selectedResp);
+    }
+  }
+  return intro
+}
+
+
 function createfulintro(instruct,instructnames){
   intro={}
 for (let i = 0; i < instructnames.length; i++) {
   instructname=instructnames[i]
-  intro[i] = createinstruct(instruct[instructname],i)
+  if (instructname == 'instruct_short_4'){
+    intro[i] = createQuestioninstruct(instruct[instructname],i)
+  }else {
+    intro[i] = createinstruct(instruct[instructname],i)
+  }
+
 }return intro
 }
 
