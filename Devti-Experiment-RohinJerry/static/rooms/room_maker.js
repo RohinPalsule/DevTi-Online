@@ -318,7 +318,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus_right=img_right[curr_learning_trial]
       var blockNUM = num_of_rem_blocks+1
       if (isNaN(blockNUM)){
-        blockNUM = 0
+        blockNUM = 1
       }
       data.trial_type='rt_plussign_withcolor'+ blockNUM
       console.log(colordetretime)
@@ -340,7 +340,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
       if (isNaN(blockNUM)){
-        blockNUM = 0
+        blockNUM = 1
       }
       data.trial_type ='rt_thecrossant_black'+blockNUM
       data.stimulus='black_plus_sign'
@@ -435,7 +435,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
       if (isNaN(blockNUM)){
-        blockNUM = 0
+        blockNUM = 1
       }
       data.trial_type='color_black'+blockNUM
       data.stimulus='black_plus_sign'
@@ -484,7 +484,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
       if (isNaN(blockNUM)){
-        blockNUM = 0
+        blockNUM = 1
       }
       data.trial_type = 'learn_phase(without_color)'+blockNUM;
       data.stimulus='black_plus_sign'
@@ -507,7 +507,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus_right=img_right[curr_learning_trial]
       var blockNUM = num_of_rem_blocks+1
       if (isNaN(blockNUM)){
-        blockNUM = 0
+        blockNUM = 1
       }
       data.trial_type = 'black_cross(without_color)'+blockNUM;
       sfa=1
