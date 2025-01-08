@@ -286,7 +286,7 @@ var prac_thecrossant_break={
   stimulus:create_memory_ten('black'),
   prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
   on_finish: function(data) {
-    data.trial_type='color_black'
+    data.trial_type='prac_color_black'
     data.stimulus='black_plus_sign'
     timetakenforpluswindow=removecolor
     colordetretime=colorStart()
@@ -314,7 +314,7 @@ var prac_learn_phase = {
   stimulus_duration:3500,
   trial_duration:3500,
   on_finish: function(data) {
-    data.trial_type = 'learn_phase(without_color)';
+    data.trial_type = 'prac_learn_phase(without_color)';
     data.stimulus='black_plus_sign'
     data.stimulus_left=learn_left[prac_curr_learning_trial],
     data.stimulus_right=learn_right[prac_curr_learning_trial],
@@ -333,7 +333,7 @@ var prac_learn_phase_color = {
     data.stimulus=prac_pluscolor[prac_curr_learning_trial]
     data.stimulus_left=learn_left[prac_curr_learning_trial]
     data.stimulus_right=learn_right[prac_curr_learning_trial]
-    data.trial_type = 'black_cross(without_color)';
+    data.trial_type = 'prac_black_cross(without_color)';
     sfa=1
   }
 }
@@ -359,7 +359,7 @@ prac_curr_direct_trial = 0
     },
     
     on_finish: function(data) {
-      data.trial_type = 'directmemory_phase';
+      data.trial_type = 'prac_directmemory_phase';
       data.stimulus=room_prac_direct_up[prac_curr_direct_trial];
       data.stimulus_down_left=room_prac_direct_left[prac_curr_direct_trial],
       data.stimulus_down_mid=room_prac_direct_mid[prac_curr_direct_trial]
@@ -432,7 +432,7 @@ var shortestpath_phase = {
     }, randomDelay);
   },
   on_finish: function(data) {
-    data.trial_type = 'shortestpath_phase';
+    data.trial_type = 'inference_phase';
     data.stimulus=room_shortest_up[curr_shortest_trial];
     data.stimulus_left=room_shortest_left[curr_shortest_trial];
     data.stimulus_middle=room_shortest_mid[curr_shortest_trial];

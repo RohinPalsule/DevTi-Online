@@ -294,7 +294,7 @@ function shuffle(array) {
 
 var num_of_learn_blocks = 0
 // Calling the learning blocks
-function generate_learning_block(img_left, img_right, num_of_trials) {
+function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_blocks) {
   generate_random_color()
   curr_learning_trial=0
   colordetretime=colorStart()
@@ -316,7 +316,7 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type='rt_plussign_withcolor'
+      data.trial_type='rt_plussign_withcolor'+num_of_rem_blocks
       console.log(colordetretime)
       kp=data.key_press
     }
@@ -334,7 +334,7 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type ='rt_thecrossant_black'
+      data.trial_type ='rt_thecrossant_black'+num_of_rem_blocks
       data.stimulus='black_plus_sign'
       op=data.key_press
       if (kp){
@@ -425,7 +425,7 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type='color_black'
+      data.trial_type='color_black'+num_of_rem_blocks
       data.stimulus='black_plus_sign'
       timetakenforpluswindow=removecolor
       colordetretime=colorStart()
@@ -470,7 +470,7 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
     stimulus_duration:3500,
     trial_duration:3500,
     on_finish: function(data) {
-      data.trial_type = 'learn_phase(without_color)';
+      data.trial_type = 'learn_phase(without_color)'+num_of_rem_blocks;
       data.stimulus='black_plus_sign'
       data.stimulus_left=img_left[curr_learning_trial],
       data.stimulus_right=img_right[curr_learning_trial],
@@ -489,7 +489,7 @@ function generate_learning_block(img_left, img_right, num_of_trials) {
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type = 'black_cross(without_color)';
+      data.trial_type = 'black_cross(without_color)'+num_of_rem_blocks;
       sfa=1
     }
   }
@@ -574,7 +574,7 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
         num_of_rem_blocks += 1
         // console.log(num_of_rem_blocks)
         if (num_of_rem_blocks < 8) {
-          generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial)
+          generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial,num_of_rem_blocks)
           post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
         }
