@@ -317,6 +317,9 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
       var blockNUM = num_of_rem_blocks+1
+      if (isNaN(blockNUM)){
+        blockNUM = 0
+      }
       data.trial_type='rt_plussign_withcolor'+ blockNUM
       console.log(colordetretime)
       kp=data.key_press
@@ -336,6 +339,9 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
+      if (isNaN(blockNUM)){
+        blockNUM = 0
+      }
       data.trial_type ='rt_thecrossant_black'+blockNUM
       data.stimulus='black_plus_sign'
       op=data.key_press
@@ -428,6 +434,9 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
+      if (isNaN(blockNUM)){
+        blockNUM = 0
+      }
       data.trial_type='color_black'+blockNUM
       data.stimulus='black_plus_sign'
       timetakenforpluswindow=removecolor
@@ -474,6 +483,9 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     trial_duration:3500,
     on_finish: function(data) {
       var blockNUM = num_of_rem_blocks+1
+      if (isNaN(blockNUM)){
+        blockNUM = 0
+      }
       data.trial_type = 'learn_phase(without_color)'+blockNUM;
       data.stimulus='black_plus_sign'
       data.stimulus_left=img_left[curr_learning_trial],
@@ -494,6 +506,9 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
       var blockNUM = num_of_rem_blocks+1
+      if (isNaN(blockNUM)){
+        blockNUM = 0
+      }
       data.trial_type = 'black_cross(without_color)'+blockNUM;
       sfa=1
     }
