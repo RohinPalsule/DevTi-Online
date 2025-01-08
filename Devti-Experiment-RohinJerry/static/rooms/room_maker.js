@@ -295,7 +295,6 @@ function shuffle(array) {
 var num_of_learn_blocks = 0
 // Calling the learning blocks
 function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_blocks) {
-  num_of_rem_blocks_touse=num_of_rem_blocks+1
   generate_random_color()
   curr_learning_trial=0
   colordetretime=colorStart()
@@ -317,7 +316,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type='rt_plussign_withcolor'+num_of_rem_blocks_touse
+      data.trial_type='rt_plussign_withcolor'+num_of_rem_blocks
       console.log(colordetretime)
       kp=data.key_press
     }
@@ -335,7 +334,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type ='rt_thecrossant_black'+num_of_rem_blocks_touse
+      data.trial_type ='rt_thecrossant_black'+num_of_rem_blocks
       data.stimulus='black_plus_sign'
       op=data.key_press
       if (kp){
@@ -426,7 +425,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type='color_black'+num_of_rem_blocks_touse
+      data.trial_type='color_black'+num_of_rem_blocks
       data.stimulus='black_plus_sign'
       timetakenforpluswindow=removecolor
       colordetretime=colorStart()
@@ -451,7 +450,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
           gen_directList('ab')
         }
         if (num_of_learn_blocks < 9) {
-          generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial,num_of_rem_blocks)
+          generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial)
           learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
           attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
         }
@@ -471,7 +470,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus_duration:3500,
     trial_duration:3500,
     on_finish: function(data) {
-      data.trial_type = 'learn_phase(without_color)'+num_of_rem_blocks_touse;
+      data.trial_type = 'learn_phase(without_color)'+num_of_rem_blocks;
       data.stimulus='black_plus_sign'
       data.stimulus_left=img_left[curr_learning_trial],
       data.stimulus_right=img_right[curr_learning_trial],
@@ -490,7 +489,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type = 'black_cross(without_color)'+num_of_rem_blocks_touse;
+      data.trial_type = 'black_cross(without_color)'+num_of_rem_blocks;
       sfa=1
     }
   }
@@ -517,8 +516,7 @@ var too_quick={
 
 // Generate remembering
 let num_of_rem_blocks=0
-function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_trials,num_of_rem_blocks){
-  num_of_rem_blocks_touse=num_of_rem_blocks+1
+function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_trials){
   curr_direct_trial = 0
   directmemory_phase = {
     type: 'html-keyboard-response',
@@ -544,7 +542,7 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
         }
       }
       
-      data.trial_type = 'directmemory_phase'+num_of_rem_blocks_touse;
+      data.trial_type = 'directmemory_phase';
       data.stimulus=imgUp[curr_direct_trial];
       data.stimulus_down_left=imgLeft[curr_direct_trial],
       data.stimulus_down_mid=imgMid[curr_direct_trial]
