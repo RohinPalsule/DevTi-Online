@@ -316,7 +316,8 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type='rt_plussign_withcolor'+num_of_rem_blocks+1
+      var blockNUM = num_of_rem_blocks+1
+      data.trial_type='rt_plussign_withcolor'+ blockNUM
       console.log(colordetretime)
       kp=data.key_press
     }
@@ -334,7 +335,8 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type ='rt_thecrossant_black'+num_of_rem_blocks+1
+      var blockNUM = num_of_rem_blocks+1
+      data.trial_type ='rt_thecrossant_black'+blockNUM
       data.stimulus='black_plus_sign'
       op=data.key_press
       if (kp){
@@ -425,7 +427,8 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus:create_memory_ten('black'),
     prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
     on_finish: function(data) {
-      data.trial_type='color_black'+num_of_rem_blocks+1
+      var blockNUM = num_of_rem_blocks+1
+      data.trial_type='color_black'+blockNUM
       data.stimulus='black_plus_sign'
       timetakenforpluswindow=removecolor
       colordetretime=colorStart()
@@ -470,7 +473,8 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     stimulus_duration:3500,
     trial_duration:3500,
     on_finish: function(data) {
-      data.trial_type = 'learn_phase(without_color)'+num_of_rem_blocks+1;
+      var blockNUM = num_of_rem_blocks+1
+      data.trial_type = 'learn_phase(without_color)'+blockNUM;
       data.stimulus='black_plus_sign'
       data.stimulus_left=img_left[curr_learning_trial],
       data.stimulus_right=img_right[curr_learning_trial],
@@ -489,7 +493,8 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       data.stimulus=pluscolor[curr_learning_trial]
       data.stimulus_left=img_left[curr_learning_trial]
       data.stimulus_right=img_right[curr_learning_trial]
-      data.trial_type = 'black_cross(without_color)'+num_of_rem_blocks+1;
+      var blockNUM = num_of_rem_blocks+1
+      data.trial_type = 'black_cross(without_color)'+blockNUM;
       sfa=1
     }
   }
