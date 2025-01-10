@@ -91,6 +91,8 @@ instruct_short_4=`
   <p id="feedbackP" style='font-size:30px; margin-top:20px; color:green; visibility:hidden'>Correct!</p>
   <p id="feedbackN" style='font-size:30px; margin-top:20px; color:red; visibility:hidden'>Try again!</p>
   
+  <button id="restart-button" style="font-size: 18px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; visibility:hidden">Go back</button>
+  <br>
   <button id="advance-button" style="font-size: 18px; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; visibility:hidden">Continue</button>
 </div>
 `

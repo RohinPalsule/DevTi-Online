@@ -523,8 +523,8 @@ quickKP = 0;
 
 var too_quick={
   type: 'html-keyboard-response',
-  stimulus: '<h1 style="color: red;">Your response was too quick. Please take your time to carefully consider your answer.</h1>' +
-            '<p style="color: red;">This screen will continue in 10 seconds.</p>',
+  stimulus: '<h1 style="color: red;">Your response was too quick. Please take your time to carefully consider your answer before responding.</h1>' +
+            '<p style="color: red;">This screen will disappear in 10 seconds.</p>',
   choices: jsPsych.NO_KEYS, // Prevent responses
   trial_duration: 10000, // Stay on screen for 10 seconds
   on_finish: function(data) {

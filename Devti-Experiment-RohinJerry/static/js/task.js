@@ -86,8 +86,9 @@ function createinstruct(instruct_1,number){
 }
 
 var advanceButton = null
-
+let tester = 0
 function createQuestioninstruct(instruct_1,number){
+
   var intro={
     type: 'html-keyboard-response',
     choices: jsPsych.NO_KEYS,
@@ -98,18 +99,23 @@ function createQuestioninstruct(instruct_1,number){
       feedbackN = document.getElementById('feedbackN');
       feedbackP = document.getElementById('feedbackP');
       advanceButton = document.getElementById('advance-button');
+      restartButton = document.getElementById('restart-button');
       radios.forEach(radio => {
         radio.addEventListener('change', function() {
           checkedBox = Array.from(radios).find(rb => rb.checked);
           if (checkedBox) {
             if (checkedBox.value === '3') {
-              feedbackN.style.visibility = 'hidden';
-              feedbackP.style.visibility = 'visible';
-              advanceButton.style.visibility = 'visible';
+              if (tester == 0){
+                feedbackN.style.visibility = 'hidden';
+                feedbackP.style.visibility = 'visible';
+                advanceButton.style.visibility = 'visible';
+              }
             } else {
               feedbackN.style.visibility = 'visible';
               feedbackP.style.visibility = 'hidden';
               advanceButton.style.visibility = 'hidden';
+              restartButton.style.visibility = 'visible';
+              tester = 1
             }
           }
         });
@@ -117,6 +123,12 @@ function createQuestioninstruct(instruct_1,number){
 
       advanceButton.addEventListener('click', function() {
         jsPsych.finishTrial();
+      });
+      restartButton.addEventListener('click', function() {
+        jsPsych.finishTrial();
+        jsPsych.endCurrentTimeline();
+        attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
+        tester = 0
       });
     },
     on_finish: function(data){
