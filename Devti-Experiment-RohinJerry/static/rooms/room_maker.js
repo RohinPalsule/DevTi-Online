@@ -152,7 +152,7 @@ var warning_page={
   choices: jsPsych.NO_KEYS,
   response_ends_trial: false,
   trial_duration:3000,
-  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions.</h1><br><h1 style="color: red;">Continued failure to respond will</h1><br><h1 style="color: red;">result in the task ending early</h1><br><h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
+  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions accurately.</h1><br><h1 style="color: red;">Continued failure to respond will</h1><br><h1 style="color: red;">result in the task ending early</h1><br><h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
   on_finish: function(data) {
     data.trial_type='warning_page'
     data.stimulus='warning'
