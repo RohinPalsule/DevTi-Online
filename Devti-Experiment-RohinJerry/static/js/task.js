@@ -96,7 +96,6 @@ function createQuestioninstruct(instruct_1,number){
     on_load: function() {
       form = document.getElementById('choices-form');
       radios = form.querySelectorAll('input[type="radio"]');
-      feedbackN = document.getElementById('feedbackN');
       feedbackP = document.getElementById('feedbackP');
       advanceButton = document.getElementById('advance-button');
       restartButton = document.getElementById('restart-button');
@@ -106,12 +105,10 @@ function createQuestioninstruct(instruct_1,number){
           if (checkedBox) {
             if (checkedBox.value === '3') {
               if (tester == 0){
-                feedbackN.style.visibility = 'hidden';
                 feedbackP.style.visibility = 'visible';
                 advanceButton.style.visibility = 'visible';
               }
             } else {
-              feedbackN.style.visibility = 'visible';
               feedbackP.style.visibility = 'hidden';
               advanceButton.style.visibility = 'hidden';
               restartButton.style.visibility = 'visible';
@@ -434,8 +431,8 @@ var shortestpath_phase = {
   choices: ['1','2','3'],
   response_ends_trial: true,
   stimulus:create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid,room_shortest_right,curr_shortest_trial),
-  stimulus_duration:7500,
-  trial_duration:7500,
+  stimulus_duration:15000,
+  trial_duration:15000,
   on_load: function() {
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
