@@ -561,6 +561,13 @@ var thank_you = {
 }
 
 
+
+// const preload = {
+//   type: 'jsPsychPreload',
+//   images: all_images,
+//   show_progress_bar: true,
+// }
+
 //time line here
 timeline.push(welcome)
 timelinepushintro(intro_learn,instructnames)
@@ -569,15 +576,18 @@ timeline.push(prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,pra
 // timelinepushintro(postprac_learn,post_instructnames)
 // timeline.push(learn_phase)
 // timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
-
 jsPsych.init({
   timeline: timeline,
   preload_images: all_images,
-  max_load_time: 600000,
+  max_load_time: 5000,
+  on_load: function() {
+    console.log('loaded!')
+  },
   on_finish: function () {
     /* Retrieve the participant's data from jsPsych */
     // Determine and save participant bonus payment
     psiturk.recordUnstructuredData("subject_id", subject_id);
     save_data(true)
+    console.log('loaded!')
   },
 })
