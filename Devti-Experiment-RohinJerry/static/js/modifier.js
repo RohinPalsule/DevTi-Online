@@ -4,14 +4,12 @@ if (debugmode==true){
   n_learning_trial=15 //This determine the number of learning trial you want in total
   n_direct_trial=15 //how many direct trial you want
   n_shortest_trial=15 //how many shortest path you want
-  n_goaldir_trial=2 //how many goal directed planning you want
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
   n_learning_trial=1 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct trial you want
-  n_shortest_trial=1 //how many shortest path you want
-  n_goaldir_trial=2 //how many goal directed planning you want
+  n_shortest_trial=2 //how many shortest path you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }
@@ -305,295 +303,12 @@ learn4_bc_right = learn_right.slice(105,120)
 leftLearnList = [learn2_ab_left, learn3_ab_left, learn4_ab_left, learn1_bc_left, learn2_bc_left, learn3_bc_left,learn4_bc_left]
 rightLearnList = [learn2_ab_right, learn3_ab_right, learn4_ab_right, learn1_bc_right, learn2_bc_right, learn3_bc_right,learn4_bc_right]
 
-imageList=['Aliance.png','Boulder.png','Cornwall.png','Custer.png','DelawareCity.png','Medora.png','Newport.png','ParkCity.png','Racine.png','Sitka.png','WestPalmBeach.png','Yukon.png']
-
-imageIndex= [[0,1], [1,3], [4,3], [11,3], [1,2], [2,3], [2,10], [11,10], [2,5], [5,6], [5,8], [10,8], [6,7], [8,7], [8,9], [7,9]]
-
-list_left=[imageList[imageIndex[0][0]],imageList[imageIndex[1][0]],imageList[imageIndex[2][0]],imageList[imageIndex[3][0]],imageList[imageIndex[4][0]],imageList[imageIndex[5][0]],imageList[imageIndex[6][0]],imageList[imageIndex[7][0]],imageList[imageIndex[8][0]],imageList[imageIndex[9][0]],imageList[imageIndex[10][0]],imageList[imageIndex[11][0]],imageList[imageIndex[12][0]],imageList[imageIndex[13][0]],imageList[imageIndex[14][0]],imageList[imageIndex[15][0]]]
-list_right=[imageList[imageIndex[0][1]],imageList[imageIndex[1][1]],imageList[imageIndex[2][1]],imageList[imageIndex[3][1]],imageList[imageIndex[4][1]],imageList[imageIndex[5][1]],imageList[imageIndex[6][1]],imageList[imageIndex[7][1]],imageList[imageIndex[8][1]],imageList[imageIndex[9][1]],imageList[imageIndex[10][1]],imageList[imageIndex[11][1]],imageList[imageIndex[12][1]],imageList[imageIndex[13][1]],imageList[imageIndex[14][1]],imageList[imageIndex[15][1]]]
-
-
-let arr = [];
-for (let i = 0; i < 16; i++) {
-  for (let j = 0; j < 8; j++) {
-    arr.push(i);
-  }
-}
-
-
-
-let randomizedArray = shuffle(arr);
-
-// for (var i = 0; i < randomizedArray.length; i++){
-//     learn_left.push(list_left[randomizedArray[i]])
-//     learn_right.push(list_right[randomizedArray[i]])
-// }
-
-var correctNode = []
-var correctDirectNodes = 0
-var shortDirectNodes = 0
-var farDirectNodes = 0
-
-// Graph object
-class Graph {
-  constructor() {
-    this.adjacencyList = {};
-  }
-
-  addVertex(vertex) {
-    if (!this.adjacencyList[vertex]) {
-      this.adjacencyList[vertex] = [];
-    }
-  }
-
-  addEdge(vertex1, vertex2) {
-    if (!this.adjacencyList[vertex1]) this.addVertex(vertex1);
-    if (!this.adjacencyList[vertex2]) this.addVertex(vertex2);
-
-    this.adjacencyList[vertex1].push(vertex2);
-    this.adjacencyList[vertex2].push(vertex1); // For undirected graph
-  }
-
-  displayGraph() {
-    console.log(this.adjacencyList);
-  }
-
-    // Function to find nodes that are directly connected to the center node (1 edge apart)
-  getDirectNeighbors(centerNode) {
-    return this.adjacencyList[centerNode] || [];
-  }
-
-  getSingleDirectNeighbor() {
-    const nodeIndexMap = new Map();
-    return (centerNode) => {
-        const neighbors = this.adjacencyList[centerNode] || [];
-        if (neighbors.length === 0) return null;
-        if (!nodeIndexMap.has(centerNode)) {
-            nodeIndexMap.set(centerNode, 0);
-        }
-        let index = nodeIndexMap.get(centerNode);
-        const neighbor = neighbors[index];
-        nodeIndexMap.set(centerNode, (index + 1) % neighbors.length);
-        return neighbor;
-    };
-}
-
-  initTriplet() {
-      this.correctNodefunc = this.getSingleDirectNeighbor();
-  }
-
-  cycleThroughNeighbors(node) {
-      const nextNeighbor = this.correctNodefunc(node);
-      return nextNeighbor
-  } 
-
-
-  // Function to find all nodes that are not directly connected to the center node
-  getNonDirectNeighbors(centerNode) {
-    const directNeighbors = new Set(this.getDirectNeighbors(centerNode));
-    const allNodes = Object.keys(this.adjacencyList).map(Number);
-
-    // Non-direct neighbors are all nodes that are not direct neighbors and not the centerNode itself
-    const nonDirectNeighbors = allNodes.filter(node => !directNeighbors.has(node) && node !== centerNode);
-    
-    return nonDirectNeighbors;
-  }
-
-  getNeighborsAtDistance(centerNode, distance) {
-    // If distance is 0, return only the centerNode itself
-    if (distance === 0) {
-      return [centerNode];
-    }
-
-    // Initialize sets and queues for BFS
-    const visited = new Set([centerNode]);  // Track visited nodes to avoid cycles
-    const queue = [[centerNode, 0]];  // Queue for BFS, stores pairs [node, currentDistance]
-    const result = new Set();  // Store the nodes found at the desired distance
-
-    // BFS loop
-    while (queue.length > 0) {
-      const [currentNode, currentDistance] = queue.shift();
-
-      // Get neighbors of the current node
-      const neighbors = this.getDirectNeighbors(currentNode);
-
-      for (let neighbor of neighbors) {
-        if (!visited.has(neighbor)) {
-          visited.add(neighbor);
-
-          // If we reached the desired distance, add the node to result
-          if (currentDistance + 1 === distance) {
-            result.add(neighbor);
-          }
-
-          // If still under the desired distance, keep exploring
-          if (currentDistance + 1 < distance) {
-            queue.push([neighbor, currentDistance + 1]);
-          }
-        }
-      }
-    }
-
-    return Array.from(result);  // Return the neighbors found at the specified distance
-}
-  // Function to generate a triplet [directNeighbor, centerNode, randomNonDirectNeighbor]
-  getTriplet(centerNode) {
-    const directNeighbors = this.getDirectNeighbors(centerNode);
-    const nonDirectNeighbors = this.getNonDirectNeighbors(centerNode);
-    const shorterNeighbor = this.getNeighborsAtDistance(centerNode,2)
-    const furtherNeighbor = this.getNeighborsAtDistance(centerNode,3).concat(this.getNeighborsAtDistance(centerNode,4))
-    if (directNeighbors.length === 0 || nonDirectNeighbors.length === 0) {
-      return null; // Return null if no valid triplet can be found
-    }
-
-    // Select a random direct neighbor (1 edge apart)
-
-    const correctNodeOption = this.cycleThroughNeighbors(centerNode)
-
-    // Select a random non-direct neighbor (not directly connected)
-    const shorterNode = shorterNeighbor[Math.floor(Math.random() * shorterNeighbor.length)];
-    const furtherNode = furtherNeighbor[Math.floor(Math.random() * furtherNeighbor.length)]
-    while(furtherNode == shorterNode){
-      furtherNode = furtherNeighbor[Math.floor(Math.random() * furtherNeighbor.length)]
-    }
-    
-   
-    if(Math.floor(Math.random() * 3 + 1) == 1) {
-      directNodes = [correctNodeOption, centerNode, furtherNode, shorterNode]
-    }else if (Math.floor(Math.random() * 3 + 1) == 2){
-      directNodes = [shorterNode, centerNode, correctNodeOption, furtherNode];
-    } else{
-      directNodes = [furtherNode, centerNode, shorterNode, correctNodeOption]
-    }
-    correctDirectNodes = correctNodeOption
-    shortDirectNodes = shorterNode
-    farDirectNodes = furtherNode
-  }
-
-  // Helper function to perform BFS and find all nodes k edges apart from the starting node
-  findNodesKEdgesApart(start, k) {
-    const queue = [[start, 0]];  // [vertex, distance]
-    const visited = new Set();
-    visited.add(start);
-    const result = new Set();
-
-    while (queue.length > 0) {
-      const [vertex, distance] = queue.shift();
-
-      // If we've reached the distance k, add this vertex
-      if (distance === k) {
-        result.add(vertex);
-      }
-
-      // If we haven't reached k edges yet, continue exploring neighbors
-      if (distance < k) {
-        this.adjacencyList[vertex].forEach(neighbor => {
-          if (!visited.has(neighbor)) {
-            visited.add(neighbor);
-            queue.push([neighbor, distance + 1]);
-          }
-        });
-      }
-    }
-
-    return Array.from(result); // Return the nodes that are k edges apart from the start
-  }
-
-  // Function to find triplets where one node is leftK edges away and another node is rightK edges away from the center node
-  getCustomTriplets(leftK, rightK) {
-    const triplets = [];
-
-    for (const centerNode in this.adjacencyList) {
-      const nodesLeftKEdgesApart = this.findNodesKEdgesApart(parseInt(centerNode), leftK);
-      const nodesRightKEdgesApart = this.findNodesKEdgesApart(parseInt(centerNode), rightK);
-
-      // Create triplets [nodeLeftK, centerNode, nodeRightK]
-      nodesLeftKEdgesApart.forEach((nodeLeft) => {
-        nodesRightKEdgesApart.forEach((nodeRight) => {
-          if (Math.floor(Math.random() * 2 + 1) == 1){
-          triplets.push([nodeLeft, parseInt(centerNode), nodeRight]);
-          } else {triplets.push([nodeRight, parseInt(centerNode), nodeLeft])}
-          correctNode.push(nodeLeft)
-        });
-      });
-    }
-
-    return triplets;
-  }
-  
-  getPairsKEdgesApart(k) {
-    const pairs = new Set();
-
-    // Helper function to perform BFS and find vertices k edges apart
-    const bfs = (start) => {
-      const queue = [[start, 0]];  // [vertex, distance]
-      const visited = new Set();
-      visited.add(start);
-
-      while (queue.length) {
-        const [vertex, distance] = queue.shift();
-
-        // If we've reached the distance k, add the pair to the set
-        if (distance === k) {
-          const pair = [Math.min(start, vertex), Math.max(start, vertex)];
-          pairs.add(pair.toString());
-          continue;
-        }
-
-        // If not at distance k, explore neighbors
-        this.adjacencyList[vertex].forEach((neighbor) => {
-          if (!visited.has(neighbor)) {
-            visited.add(neighbor);
-            queue.push([neighbor, distance + 1]);
-          }
-        });
-      }
-    };
-
-    // Perform BFS from each vertex
-    for (const vertex in this.adjacencyList) {
-      bfs(parseInt(vertex));
-    }
-
-    // Convert the set back into an array of pairs
-    return Array.from(pairs).map(pair => pair.split(',').map(Number));
-  }
-}
-
-// Initialize the graph
-const graph = new Graph();
-for (let i = 1; i < 13; i++) {
-  graph.addVertex(i);
-}
-
-graph.addEdge(1, 2);
-graph.addEdge(2, 3);
-graph.addEdge(2, 4);
-graph.addEdge(3, 4);
-graph.addEdge(3, 11);
-graph.addEdge(3, 6);
-graph.addEdge(4, 5);
-graph.addEdge(4, 12);
-graph.addEdge(6, 7);
-graph.addEdge(6, 9);
-graph.addEdge(7, 8);
-graph.addEdge(8, 9);
-graph.addEdge(8, 10);
-graph.addEdge(9, 10);
-graph.addEdge(9, 11);
-graph.addEdge(11, 12);
-
-graph.displayGraph();
-
 //Direct Memory phase
-graph.initTriplet()
 let directRight = []
 let directMid = []
 let directLeft = []
 let directUp = []
 let directCorrect = []
-let directShort = []
-let directFar = []
 var directNodes = 0
 
 for(let i = 0;i<15;i++){
@@ -637,8 +352,7 @@ let room_direct_mid=[]
 let room_direct_right=[]
 let room_direct_up=[]
 let room_direct_correct=[]
-let room_direct_far=[]
-let room_direct_short=[]
+
 
 
 for(let i = 0;i<directLeft.length;i++){
@@ -647,56 +361,7 @@ for(let i = 0;i<directLeft.length;i++){
   room_direct_right.push(directRight[directarr[i]])
   room_direct_mid.push(directMid[directarr[i]])
   room_direct_correct.push(directCorrect[directarr[i]])
-  room_direct_short.push(imageList[directShort[directarr[i]]-1])
-  room_direct_far.push(imageList[directFar[directarr[i]]-1])
 }
-
-
-//Shoretst Path judge phase
-// twothree = graph.getCustomTriplets(2,3)
-// threefour = graph.getCustomTriplets(3,4)
-// fourfive = graph.getCustomTriplets(4,5)
-
-// twofour = graph.getCustomTriplets(2,4)
-// threefive = graph.getCustomTriplets(3,5)
-
-// twofive = graph.getCustomTriplets(2,5)
-
-
-// let onediff = twothree.concat(threefour,fourfive)
-// let onediffcorrect = correctNode
-// correctNode = []
-// let twodiff = twofour.concat(threefive)
-// let twodiffcorrect = correctNode
-// correctNode = []
-// let threediff = twofive
-// let threediffcorrect = correctNode
-
-// cumulativediff = onediff.concat(twodiff,threediff)
-// let cumulativeCorrect = onediffcorrect.concat(twodiffcorrect,threediffcorrect)
-
-// let onediffarr = [];
-// let cumulativearr = []
-//   for (let i = 0; i < onediff.length; i++) {
-//     onediffarr.push(i);
-//     cumulativearr.push(i)
-//   }
-// let twodiffarr = [];
-// for (let i = onediff.length; i < onediff.length + twodiff.length; i++) {
-//   twodiffarr.push(i);
-//   cumulativearr.push(i)
-// }
-// let threediffarr = [];
-// for (let i = 0; i < threediff.length; i++) {
-//   threediffarr.push(i);
-//   cumulativearr.push(i)
-// }
-
-// cumulativearr=shuffle(cumulativearr)
-
-// onediffarr = shuffle(onediffarr);
-// twodiffarr = shuffle(twodiffarr);
-// threediffarr = shuffle(threediffarr);
 
 let correctShortList = []
 let upList = []
@@ -751,13 +416,6 @@ for (let i = 0;i<15;i++){
     }
   }
 }
-// for (let i = 0;i<30;i++){
-//   upList.push(cumulativediff[cumulativearr[i]][1])
-//   leftList.push(cumulativediff[cumulativearr[i]][0])
-//   rightList.push(cumulativediff[cumulativearr[i]][2])
-//   correctShortList.push(cumulativeCorrect[cumulativearr[i]])
-// }
-
 let shortarr = []
   for (let i = 0; i < leftList.length; i++) {
     shortarr.push(i)
@@ -778,49 +436,6 @@ for (let i = 0;i<n_shortest_trial;i++){
   room_shortest_right.push(rightList[shortarr[i]])
   room_shortest_correct.push(correctShortList[shortarr[i]])
 }
-
-
-//Goal Directed Navigation:
-
-var room_goaldir_left = []
-var room_goaldir_right = []
-
-let twoEdgePair = graph.getPairsKEdgesApart(2)
-let threeEdgePair = graph.getPairsKEdgesApart(3)
-let fourEdgePair = graph.getPairsKEdgesApart(4)
-let fiveEdgePair = graph.getPairsKEdgesApart(5)
-
-let goaldirList = graph.getPairsKEdgesApart(2).concat(graph.getPairsKEdgesApart(3),graph.getPairsKEdgesApart(4),graph.getPairsKEdgesApart(5))
-goaldirIndex = []
-for (let i = 0; i < goaldirList.length; i++) {
-  goaldirIndex.push(i);
-}
-goaldirIndex = shuffle(goaldirIndex)
-
-let shuffledList = []
-for (let i = 0;i < 4; i++){
-  shuffledList.push(goaldirList[goaldirIndex[i]])
-  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length]])
-  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length]])
-  shuffledList.push(goaldirList[goaldirIndex[i+twoEdgePair.length + threeEdgePair.length + fourEdgePair.length]])
-}
-
-let shuffledIndex = []
-for (let i = 0; i < shuffledList.length; i++) {
-  shuffledIndex.push(i);
-}
-
-for (let i = 0; i<shuffledList.length; i++){
-  if(Math.floor(Math.random() * 2 + 1) == 1){
-    room_goaldir_left.push(shuffledList[shuffledIndex[i]][0])
-    room_goaldir_right.push(shuffledList[shuffledIndex[i]][1])
-  }else {
-    room_goaldir_left.push(shuffledList[shuffledIndex[i]][1])
-    room_goaldir_right.push(shuffledList[shuffledIndex[i]][0])
-  }
-
-}
-
 
 //color for the plus sign
 atcheckcolor=['blue','green']

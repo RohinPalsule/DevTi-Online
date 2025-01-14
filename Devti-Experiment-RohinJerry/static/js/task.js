@@ -374,8 +374,6 @@ prac_curr_direct_trial = 0
       data.stimulus_down_mid=room_prac_direct_mid[prac_curr_direct_trial]
       data.stimulus_down_right=room_prac_direct_right[prac_curr_direct_trial];
       data.stimulus_correct=room_direct_correct[prac_curr_direct_trial];
-      data.stimulus_short=room_direct_short[prac_curr_direct_trial];
-      data.stimulus_far=room_direct_far[prac_curr_direct_trial];
       if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
       (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
         data.accuracy = 1
@@ -385,16 +383,6 @@ prac_curr_direct_trial = 0
         data.accuracy = 0
         prac_directcorrectness.push(0)
         data.weighted_accuracy = 0
-      }
-
-      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_short)||
-      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_short) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_short)) {
-        data.missedtrial = 'closer'
-        data.weighted_accuracy = 0.5
-      } else if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_far)||
-      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_far) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_far)) {
-        data.missedtrial = 'closer'
-        data.weighted_accuracy = 0.5
       }
       
       let directsum = 0;
@@ -470,82 +458,17 @@ var shortestpath_phase = {
         timeline: [thank_you],
       }, jsPsych.resumeExperiment)
     } else {
-      attentioncheck(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial,dir_break)
+      attentioncheck_end(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial)
     }
   }
 }
 //Shortest Path memory end
-var phase3 = {}
-//Goal directed planning
-function createPhase3(numberoftrial){
-  var phase3 = {}
-  for (let i = 0; i < numberoftrial; i++){
-    if (i==numberoftrial-1){
-      phase3[i] = {
-        type: 'html-keyboard-response',
-        stimulus: phasethreeroom[0],
-        choices: jsPsych.NO_KEYS, // Disable keyboard responses
-        // on_load: function() {
-        //   document.getElementById('nextButton').style.display = 'block'
-        //   document.getElementById('nextButton').addEventListener('click', function() {
-        //     jsPsych.finishTrial(); // End trial on button click
-        //   });
-        // },
-        on_finish: function (data) {
-          data.trial_type='Goal Directed Planning'
-          data.imgL_ID = leftName
-          data.imgR_ID = rightName
-          data.linedress=''
-          for (const key in specificline) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
-          }
-          if (goaldirIndex[numberoftrial] < threeEdgePair.length){
-            data.condition = 'Three Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length && goaldirIndex[numberoftrial] < threeEdgePair.length + fourEdgePair.length){
-            data.condition = 'Four Edge Diff'
-          } else if (goaldirIndex[numberoftrial] >= threeEdgePair.length + fourEdgePair.length + fiveEdgePair.length){
-            data.condition = 'Five Edge Diff'
-          }
-          wassup(),
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [thank_you],
-          }, jsPsych.resumeExperiment)
-        }
-      }
-    }else{
-      phase3[i] = {
-        type: 'html-keyboard-response',
-        stimulus: phasethreeroom[0],
-        choices: jsPsych.NO_KEYS, // Disable keyboard responses
-        // on_load: function() {
-        //   document.getElementById('nextButton').addEventListener('click', function() {
-        //     jsPsych.finishTrial(); // End trial on button click
-        //   });
-        // },
-        on_finish: function (data) {
-          data.trial_type='Goal Directed Planning'
-          data.linedress=''
-          for (const key in specificline) {
-              data.linedressed += specificline[key].name+':[x1:'+specificline[key].location.x1+' x2:'+specificline[key].location.x2+' y1:'+specificline[key].location.y1+' y2:'+specificline[key].location.y2+']'
-          }
-          wassup(),
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [phase3[i+1]],
-          }, jsPsych.resumeExperiment)
-        }
-      }
-    }
-  }
-  return phase3
-}
 
-phase3=createPhase3(n_goaldir_trial)
 generate_learning_block(learn_left, learn_right, n_learning_trial)
 //generate_remembering_block(room_direct_up, room_direct_left, room_direct_mid, room_direct_right, n_direct_trial)
 post_break=createbreak(postprac_learn,post_instructnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
 remembering_instruct_break=createbreak(remembering_prac,dir_instructnames,prac_directmemory_phase)
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
-dir_break=createbreak(intro_mem,mem_instructnames,phase3[0])
 //Goal directed planning end
 
 // final thank you

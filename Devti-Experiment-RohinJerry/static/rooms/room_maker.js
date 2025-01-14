@@ -88,6 +88,26 @@ function attentioncheck(learn_phase,sfa,curr_blue_trial,n_blue_rounds,thebreak){
   }
 }
 
+function attentioncheck_end(learn_phase,sfa,curr_blue_trial,n_blue_rounds){
+  if(sfa && curr_blue_trial<n_blue_rounds) {
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial<n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,learn_phase],
+    }, jsPsych.resumeExperiment)
+  }else if(warning<=2&& curr_blue_trial>=n_blue_rounds){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page,thebreak],
+    }, jsPsych.resumeExperiment)
+  }else if(warning>2){
+    jsPsych.addNodeToEndOfTimeline({
+      timeline: [warning_page],
+    }, jsPsych.resumeExperiment)
+  }
+}
+
 //function to push the instruct
 function timelinepushintro(intro,instructnames){
   for (let i = 0; i < instructnames.length; i++){
