@@ -539,6 +539,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
 
 
 quickKP = 0;
+infKP = 0;
 
 
 var too_quick={
@@ -573,7 +574,7 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
     },
     on_finish: function(data) {
       // Check if the RT is too quick
-      if (data.rt < 300) {
+      if (data.rt < 500) {
         quickKP += 1
         if (quickKP >= 3) {
           jsPsych.addNodeToEndOfTimeline({
