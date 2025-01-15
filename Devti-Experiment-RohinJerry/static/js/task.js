@@ -528,17 +528,24 @@ var thank_you = {
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
+    data.breakfocus = blurNUM
     save_data(true)
   }
 }
 
-
-
-// const preload = {
-//   type: 'jsPsychPreload',
-//   images: all_images,
-//   show_progress_bar: true,
+// function checkFullscreen() {
+//   if (!document.fullscreenElement) {
+//       alert("You have exited fullscreen mode!");
+//   }
 // }
+
+// // Listen for fullscreen changes
+// document.addEventListener("fullscreenchange", checkFullscreen);
+
+
+// Detect when the user clicks away or switches tabs
+
+
 
 //time line here
 timeline.push(welcome, enterFullscreen)
@@ -563,3 +570,31 @@ jsPsych.init({
     console.log('loaded!')
   },
 })
+
+let blurNUM = 0
+window.addEventListener("blur", () => {
+  blurNUM+=1
+  console.log(blurNUM)
+});
+
+// // Event listeners to detect focus/blur
+// let focusTimeout;
+
+// window.addEventListener("blur", () => {
+//   // Pause the experiment immediately when the page loses focus
+//   jsPsych.pauseExperiment();
+//   console.log("Experiment paused due to losing focus.");
+// });
+
+// window.addEventListener("focus", () => {
+//   // Once the page regains focus, display "Resuming..." immediately
+//   document.getElementById("jspsych-content").innerHTML = "Resuming...";
+
+//   // Wait for 3 seconds before resuming the experiment
+//   clearTimeout(focusTimeout);
+//   focusTimeout = setTimeout(() => {
+//     // Resume the experiment after the delay
+//     jsPsych.resumeExperiment();
+//     console.log("Experiment resumed.");
+//   }, 3000); // Delay for 3 seconds before resuming
+// });
