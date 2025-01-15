@@ -484,6 +484,76 @@ var thank_you = {
 }
 
 
+//practice attention check
+// 1: The black plus sign, the color change, the black plus sign for response
+var ac_colorprepare=colorStart()
+var ac_colorstop=colorStop(ac_colorprepare)
+var ac_colorlist=['blue','green','green','blue','green','green','blue','green','blue','blue']
+var ac_colornumber=0
+
+var prac_attentioncheck_blackplus={
+  type: 'html-keyboard-response',
+  choices: jsPsych.NO_KEYS,
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: ac_colorprepare,
+  trial_duration: ac_colorprepare,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type='prac_atten_color_black'
+    data.stimulus='black_plus_sign'
+  }
+}
+
+var prac_attentioncheck_colorchange={
+  type: 'html-keyboard-responsefl',
+  choices: ['1','2'],
+  response_ends_trial: false,
+  stimulus:create_memory_ten(ac_colorlist[ac_colornumber]),
+  stimulus_duration:ac_colorstop,
+  trial_duration:ac_colorstop,
+  on_finish: function(data) {
+    data.trial_type = 'prac_atten_black_cross(without_color)';
+    sfa=data.key_press
+  }
+}
+
+var prac_attentioncheck_blackplus={
+  type: 'html-keyboard-response',
+  choices: ['1','2'],
+  stimulus_height: 100,
+  stimulus_width: 100,
+  stimulus_duration: 1000,
+  trial_duration: 1000,
+  response_ends_trial: false,
+  stimulus:create_memory_ten('black'),
+  prompt:parse("<br><br><style>body {background-color: #ffff;}</style>"),
+  on_finish: function(data) {
+    data.trial_type='prac_atten_color_black'
+    data.stimulus='black_plus_sign'
+    if (sfa==49&&ac_colorlist[ac_colornumber]=='blue'){
+      ac_colornumber=ac_colornumber+1
+      prac_attentioncheck_colorchange.stimulus=create_memory_ten(ac_colorlist[ac_colornumber])
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [prac_attentioncheck_blackplus],
+      }, jsPsych.resumeExperiment)
+    }else if (sfa==50&&ac_colorlist[ac_colornumber]=='green'){
+      ac_colornumber=ac_colornumber+1
+      prac_attentioncheck_colorchange.stimulus=create_memory_ten(ac_colorlist[ac_colornumber])
+      jsPsych.addNodeToEndOfTimeline({
+        timeline: [prac_attentioncheck_blackplus],
+      }, jsPsych.resumeExperiment)
+    }
+  }
+}
+
+
+
+//practice attention check end
+
+
 
 // const preload = {
 //   type: 'jsPsychPreload',
@@ -494,6 +564,8 @@ var thank_you = {
 //time line here
 timeline.push(welcome)
 timelinepushintro(intro_learn,instructnames)
+tineline.push()
+
 timeline.push(prac_learn_phase)
 timeline.push(prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
 // timelinepushintro(postprac_learn,post_instructnames)
