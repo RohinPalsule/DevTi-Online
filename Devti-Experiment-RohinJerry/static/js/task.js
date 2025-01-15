@@ -533,7 +533,6 @@ var thank_you = {
   }
 }
 
-<<<<<<< HEAD
 
 //practice attention check
 // 1: The black plus sign, the color change, the black plus sign for response
@@ -610,12 +609,6 @@ var prac_attentioncheck_blackplus={
 //   type: 'jsPsychPreload',
 //   images: all_images,
 //   show_progress_bar: true,
-=======
-// function checkFullscreen() {
-//   if (!document.fullscreenElement) {
-//       alert("You have exited fullscreen mode!");
-//   }
->>>>>>> c32db47bc3fe55e2c9d32a6e9c1626aca2a4e1a2
 // }
 
 // // Listen for fullscreen changes
