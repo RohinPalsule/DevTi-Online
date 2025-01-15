@@ -540,7 +540,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
 
 quickKP = 0;
 infKP = 0;
-
+let intervalId = null
 
 var too_quick={
   type: 'html-keyboard-response',
@@ -554,7 +554,7 @@ var too_quick={
     quickKP +=1
   }
 }
-
+let timer = null
 // Generate remembering
 let num_of_rem_blocks=0
 function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_trials,num_of_learn_blocks){
@@ -574,14 +574,40 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
     },
     on_finish: function(data) {
       // Check if the RT is too quick
-      if (data.rt < 500) {
-        quickKP += 1
-        if (quickKP >= 3) {
-          jsPsych.addNodeToEndOfTimeline({
-            timeline: [too_quick],
-            }, jsPsych.resumeExperiment)
-        }
+      quickKP += 1
+      if (quickKP==1){
+        // Start the timer
+        timer = 0;
+        intervalId = setInterval(() => {
+            timer++;
+            console.log(`Timer: ${timer} seconds`);
+        }, 1000);
       }
+
+      if (quickKP == 4 && timer <= 3) {
+        clearInterval(intervalId)
+        jsPsych.addNodeToEndOfTimeline({
+        timeline: [too_quick],
+        }, jsPsych.resumeExperiment)
+        quickKP = -1
+      } else if ((quickKP == 4 && timer >= 4)){
+        quickKP = 0
+        clearInterval(intervalId);
+      }
+
+      setTimeout(() => {
+        clearInterval(intervalId);
+        console.log("Timer stopped");
+      }, 4000);
+      
+      // if (data.rt < 500) {
+      //   quickKP += 1
+      //   if (quickKP >= 3) {
+      //     jsPsych.addNodeToEndOfTimeline({
+      //       timeline: [too_quick],
+      //       }, jsPsych.resumeExperiment)
+      //   }
+      // }
       
       data.trial_type = 'directmemory_phase'+num_of_learn_blocks;
       data.stimulus=imgUp[curr_direct_trial];
