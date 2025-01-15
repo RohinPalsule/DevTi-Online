@@ -70,6 +70,49 @@ var feedbackP = null
 var continuePrompt = null
 var checkedBox = null
 var loadNum = 0
+
+var enterFullscreen = {
+  type: 'html-button-response',
+  stimulus: `
+        <style>
+            ul {
+                list-style-type: disc; /* Use bullet points */
+                margin: 20px 0; /* Space around the list */
+                padding-left: 100px; /* Add space to align bullets and text */
+                text-align: left; /* Ensure bullets and text align left */
+            }
+            li {
+                margin-bottom: 15px; /* Space between list items */
+                font-size: 18px; /* Adjust font size for readability */
+                line-height: 1.6; /* Set line height for clarity */
+            }
+            p {
+                font-size: 18px;
+                line-height: 1.6;
+                margin: 10px 0;
+                text-align: center; /* Align all paragraphs to the left */
+            }
+        </style>
+        <h3 style='text-align: center'><strong>Thank you for your participation in this study. Please:</strong></h3>
+        <br />
+        <ul>
+            <li>Follow the instructions for each task and try your best to perform well.</li>
+            <li>Maximize your browser and focus completely on the task without any distractions.</li>
+            <li><strong>DO NOT</strong> take notes during the experiment, as this interferes with our ability to accurately measure the learning process.</li>
+            <li><strong>DO NOT</strong> participate if you feel you cannot fully commit to these requirements.</li>
+        </ul> <br />
+        <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
+    `,
+  choices: ['Enter Fullscreen'],
+  on_finish: function() {
+      // Trigger fullscreen mode when the button is clicked
+      document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+      });
+  }
+};
+
+
 //Instruction page
 
 function createinstruct(instruct_1,number){
@@ -442,8 +485,14 @@ var shortestpath_phase = {
       data.accuracy = 0
       correctness.push(0)
     }
-
-
+    if (data.rt < 800) {
+      infKP += 1
+      if (infKP >= 3) {
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [too_quick],
+          }, jsPsych.resumeExperiment)
+      }
+    }
     let sum = 0;
     correctness.forEach(function(value) {
       sum += value;
@@ -475,14 +524,16 @@ short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p>The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email mnadkarn@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
+    data.breakfocus = blurNUM
     save_data(true)
   }
 }
 
+<<<<<<< HEAD
 
 //practice attention check
 // 1: The black plus sign, the color change, the black plus sign for response
@@ -559,10 +610,24 @@ var prac_attentioncheck_blackplus={
 //   type: 'jsPsychPreload',
 //   images: all_images,
 //   show_progress_bar: true,
+=======
+// function checkFullscreen() {
+//   if (!document.fullscreenElement) {
+//       alert("You have exited fullscreen mode!");
+//   }
+>>>>>>> c32db47bc3fe55e2c9d32a6e9c1626aca2a4e1a2
 // }
 
+// // Listen for fullscreen changes
+// document.addEventListener("fullscreenchange", checkFullscreen);
+
+
+// Detect when the user clicks away or switches tabs
+
+
+
 //time line here
-timeline.push(welcome)
+timeline.push(welcome, enterFullscreen)
 timelinepushintro(intro_learn,instructnames)
 tineline.push()
 
@@ -586,3 +651,31 @@ jsPsych.init({
     console.log('loaded!')
   },
 })
+
+let blurNUM = 0
+window.addEventListener("blur", () => {
+  blurNUM+=1
+  console.log(blurNUM)
+});
+
+// // Event listeners to detect focus/blur
+// let focusTimeout;
+
+// window.addEventListener("blur", () => {
+//   // Pause the experiment immediately when the page loses focus
+//   jsPsych.pauseExperiment();
+//   console.log("Experiment paused due to losing focus.");
+// });
+
+// window.addEventListener("focus", () => {
+//   // Once the page regains focus, display "Resuming..." immediately
+//   document.getElementById("jspsych-content").innerHTML = "Resuming...";
+
+//   // Wait for 3 seconds before resuming the experiment
+//   clearTimeout(focusTimeout);
+//   focusTimeout = setTimeout(() => {
+//     // Resume the experiment after the delay
+//     jsPsych.resumeExperiment();
+//     console.log("Experiment resumed.");
+//   }, 3000); // Delay for 3 seconds before resuming
+// });
