@@ -660,26 +660,23 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
         // Start the timer
         timer = 0;
         intervalId = setInterval(() => {
-            timer++;
-            console.log(`Timer: ${timer} seconds`);
+            timer++;;
         }, 1000);
       }
 
-      if (quickKP == 4 && timer <= 3) {
+      if (quickKP == 4 && timer < 4) {
         clearInterval(intervalId)
         jsPsych.addNodeToEndOfTimeline({
         timeline: [too_quick],
         }, jsPsych.resumeExperiment)
         quickKP = -1
-      } else if ((quickKP == 4 && timer >= 4)){
+        timer = 0;
+        data.tooquick = 1
+      } else if ((quickKP <= 4 && timer >= 4)){
         quickKP = 0
         clearInterval(intervalId);
+        timer = 0
       }
-
-      setTimeout(() => {
-        clearInterval(intervalId);
-        console.log("Timer stopped");
-      }, 4000);
       
       // if (data.rt < 500) {
       //   quickKP += 1

@@ -21,8 +21,8 @@ if (debugmode==true){
   n_prac_direct_trial = 4
 }else{
   n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=2 //how many direct tests you want
-  n_shortest_trial=2 //how many inference trials you want
+  n_direct_trial=10 //how many direct tests you want
+  n_shortest_trial=10 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }
