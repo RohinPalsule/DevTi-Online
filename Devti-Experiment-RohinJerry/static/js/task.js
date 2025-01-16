@@ -76,21 +76,21 @@ var enterFullscreen = {
   stimulus: `
         <style>
             ul {
-                list-style-type: disc; /* Use bullet points */
-                margin: 20px 0; /* Space around the list */
-                padding-left: 100px; /* Add space to align bullets and text */
-                text-align: left; /* Ensure bullets and text align left */
+                list-style-type: disc;
+                margin: 20px 0;
+                padding-left: 100px;
+                text-align: left;
             }
             li {
-                margin-bottom: 15px; /* Space between list items */
-                font-size: 18px; /* Adjust font size for readability */
-                line-height: 1.6; /* Set line height for clarity */
+                margin-bottom: 15px;
+                font-size: 18px;
+                line-height: 1.6;
             }
             p {
                 font-size: 18px;
                 line-height: 1.6;
                 margin: 10px 0;
-                text-align: center; /* Align all paragraphs to the left */
+                text-align: center;
             }
         </style>
         <h3 style='text-align: center'><strong>Thank you for your participation in this study. Please:</strong></h3>
@@ -641,7 +641,7 @@ var prac_attentioncheck_thethird={
 var helpofattentioncheck={
   type: 'html-keyboard-response',
   choices: ['spacebar'],
-  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>It seems you got one wrong. Remember, for the cross below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
   on_finish: function (data) {
     data.trial_type = 'attentioncheck_help';
     data.stimulus='instruct'
