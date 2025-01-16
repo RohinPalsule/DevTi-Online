@@ -1,15 +1,28 @@
+// Task structure (IF BLOCKED TYPE "blocked" IF INTERLEAVED TYPE "interleaved")
+taskStructure = "interleaved"
+
+let blocks = null
+if (taskStructure == "blocked"){
+  blocks = 8
+  n_learning_trial=15 //This determine the number of learning trial you want in total
+  n_direct_trial=15 //how many direct trial you want
+}
+else if (taskStructure == "interleaved"){
+  blocks = 4
+  n_learning_trial=30 //This determine the number of learning trial you want in total
+  n_direct_trial=30 //how many direct trial you want
+}
+
 //debug moode on/off
 debugmode= false
 if (debugmode==true){
-  n_learning_trial=15 //This determine the number of learning trial you want in total
-  n_direct_trial=15 //how many direct trial you want
-  n_shortest_trial=15 //how many shortest path you want
+  n_shortest_trial=15 //how many inference trials you want
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
   n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=10 //how many direct trial you want
-  n_shortest_trial=2 //how many shortest path you want
+  n_direct_trial=2 //how many direct tests you want
+  n_shortest_trial=2 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }
@@ -303,8 +316,35 @@ learn4_bc_right = learn_right.slice(105,120)
 // rightLearnList = [learn1_bc_right,learn2_ab_right,learn2_bc_right,learn3_ab_right,learn3_bc_right,learn4_ab_right,learn4_bc_right]
 
 
-leftLearnList = [learn2_ab_left, learn3_ab_left, learn4_ab_left, learn1_bc_left, learn2_bc_left, learn3_bc_left,learn4_bc_left]
-rightLearnList = [learn2_ab_right, learn3_ab_right, learn4_ab_right, learn1_bc_right, learn2_bc_right, learn3_bc_right,learn4_bc_right]
+leftBlocked = [learn2_ab_left, learn3_ab_left, learn4_ab_left, learn1_bc_left, learn2_bc_left, learn3_bc_left,learn4_bc_left]
+rightBlocked = [learn2_ab_right, learn3_ab_right, learn4_ab_right, learn1_bc_right, learn2_bc_right, learn3_bc_right,learn4_bc_right]
+
+inter1L = learn1_ab_left.concat(learn1_bc_left)
+inter1R = learn1_ab_right.concat(learn1_bc_right)
+
+inter2L = learn2_ab_left.concat(learn2_bc_left)
+inter2R = learn2_ab_right.concat(learn2_bc_right)
+
+inter3L = learn3_ab_left.concat(learn3_bc_left)
+inter3R = learn3_ab_right.concat(learn3_bc_right)
+
+inter4L = learn4_ab_left.concat(learn4_bc_left)
+inter4R = learn4_ab_right.concat(learn4_bc_right)
+
+leftInterleaved = [inter1L, inter2L, inter3L, inter4L]
+rightInterleaved = [inter1R, inter2R, inter3R, inter4R]
+
+
+if (taskStructure == "blocked") {
+  leftLearnList = leftBlocked
+  rightLearnList = rightBlocked
+} else if (taskStructure == "interleaved") {
+  leftLearnList = leftInterleaved
+  rightLearnList = rightInterleaved
+}
+
+
+
 
 //Direct Memory phase
 let directRight = []

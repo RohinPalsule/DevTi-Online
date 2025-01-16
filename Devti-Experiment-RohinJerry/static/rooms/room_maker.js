@@ -156,7 +156,7 @@ for (let i=0 ; i<n_prac_learning_trial;i++){
 function generate_random_color(){
   pluscheck=[]
   pluscolor=[]
-  for (let i=0 ; i<n_learning_trial*8;i++){
+  for (let i=0 ; i<n_learning_trial*blocks;i++){
     plusdeter = randomIntFromInterval(1, 2)
     if (plusdeter==1){
       pluscolor.push(atcheckcolor[0])
@@ -203,81 +203,153 @@ var room_gen_direct_right=[]
 var room_gen_direct_up=[]
 var room_gen_direct_correct=[]
 
-function gen_directList(trialType) {
+function gen_directList(trialType, structure) {
   let genRight = []
   let genMid = []
   let genLeft = []
   let genUp = []
   let genCorrect = []
-  if (trialType =='ab') {
-    for(let i = 0;i<15;i++){
-      genUp.push(aList[i])
-      incorrectArr = i
-      wrongA = i
-      while (i == incorrectArr) {
-        incorrectArr = Math.floor(Math.random() * 14)
-      } 
-      while (i == wrongA) {
-        wrongA = Math.floor(Math.random() * 14)
-      } 
-      threeIndex = Math.floor(Math.random() * 3)+1
-      if (threeIndex == 1){
-        genLeft.push(bList[i])
-        genCorrect.push(bList[i])
-        genMid.push(bList[incorrectArr])
-        genRight.push(aList[wrongA])
-      } else if (threeIndex == 2){
-        genRight.push(bList[i])
-        genCorrect.push(bList[i])
-        genLeft.push(bList[incorrectArr])
-        genMid.push(aList[wrongA])
-      } else {
-        genMid.push(bList[i])
-        genCorrect.push(bList[i])
-        genRight.push(bList[incorrectArr])
-        genLeft.push(aList[wrongA])
+  if (structure == 'blocked'){
+    if (trialType =='ab') {
+      for(let i = 0;i<15;i++){
+        genUp.push(aList[i])
+        incorrectArr = i
+        wrongA = i
+        while (i == incorrectArr) {
+          incorrectArr = Math.floor(Math.random() * 14)
+        } 
+        while (i == wrongA) {
+          wrongA = Math.floor(Math.random() * 14)
+        } 
+        threeIndex = Math.floor(Math.random() * 3)+1
+        if (threeIndex == 1){
+          genLeft.push(bList[i])
+          genCorrect.push(bList[i])
+          genMid.push(bList[incorrectArr])
+          genRight.push(aList[wrongA])
+        } else if (threeIndex == 2){
+          genRight.push(bList[i])
+          genCorrect.push(bList[i])
+          genLeft.push(bList[incorrectArr])
+          genMid.push(aList[wrongA])
+        } else {
+          genMid.push(bList[i])
+          genCorrect.push(bList[i])
+          genRight.push(bList[incorrectArr])
+          genLeft.push(aList[wrongA])
+        }
+      }
+    } else if (trialType == 'bc') {
+      var bcArrayCorrect = []
+      var bcArrayTop = []
+
+      for(let i = 0;i<15;i++){
+        if (Math.random() > 0.5){
+          bcArrayTop = bList
+          bcArrayCorrect = cList
+        } else {
+          bcArrayTop = cList
+          bcArrayCorrect = bList
+        }
+        genUp.push(bcArrayTop[i])
+        incorrectArr = i
+        wrongA = i
+        while (i == incorrectArr) {
+          incorrectArr = Math.floor(Math.random() * 14)
+        } 
+        while (i == wrongA) {
+          wrongA = Math.floor(Math.random() * 14)
+        } 
+        threeIndex = Math.floor(Math.random() * 3)+1
+        if (threeIndex == 1){
+          genLeft.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genMid.push(bcArrayCorrect[incorrectArr])
+          genRight.push(bcArrayTop[wrongA])
+        } else if (threeIndex == 2){
+          genRight.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genLeft.push(bcArrayCorrect[incorrectArr])
+          genMid.push(bcArrayTop[wrongA])
+        } else {
+          genMid.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genRight.push(bcArrayCorrect[incorrectArr])
+          genLeft.push(bcArrayTop[wrongA])
+        }
       }
     }
-  } else if (trialType == 'bc') {
-    var bcArrayCorrect = []
-    var bcArrayTop = []
-
-    for(let i = 0;i<15;i++){
-      if (Math.random() > 0.5){
-        bcArrayTop = bList
-        bcArrayCorrect = cList
-      } else {
-        bcArrayTop = cList
-        bcArrayCorrect = bList
+  } else if (structure == 'interleaved') {
+    if (trialType == 'ab' || trialType == 'bc' ) {
+      for(let i = 0;i<15;i++){
+        genUp.push(aList[i])
+        incorrectArr = i
+        wrongA = i
+        while (i == incorrectArr) {
+          incorrectArr = Math.floor(Math.random() * 14)
+        } 
+        while (i == wrongA) {
+          wrongA = Math.floor(Math.random() * 14)
+        } 
+        threeIndex = Math.floor(Math.random() * 3)+1
+        if (threeIndex == 1){
+          genLeft.push(bList[i])
+          genCorrect.push(bList[i])
+          genMid.push(bList[incorrectArr])
+          genRight.push(aList[wrongA])
+        } else if (threeIndex == 2){
+          genRight.push(bList[i])
+          genCorrect.push(bList[i])
+          genLeft.push(bList[incorrectArr])
+          genMid.push(aList[wrongA])
+        } else {
+          genMid.push(bList[i])
+          genCorrect.push(bList[i])
+          genRight.push(bList[incorrectArr])
+          genLeft.push(aList[wrongA])
+        }
       }
-      genUp.push(bcArrayTop[i])
-      incorrectArr = i
-      wrongA = i
-      while (i == incorrectArr) {
-        incorrectArr = Math.floor(Math.random() * 14)
-      } 
-      while (i == wrongA) {
-        wrongA = Math.floor(Math.random() * 14)
-      } 
-      threeIndex = Math.floor(Math.random() * 3)+1
-      if (threeIndex == 1){
-        genLeft.push(bcArrayCorrect[i])
-        genCorrect.push(bcArrayCorrect[i])
-        genMid.push(bcArrayCorrect[incorrectArr])
-        genRight.push(bcArrayTop[wrongA])
-      } else if (threeIndex == 2){
-        genRight.push(bcArrayCorrect[i])
-        genCorrect.push(bcArrayCorrect[i])
-        genLeft.push(bcArrayCorrect[incorrectArr])
-        genMid.push(bcArrayTop[wrongA])
-      } else {
-        genMid.push(bcArrayCorrect[i])
-        genCorrect.push(bcArrayCorrect[i])
-        genRight.push(bcArrayCorrect[incorrectArr])
-        genLeft.push(bcArrayTop[wrongA])
+      var bcArrayCorrect = []
+      var bcArrayTop = []
+
+      for(let i = 0;i<15;i++){
+        if (Math.random() > 0.5){
+          bcArrayTop = bList
+          bcArrayCorrect = cList
+        } else {
+          bcArrayTop = cList
+          bcArrayCorrect = bList
+        }
+        genUp.push(bcArrayTop[i])
+        incorrectArr = i
+        wrongA = i
+        while (i == incorrectArr) {
+          incorrectArr = Math.floor(Math.random() * 14)
+        } 
+        while (i == wrongA) {
+          wrongA = Math.floor(Math.random() * 14)
+        } 
+        threeIndex = Math.floor(Math.random() * 3)+1
+        if (threeIndex == 1){
+          genLeft.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genMid.push(bcArrayCorrect[incorrectArr])
+          genRight.push(bcArrayTop[wrongA])
+        } else if (threeIndex == 2){
+          genRight.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genLeft.push(bcArrayCorrect[incorrectArr])
+          genMid.push(bcArrayTop[wrongA])
+        } else {
+          genMid.push(bcArrayCorrect[i])
+          genCorrect.push(bcArrayCorrect[i])
+          genRight.push(bcArrayCorrect[incorrectArr])
+          genLeft.push(bcArrayTop[wrongA])
+        }
       }
     }
   }
+  
 
   let genarr = [];
   for (let i = 0; i < genLeft.length; i++) {
@@ -477,12 +549,20 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       if (curr_learning_trial == num_of_trials){
         num_of_learn_blocks += 1
         // console.log(num_of_learn_blocks)
-        if (num_of_learn_blocks % 2 == 0) {
-          gen_directList('bc')
-        } else {
-          gen_directList('ab')
+
+
+        if (taskStructure == "blocked"){
+          if (num_of_learn_blocks % 2 == 0) {
+            gen_directList('bc', 'blocked')
+          } else {
+            gen_directList('ab', 'blocked')
+          }
+        } else if (taskStructure == "interleaved"){
+          gen_directList('ab', 'interleaved')
         }
-        if (num_of_learn_blocks < 9) {
+        
+
+        if (num_of_learn_blocks < blocks + 1) {
           generate_remembering_block(room_gen_direct_up, room_gen_direct_left, room_gen_direct_mid, room_gen_direct_right, n_direct_trial,num_of_learn_blocks)
           learn_break=createbreak(remembering_intro_text,rememberingnames,directmemory_phase)
           attentioncheck_learningphase(learn_phase,sfa,curr_learning_trial,num_of_trials,learn_break,thecrossant,thecrossant_black,thecrossant_break)
@@ -641,12 +721,12 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
       if (curr_direct_trial == num_of_trials) {
         num_of_rem_blocks += 1
         // console.log(num_of_rem_blocks)
-        if (num_of_rem_blocks < 8) {
+        if (num_of_rem_blocks < blocks) {
           generate_learning_block(leftLearnList[num_of_rem_blocks-1], rightLearnList[num_of_learn_blocks-1], n_learning_trial,num_of_rem_blocks)
           post_break = createbreak(learning_intro_text,learningnames,[learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break])
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,num_of_trials,post_break)
         }
-        else if (num_of_rem_blocks >= 8) {
+        else if (num_of_rem_blocks >= blocks) {
           attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
         }
       }else {
