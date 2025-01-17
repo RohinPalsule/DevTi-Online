@@ -20,8 +20,8 @@ if (debugmode==true){
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
-  n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=10 //how many direct tests you want
+  n_learning_trial=30 //This determine the number of learning trial you want in total
+  n_direct_trial=1 //how many direct tests you want
   n_shortest_trial=10 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
@@ -331,8 +331,49 @@ inter3R = learn3_ab_right.concat(learn3_bc_right)
 inter4L = learn4_ab_left.concat(learn4_bc_left)
 inter4R = learn4_ab_right.concat(learn4_bc_right)
 
-leftInterleaved = [inter1L, inter2L, inter3L, inter4L]
-rightInterleaved = [inter1R, inter2R, inter3R, inter4R]
+let interArr = [];
+let inter1LShuffled = []
+let inter1RShuffled = []
+let inter2LShuffled = []
+let inter2RShuffled = []
+let inter3LShuffled = []
+let inter3RShuffled = []
+let inter4LShuffled = []
+let inter4RShuffled = []
+
+
+for (let i = 0; i < 30; i++) {
+  interArr.push(i);
+}
+shuffle(interArr)
+
+for (i = 0;i < inter1L.length; i++){
+  inter1LShuffled.push(inter1L[interArr[i]])
+  inter1RShuffled.push(inter1R[interArr[i]])
+}
+shuffle(interArr)
+
+for (i = 0;i < inter2L.length; i++){
+  inter2LShuffled.push(inter2L[interArr[i]])
+  inter2RShuffled.push(inter2R[interArr[i]])
+}
+shuffle(interArr)
+
+for (i = 0;i < inter3L.length; i++){
+  inter3LShuffled.push(inter3L[interArr[i]])
+  inter3RShuffled.push(inter3R[interArr[i]])
+}
+shuffle(interArr)
+
+for (i = 0;i < inter1L.length; i++){
+  inter4LShuffled.push(inter4L[interArr[i]])
+  inter4RShuffled.push(inter4R[interArr[i]])
+}
+shuffle(interArr)
+
+
+leftInterleaved = [inter2LShuffled, inter3LShuffled, inter4LShuffled]
+rightInterleaved = [inter2RShuffled, inter3RShuffled, inter4RShuffled]
 
 
 if (taskStructure == "blocked") {
@@ -341,6 +382,8 @@ if (taskStructure == "blocked") {
 } else if (taskStructure == "interleaved") {
   leftLearnList = leftInterleaved
   rightLearnList = rightInterleaved
+  learn_left = inter1LShuffled.concat(inter2LShuffled, inter3LShuffled, inter4LShuffled)
+  learn_right = inter1RShuffled.concat(inter2RShuffled, inter3RShuffled, inter4RShuffled)
 }
 
 
