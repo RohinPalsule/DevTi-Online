@@ -13,13 +13,19 @@ else if (taskStructure == "interleaved"){
   n_direct_trial=30 //how many direct trial you want
 }
 
+
 //debug moode on/off
-debugmode= false
+
+debugmode= true
 if (debugmode==true){
-  n_shortest_trial=15 //how many inference trials you want
-  n_prac_learning_trial = 4
-  n_prac_direct_trial = 4
+  ac_colortotal=0
+  n_learning_trial=1 //This determine the number of learning trial you want in total
+  n_direct_trial=1 //how many direct tests you want
+  n_shortest_trial=11 //how many inference trials you want
+  n_prac_learning_trial = 1
+  n_prac_direct_trial = 1
 }else{
+  ac_colortotal=6
   n_learning_trial=30 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct tests you want
   n_shortest_trial=10 //how many inference trials you want
@@ -81,8 +87,8 @@ instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 30px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
 instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press “1”. To pick the object in the middle, press “2”, and to pick the object on the right, press “3”.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_dir_5=remembering_text
-dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3", "instruct_dir_4","instruct_dir_5"] //Same for above, if you want to delete or add, just decrease or add the var
-dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4,instruct_dir_5} //same for above
+dir_instructnames = ["instruct_dir_5"] //Same for above, if you want to delete or add, just decrease or add the var
+dir_instruct={instruct_dir_5} //same for above
 
 //Text for shortest path instruction
 instruct_short_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>You may have noticed that some objects were paired with more than one other object.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",

@@ -353,7 +353,7 @@ var prac_thecrossant_break={
     prac_learn_phase.stimulus_duration=3500
     prac_thecrossant_black.stimulus=create_memory_ten('black')
     prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
-    attentioncheck_learningphase(prac_learn_phase,sfa,prac_curr_learning_trial,n_prac_learning_trial,remembering_instruct_break,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
+    attentioncheck_learningphase(prac_learn_phase,sfa,prac_curr_learning_trial,n_prac_learning_trial,instruct_dir_01,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break)
     
   }
 }
@@ -565,7 +565,6 @@ var ac_colorprepare=colorStart()
 var ac_colorstop=colorStop(ac_colorprepare)
 var ac_colorlist=['blue','green','green','blue','green','green','blue','green','blue','blue']
 var ac_colornumber=0
-var ac_colortotal=6
 
 var prac_attentioncheck_blackplus={
   type: 'html-keyboard-response',
@@ -686,6 +685,115 @@ var instruct_lastonebefore_practice={
 
 //practice attention check end
 
+//instruction part 2
+//instruction part 2
+// Remembering text
+remembering_text = "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 55px;margin-bottom:40px'><b>REMEMBERING</b><br><br>",
+
+rememberingnames = ["remembering_text"]
+remembering_instruct = {remembering_text}
+//Text for direct memory instruction
+instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'><strong>REMEMBERING</strong> phase: Your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong><strong>LEARNING</strong></strong>.</p><br><br>",
+// instruct_dir_1 is for post test learning phase
+instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>For example, if you had studied the following pair in <strong>LEARNING</strong>:</p><img src= '../static/images/introEX.png' width='700' height='500'><br><br>",
+instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 30px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top"
+instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press “1”. To pick the object in the middle, press “2”, and to pick the object on the right, press “3”.</p><br><br>",
+instruct_dir_5=remembering_text
+dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3", "instruct_dir_4","instruct_dir_5"] //Same for above, if you want to delete or add, just decrease or add the var
+dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4,instruct_dir_5} //same for above
+
+var instruct_dir_01 = {
+  type: 'html-button-response',
+  choices: ['Next'], 
+  stimulus: instruct_dir_1,
+  button_html: '<button class="custom-button">%choice%</button>',
+  on_finish: function(data) {
+    data.trial_type = 'instruct_dir_01';
+    data.stimulus = 'instruct';
+    console.log(data.button_pressed)
+    if (data.button_pressed == 0) {
+      data.response = 'Next';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_02],
+        }, jsPsych.resumeExperiment)
+    }
+  }
+};
+
+
+var instruct_dir_02 = {
+  type: 'html-button-response',
+  choices: ['Previous', 'Next'], 
+  stimulus: instruct_dir_2,
+  button_html: '<button class="custom-button">%choice%</button>',
+  on_finish: function(data) {
+    // Add a custom trial type and stimulus
+    data.trial_type = 'instruct_dir_2';
+    data.stimulus = 'instruct';
+    // Check which button was pressed
+    if (data.button_pressed == 0) {
+      data.response = 'Previous';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_01],
+        }, jsPsych.resumeExperiment)
+    } else if (data.button_pressed == 1) {
+      data.response = 'Next';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_03],
+        }, jsPsych.resumeExperiment)
+    }
+  }
+};
+
+var instruct_dir_03= {
+  type: 'html-button-response',
+  choices: ['Previous', 'Next'], 
+  stimulus: instruct_dir_3,
+  button_html: '<button class="custom-button">%choice%</button>',
+  on_finish: function(data) {
+    // Add a custom trial type and stimulus
+    data.trial_type = 'instruct_dir_3';
+    data.stimulus = 'instruct';
+    // Check which button was pressed
+    if (data.button_pressed == 0) {
+      data.response = 'Previous';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_02],
+        }, jsPsych.resumeExperiment)
+    } else if (data.button_pressed == 1) {
+      data.response = 'Next';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_04],
+        }, jsPsych.resumeExperiment)
+    }
+  }
+};
+
+var instruct_dir_04 = {
+  type: 'html-button-response',
+  choices: ['Previous', 'Start'], 
+  stimulus: instruct_dir_4,
+  button_html: '<button class="custom-button">%choice%</button>',
+  on_finish: function(data) {
+    // Add a custom trial type and stimulus
+    data.trial_type = 'instruct_dir_4';
+    data.stimulus = 'instruct';
+    // Check which button was pressed
+    if (data.button_pressed == 0) {
+      data.response = 'Previous';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_dir_03],
+        }, jsPsych.resumeExperiment)
+    } else if (data.button_pressed == 1) {
+      data.response = 'Start';
+      jsPsych.addNodeToEndOfTimeline({
+          timeline: [remembering_instruct_break],
+        }, jsPsych.resumeExperiment)
+    }
+  }
+};
+
+//instruction part 2 end
 
 
 // const preload = {
