@@ -704,8 +704,7 @@ var instruct_lastonebefore_practice={
 
 //time line here
 timeline.push(welcome, enterFullscreen)
-timelinepushintro(intro_learn,instructnames)
-timeline.push(prac_attentioncheck_blackplus)
+timeline.push(instruct_01)
 // timelinepushintro(postprac_learn,post_instructnames)
 // timeline.push(learn_phase)
 // timeline.push(learn_phase_color,thecrossant,thecrossant_black,thecrossant_break)
