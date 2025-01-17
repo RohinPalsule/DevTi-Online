@@ -465,6 +465,7 @@ var shortestpath_phase = {
   stimulus_duration:15000,
   trial_duration:15000,
   on_load: function() {
+    clearInterval(intervalId)
     setTimeout(function() {
       for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
         document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
@@ -485,14 +486,38 @@ var shortestpath_phase = {
       data.accuracy = 0
       correctness.push(0)
     }
-    if (data.rt < 800) {
-      infKP += 1
-      if (infKP >= 3) {
-        jsPsych.addNodeToEndOfTimeline({
-          timeline: [too_quick],
-          }, jsPsych.resumeExperiment)
-      }
+    // if (data.rt < 800) {
+    //   infKP += 1
+    //   if (infKP >= 3) {
+    //     jsPsych.addNodeToEndOfTimeline({
+    //       timeline: [too_quick],
+    //       }, jsPsych.resumeExperiment)
+    //   }
+    // }
+
+    infKP += 1
+    if (infKP==1){
+      // Start the timer
+      timer = 0;
+      infINT = setInterval(() => {
+          timer++;;
+      }, 1000);
     }
+
+    if (infKP == 4 && timer < 4) {
+      clearInterval(infINT)
+      jsPsych.addNodeToEndOfTimeline({
+      timeline: [too_quick],
+      }, jsPsych.resumeExperiment)
+      infKP = -1
+      timer = 0;
+      data.tooquick = 1
+    } else if ((infKP <= 4 && timer >= 4)){
+      infKP = 0
+      clearInterval(infINT);
+      timer = 0
+    }
+
     let sum = 0;
     correctness.forEach(function(value) {
       sum += value;
