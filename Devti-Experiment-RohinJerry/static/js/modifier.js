@@ -16,7 +16,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= fakse
+debugmode= false
 if (debugmode==true){
   ac_colortotal=0
   n_learning_trial=5 //This determine the number of learning trial you want in total
@@ -27,8 +27,8 @@ if (debugmode==true){
 }else{
   ac_colortotal=6
   n_shortest_trial=15 //how many inference trials you want
-  n_prac_learning_trial = 1
-  n_prac_direct_trial = 1
+  n_prac_learning_trial = 4
+  n_prac_direct_trial = 4
 }
 
 //warningpage
