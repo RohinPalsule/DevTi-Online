@@ -697,7 +697,7 @@ instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 // instruct_dir_1 is for post test learning phase
 instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>For example, if you had studied the following pair in <strong>LEARNING</strong>:</p><img src= '../static/images/introEX.png' width='700' height='500'><br><br>",
 instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 30px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top"
-instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press “1”. To pick the object in the middle, press “2”, and to pick the object on the right, press “3”.</p><br><br>",
+instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press '1'. To pick the object in the middle, press '2', and to pick the object on the right, press '3'.</p><br><br>",
 instruct_dir_5=remembering_text
 dir_instructnames = ["instruct_dir_1","instruct_dir_2","instruct_dir_3", "instruct_dir_4","instruct_dir_5"] //Same for above, if you want to delete or add, just decrease or add the var
 dir_instruct={instruct_dir_1,instruct_dir_2,instruct_dir_3,instruct_dir_4,instruct_dir_5} //same for above

@@ -19,16 +19,14 @@ else if (taskStructure == "interleaved"){
 debugmode= fakse
 if (debugmode==true){
   ac_colortotal=0
-  n_learning_trial=1 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct tests you want
+  n_learning_trial=5 //This determine the number of learning trial you want in total
+  n_direct_trial=5 //how many direct tests you want
   n_shortest_trial=11 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }else{
   ac_colortotal=6
-  n_learning_trial=30 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct tests you want
-  n_shortest_trial=10 //how many inference trials you want
+  n_shortest_trial=15 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }
@@ -81,11 +79,11 @@ post_instruct = {post_instruct_1,post_instruct_2}
 
 
 //Text for direct memory instruction
-instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'><strong>REMEMBERING</strong> phase: Your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong><strong>LEARNING</strong></strong>.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Now, we will do a practice of the <strong>REMEMBERING</strong> phase. In this phase, your job is to show us how well you remember the pairs! You will see one made up object on the top of the screen. You should pick which object on the bottom of the screen was paired with the one on top during <strong><strong>LEARNING</strong></strong>.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 // instruct_dir_1 is for post test learning phase
 instruct_dir_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>For example, if you had studied the following pair in <strong>LEARNING</strong>:</p><img src= '../static/images/introEX.png' width='700' height='500'><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 30px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
-instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press “1”. To pick the object in the middle, press “2”, and to pick the object on the right, press “3”.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_dir_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>And in <strong>REMEMBERING</strong> were shown this:</p><img src= '../static/images/introEX2.png' width='700' height='500'><p style ='font-size: 30px;line-height:1.5'>You would press '1', as the hot pink image on the left was paired with the green image at the top. Now you will do a practice of the <strong>REMEMBERING</strong> phase.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>"
+instruct_dir_2="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To pick the object on the left, press '1'. To pick the object in the middle, press '2', and to pick the object on the right, press '3'.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_dir_5=remembering_text
 dir_instructnames = ["instruct_dir_5"] //Same for above, if you want to delete or add, just decrease or add the var
 dir_instruct={instruct_dir_5} //same for above
