@@ -16,7 +16,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= true
+debugmode= fakse
 if (debugmode==true){
   ac_colortotal=0
   n_learning_trial=1 //This determine the number of learning trial you want in total
