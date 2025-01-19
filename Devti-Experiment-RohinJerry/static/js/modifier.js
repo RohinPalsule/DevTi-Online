@@ -1,5 +1,5 @@
 // Task structure (IF BLOCKED TYPE "blocked" IF INTERLEAVED TYPE "interleaved")
-taskStructure = "interleaved"
+taskStructure = "blocked"
 
 let blocks = null
 if (taskStructure == "blocked"){
