@@ -372,6 +372,8 @@ function gen_directList(trialType, structure) {
     room_gen_direct_mid.push(genMid[genarr[i]])
     room_gen_direct_correct.push(genCorrect[genarr[i]])
   }
+  room_direct_correct = room_gen_direct_correct
+  console.log(room_direct_correct)
 }
 
 function shuffle(array) {
