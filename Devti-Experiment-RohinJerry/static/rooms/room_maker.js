@@ -647,6 +647,8 @@ function generate_remembering_block(imgUp, imgLeft, imgMid, imgRight, num_of_tri
     choices: ['1','2','3'],
     response_ends_trial: true,
     stimulus:create_direct_trial(imgUp,imgLeft,imgMid,imgRight,curr_direct_trial),
+    stimulus_duration:15000,
+    trial_duration:15000,
     on_load: function() {
       // Reveal other rooms after 1500 ms
       setTimeout(function() {

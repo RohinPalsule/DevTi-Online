@@ -422,8 +422,8 @@ prac_curr_direct_trial = 0
     choices: ['1','2','3'],
     response_ends_trial: true,
     stimulus:create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial),
-    // stimulus_duration:6500,//5 second for now, we will discuss it 
-    // trial_duration:6500,//5 second for now 
+    stimulus_duration:15000,
+    trial_duration:15000,
     on_load: function() {
       // Reveal other rooms after 1500 ms
       setTimeout(function() {
