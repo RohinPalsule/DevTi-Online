@@ -137,48 +137,71 @@ function createQuestioninstruct(instruct_1,number){
     choices: jsPsych.NO_KEYS,
     stimulus: instruct_1,
     on_load: function() {
-      form = document.getElementById('choices-form');
-      radios = form.querySelectorAll('input[type="radio"]');
+      
+      // form = document.getElementById('choices-form');
+      // radios = form.querySelectorAll('input[type="radio"]');
       feedbackP = document.getElementById('feedbackP');
       advanceButton = document.getElementById('advance-button');
       restartButton = document.getElementById('restart-button');
-      radios.forEach(radio => {
-        radio.addEventListener('change', function() {
-          checkedBox = Array.from(radios).find(rb => rb.checked);
-          if (checkedBox) {
-            if (checkedBox.value === '3') {
-              if (tester == 0){
-                feedbackP.style.visibility = 'visible';
-                advanceButton.style.visibility = 'visible';
-              }
-            } else {
-              feedbackP.style.visibility = 'hidden';
-              advanceButton.style.visibility = 'hidden';
-              restartButton.style.visibility = 'visible';
-              tester = 1
-            }
-          }
-        });
-      });
+      // radios.forEach(radio => {
+      //   radio.addEventListener('change', function() {
+      //     checkedBox = Array.from(radios).find(rb => rb.checked);
+      //     if (checkedBox) {
+      //       if (checkedBox.value === '3') {
+      //         if (tester == 0){
+      //           feedbackP.style.visibility = 'visible';
+      //           advanceButton.style.visibility = 'visible';
+      //         }
+      //       } else {
+      //         feedbackP.style.visibility = 'hidden';
+      //         advanceButton.style.visibility = 'hidden';
+      //         restartButton.style.visibility = 'visible';
+      //         tester = 1
+      //       }
+      //     }
+      //   });
+      // });
+      document.addEventListener('keydown', handleKeyPress);
 
+      function handleKeyPress(event) {
+        const key = event.key; // Get the pressed key
+        if (key === '1' || key === '2' || key === '3') {
+          if (key === '3') {
+            if (tester === 0) {
+              feedbackP.style.visibility = 'visible';
+              advanceButton.style.visibility = 'visible';
+              tester = 1;
+            }
+          } else {
+            feedbackP.style.visibility = 'hidden';
+            advanceButton.style.visibility = 'hidden';
+            restartButton.style.visibility = 'visible';
+            tester = 1;
+          }
+        }
+      }
+  
+      // Add event listener for buttons
       advanceButton.addEventListener('click', function() {
+        // Remove the keydown listener before finishing the trial
+        document.removeEventListener('keydown', handleKeyPress);
         jsPsych.finishTrial();
       });
+  
       restartButton.addEventListener('click', function() {
+        // Remove the keydown listener before restarting the trial
+        document.removeEventListener('keydown', handleKeyPress);
         jsPsych.finishTrial();
         jsPsych.endCurrentTimeline();
-        attentioncheck(directmemory_phase,sfa,curr_direct_trial,n_direct_trial,short_break)
-        tester = 0
+        attentioncheck(directmemory_phase, sfa, curr_direct_trial, n_direct_trial, short_break);
+        tester = 0;
       });
     },
     on_finish: function(data){
       data.trial_type = 'intro_'+ number;
       data.stimulus='instruct'
-      const formData = new FormData(form);
-      const selectedResp = formData.getAll('response');
-      data.selected_options = selectedResp;
-      console.log('Selected options:', selectedResp);
     }
+    
   }
   return intro
 }

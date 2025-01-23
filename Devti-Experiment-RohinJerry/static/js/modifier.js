@@ -1,5 +1,5 @@
 // Task structure (IF BLOCKED TYPE "blocked" IF INTERLEAVED TYPE "interleaved")
-taskStructure = "blocked"
+taskStructure = "interleaved"
 
 let blocks = null
 if (taskStructure == "blocked"){
@@ -16,12 +16,12 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= false
+debugmode= true
 if (debugmode==true){
   ac_colortotal=0
-  n_learning_trial=5 //This determine the number of learning trial you want in total
-  n_direct_trial=5 //how many direct tests you want
-  n_shortest_trial=11 //how many inference trials you want
+  n_learning_trial=1 //This determine the number of learning trial you want in total
+  n_direct_trial=1 //how many direct tests you want
+  n_shortest_trial=1 //how many inference trials you want
   n_prac_learning_trial = 1
   n_prac_direct_trial = 1
 }else{
@@ -100,19 +100,10 @@ instruct_short_4=`
   <p style='font-size:30px; line-height:1.5; margin-top: 50px'>According to the pairs we just showed you, if you saw this:</p>
   <img src='../static/images/introEX4.png' width='700' height='500'>
   <p style='font-size:30px; line-height:1.5'>Given the example above, which image choice would you choose?</p>
-  
-  <!-- Checkbox options -->
-  <form id="choices-form" style="font-size: 30px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-    <label style="flex: 1; text-align: center;">
-      <input type="radio" name="response" value="1"> Left (1)
-    </label>
-    <label style="flex: 1; text-align: center;">
-      <input type="radio" name="response" value="2"> Middle (2)
-    </label>
-    <label style="flex: 1; text-align: center;">
-      <input type="radio" name="response" value="3"> Right (3)
-    </label>
-  </form>
+
+  <br />
+
+  <p style='font-size:30px; line-height:1.5'><strong>Press '1' on your key for the left image, '2' for the middle image, and '3' for the right image.</strong></p>
   
   <p id="feedbackP" style='font-size:30px; margin-top:20px; color:green; visibility:hidden'>Correct!</p>
   <button id="restart-button" style="font-size: 18px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; visibility:hidden">Try again!</button>
