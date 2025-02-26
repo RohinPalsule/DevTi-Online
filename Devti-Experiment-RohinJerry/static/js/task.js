@@ -138,29 +138,10 @@ function createQuestioninstruct(instruct_1,number){
     stimulus: instruct_1,
     on_load: function() {
       
-      // form = document.getElementById('choices-form');
-      // radios = form.querySelectorAll('input[type="radio"]');
       feedbackP = document.getElementById('feedbackP');
       advanceButton = document.getElementById('advance-button');
       restartButton = document.getElementById('restart-button');
-      // radios.forEach(radio => {
-      //   radio.addEventListener('change', function() {
-      //     checkedBox = Array.from(radios).find(rb => rb.checked);
-      //     if (checkedBox) {
-      //       if (checkedBox.value === '3') {
-      //         if (tester == 0){
-      //           feedbackP.style.visibility = 'visible';
-      //           advanceButton.style.visibility = 'visible';
-      //         }
-      //       } else {
-      //         feedbackP.style.visibility = 'hidden';
-      //         advanceButton.style.visibility = 'hidden';
-      //         restartButton.style.visibility = 'visible';
-      //         tester = 1
-      //       }
-      //     }
-      //   });
-      // });
+     
       document.addEventListener('keydown', handleKeyPress);
 
       function handleKeyPress(event) {
@@ -181,15 +162,14 @@ function createQuestioninstruct(instruct_1,number){
         }
       }
   
-      // Add event listener for buttons
+
       advanceButton.addEventListener('click', function() {
-        // Remove the keydown listener before finishing the trial
+
         document.removeEventListener('keydown', handleKeyPress);
         jsPsych.finishTrial();
       });
   
       restartButton.addEventListener('click', function() {
-        // Remove the keydown listener before restarting the trial
         document.removeEventListener('keydown', handleKeyPress);
         jsPsych.finishTrial();
         jsPsych.endCurrentTimeline();
@@ -509,14 +489,6 @@ var shortestpath_phase = {
       data.accuracy = 0
       correctness.push(0)
     }
-    // if (data.rt < 800) {
-    //   infKP += 1
-    //   if (infKP >= 3) {
-    //     jsPsych.addNodeToEndOfTimeline({
-    //       timeline: [too_quick],
-    //       }, jsPsych.resumeExperiment)
-    //   }
-    // }
 
     infKP += 1
     if (infKP==1){
@@ -588,6 +560,9 @@ var ac_colorprepare=colorStart()
 var ac_colorstop=colorStop(ac_colorprepare)
 var ac_colorlist=['blue','green','green','blue','green','green','blue','green','blue','blue']
 var ac_colornumber=0
+var total_ac = 0
+var correct_ac = 0
+ac_feedback = {}
 
 var prac_attentioncheck_blackplus={
   type: 'html-keyboard-response',
@@ -647,18 +622,22 @@ var prac_attentioncheck_thethird={
     data.stimulus='black_plus_sign'
     if(ac_colornumber<ac_colortotal){
       if (csfa==49&&ac_colorlist[ac_colornumber]=='blue'){
+        correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
       }else if (csfa==50&&ac_colorlist[ac_colornumber]=='green'){
+        correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
       }else if (data.key_press==49&&ac_colorlist[ac_colornumber]=='blue'){
+        correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
       }else if (data.key_press==50&&ac_colorlist[ac_colornumber]=='green'){
+        correct_ac += 1
         jsPsych.addNodeToEndOfTimeline({
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
@@ -669,11 +648,17 @@ var prac_attentioncheck_thethird={
         }, jsPsych.resumeExperiment)
       }
     }else{
+      if (csfa==49&&ac_colorlist[ac_colornumber]=='blue' || csfa==50&&ac_colorlist[ac_colornumber]=='green' || data.key_press==49&&ac_colorlist[ac_colornumber]=='blue' || data.key_press==49&&ac_colorlist[ac_colornumber]=='green') {
+        correct_ac += 1
+      }
+      total_ac += 1
+      getACvalues()
       jsPsych.addNodeToEndOfTimeline({
-        timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+        timeline: [ac_feedback],
       }, jsPsych.resumeExperiment)
     }
-    ac_colornumber=ac_colornumber+1
+    ac_colornumber+=1
+    total_ac +=1
     csfa=[]
     ac_colorprepare=colorStart()
     ac_colorstop=colorStop(ac_colorprepare)
@@ -683,6 +668,45 @@ var prac_attentioncheck_thethird={
     prac_attentioncheck_colorchange.trial_duration=ac_colorstop
   }
 }
+
+function getACvalues() {
+  ac_feedback = {
+    type: 'html-button-response',
+    stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                 <p style='font-size: 30px; line-height:1.5'>
+                   Thank you for completing the practice, your score is ${correct_ac}/${total_ac}.
+                 </p><br>
+               </div>`,
+    choices: ['Try Again', 'Continue'],
+    button_html: [
+      '<button id="retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+      '<button id="continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+    ],
+    response_ends_trial: true, 
+    on_load: function() {
+      document.getElementById("continue-button").addEventListener("click", function() {
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      });
+  
+      document.getElementById("retry-button").addEventListener("click", function() {
+        ac_colornumber = 0
+        total_ac = 0
+        correct_ac = 0
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [prac_attentioncheck_blackplus],
+        }, jsPsych.resumeExperiment)
+        console.log("Try Again button clicked!");
+      });
+    },
+    on_finish: function(data) {
+      data.trial_type = 'attentioncheck_feedback';
+      data.stimulus = 'cross_check_feedback';
+    }
+  };
+}
+
 
 
 var helpofattentioncheck={

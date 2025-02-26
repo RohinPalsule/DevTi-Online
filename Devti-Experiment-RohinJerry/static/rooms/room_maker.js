@@ -168,18 +168,26 @@ function generate_random_color(){
   }
 } 
 
-var warning_page={
-  type: 'html-keyboard-response',
-  choices: jsPsych.NO_KEYS,
-  response_ends_trial: false,
-  trial_duration:3000,
-  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions accurately.</h1><br><h1 style="color: red;">Continued failure to respond will</h1><br><h1 style="color: red;">result in the task ending early</h1><br><h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
+var warning_page = {
+  type: 'html-button-response',
+  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions accurately.</h1>' +
+    '<h1 style="color: red;">Continued failure to respond will</h1>' +
+    '<h1 style="color: red;">result in the task ending early</h1>' +
+    '<h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
+  choices: ['Continue'], 
+  button_html: '<button id="continue-button" style="font-size: 20px; padding: 10px; display: none;">%choice%</button>',
+  response_ends_trial: true,
+  on_load: function() {
+    setTimeout(function() {
+      document.getElementById("continue-button").style.display = "block";
+    }, 3000);
+  },
   on_finish: function(data) {
-    data.trial_type='warning_page'
-    data.stimulus='warning'
-    warning=warning+1
+    data.trial_type = 'warning_page';
+    data.stimulus = 'warning';
+    warning = warning + 1;
   }
-}
+};
 
 function createbreak(intro_dir,instructnames,directmemory_phase){
   let thebreak= {
