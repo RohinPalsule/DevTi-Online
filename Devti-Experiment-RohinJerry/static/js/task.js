@@ -59,6 +59,9 @@ var welcome = {
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
+    data.identifier_a = aList
+    data.identifier_b = bList
+    data.identifier_c = cList
     subject_id=useridtouse
   }
 }

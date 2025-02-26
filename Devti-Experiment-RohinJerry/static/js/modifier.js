@@ -233,20 +233,37 @@ function shuffle(array) {
   return array;
 }
 
-triadList = []
-aList = []
-bList = []
-cList = []
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
-for (let i = 1;i<16;i++){
-  if (i <10){
-    triadList.push([`object_0${i}a.png`, `object_0${i}b.png`, `object_0${i}c.png`])
-  }else{
-    triadList.push([`object_${i}a.png`,`object_${i}b.png`,`object_${i}c.png`])
-  }
-  aList.push(triadList[i-1][0])
-  bList.push(triadList[i-1][1])
-  cList.push(triadList[i-1][2])
+// Initialize lists
+let allObjects = [];
+let triadList = [];
+let aList = [];
+let bList = [];
+let cList = [];
+
+for (let i = 1; i < 16; i++) {
+  let objA = i < 10 ? `object_0${i}a.png` : `object_${i}a.png`;
+  let objB = i < 10 ? `object_0${i}b.png` : `object_${i}b.png`;
+  let objC = i < 10 ? `object_0${i}c.png` : `object_${i}c.png`;
+
+  allObjects.push(objA, objB, objC);
+}
+
+// Fully shuffle all objects
+allObjects = shuffleArray(allObjects);
+
+// Create new random triads and split back into lists
+for (let i = 0; i < allObjects.length; i += 3) {
+  let triad = [allObjects[i], allObjects[i + 1], allObjects[i + 2]];
+  triadList.push(triad);
+
+  // Assign back into aList, bList, cList
+  aList.push(triad[0]);
+  bList.push(triad[1]);
+  cList.push(triad[2]);
 }
 
 let triadArr = [];
