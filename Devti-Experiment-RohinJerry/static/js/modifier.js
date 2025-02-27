@@ -33,9 +33,12 @@ if (debugmode==true){
 
 //warningpage
 warning=0 //this is to start the counter of total warning
-warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you see a blue cross flash and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>",
-checkfail=0 //this is to start the attentioncheck
-checkthreshold=2 //this is to add the threshold for attentioncheck
+warning_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5;color:red'>Warning, you are missing too many trials, make sure to press the key '1' when you see a blue cross flash and '2' when you see a green one. If you keep missing trials you will be disqualified.</p>"
+var checkfail = 0 //this is to start the attentioncheck
+let cummulative_checkfail = 0 // ^
+let checkthreshold=2 //this is to add the threshold for attentioncheck
+let cummulative_cf_warning = 5 // this is the threshold for how many total wrong checks will give them a warning
+let cummulative_cf_threshold = 15 // this is the threshold for how many total wrong checks to boot them from the experiment
 
 // Learning text
 

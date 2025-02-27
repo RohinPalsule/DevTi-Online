@@ -453,15 +453,16 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
       if (kp){
         data.rt=null
       if(kp!=pluscheck[curr_learning_trial]) {
+        cummulative_checkfail += 1
         checkfail=checkfail+1
         data.accuracy = 0
         learningcorrectness.push(0)
-        if(checkfail>=checkthreshold&&checkfail<4){
+        if(checkfail>=checkthreshold&&checkfail<4 || (cummulative_checkfail >= cummulative_cf_warning && cummulative_checkfail < cummulative_cf_threshold)){
           jsPsych.endCurrentTimeline(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [warning_page,thecrossant_break],
           }, jsPsych.resumeExperiment)
-        }else if(checkfail>4){
+        }else if(checkfail>4 || cummulative_checkfail >= cummulative_cf_threshold){
           jsPsych.endCurrentTimeline(),
           jsPsych.addNodeToEndOfTimeline({
           timeline:[TaskFailed],},jsPsych.resumeExperiment)
@@ -475,15 +476,16 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
     }else if(op){
       data.rt=data.rt+100+timetakenforpluswindow
       if(op!=pluscheck[curr_learning_trial]) {
+        cummulative_checkfail += 1
         checkfail=checkfail+1
         data.accuracy = 0
         learningcorrectness.push(0)
-        if(checkfail>=checkthreshold&&checkfail<4){
+        if(checkfail>=checkthreshold&&checkfail<4 || (cummulative_checkfail >= cummulative_cf_warning && cummulative_checkfail < cummulative_cf_threshold)){
           jsPsych.endCurrentTimeline(),
           jsPsych.addNodeToEndOfTimeline({
             timeline: [warning_page,thecrossant_break],
           }, jsPsych.resumeExperiment)
-        }else if(checkfail>4){
+        }else if(checkfail>4 || cummulative_checkfail >= cummulative_cf_threshold){
           jsPsych.endCurrentTimeline(),
           jsPsych.addNodeToEndOfTimeline({
           timeline:[TaskFailed],},jsPsych.resumeExperiment)
@@ -495,13 +497,14 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
         learningcorrectness.push(1)
       }
     }else{
+      cummulative_checkfail += 1
       checkfail=checkfail+1
-      if(checkfail>=checkthreshold&&checkfail<4){
+      if(checkfail>=checkthreshold&&checkfail<4 || (cummulative_checkfail >= cummulative_cf_warning && cummulative_checkfail < cummulative_cf_threshold)){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
           timeline: [warning_page,thecrossant_break],
           }, jsPsych.resumeExperiment)
-      }else if(checkfail>4){
+      }else if(checkfail>4 || cummulative_checkfail >= cummulative_cf_threshold){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
         timeline:[TaskFailed],},jsPsych.resumeExperiment)
