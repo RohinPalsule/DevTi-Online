@@ -237,6 +237,26 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+// old list NOT USING
+
+// triadList = []
+// aList = []
+// bList = []
+// cList = []
+
+// for (let i = 1;i<16;i++){
+//   if (i <10){
+//     triadList.push([`object_0${i}a.png`, `object_0${i}b.png`, `object_0${i}c.png`])
+//   }else{
+//     triadList.push([`object_${i}a.png`,`object_${i}b.png`,`object_${i}c.png`])
+//   }
+//   aList.push(triadList[i-1][0])
+//   bList.push(triadList[i-1][1])
+//   cList.push(triadList[i-1][2])
+// }
+//
+
+
 // Initialize lists
 let allObjects = [];
 let triadList = [];
