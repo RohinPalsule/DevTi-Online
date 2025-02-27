@@ -173,14 +173,14 @@ var warning_page = {
   stimulus: '<h1 style="color: red;">Please make sure to respond to the questions accurately.</h1>' +
     '<h1 style="color: red;">Continued failure to respond will</h1>' +
     '<h1 style="color: red;">result in the task ending early</h1>' +
-    '<h1 style="color: red;">The experiment will resume in 3 seconds</h1>',
+    '<h1 style="color: red;">You can resume the experiment in 5 seconds</h1>',
   choices: ['Continue'], 
   button_html: '<button id="continue-button" style="font-size: 20px; padding: 10px; display: none;">%choice%</button>',
   response_ends_trial: true,
   on_load: function() {
     setTimeout(function() {
       document.getElementById("continue-button").style.display = "block";
-    }, 3000);
+    }, 5000);
   },
   on_finish: function(data) {
     data.trial_type = 'warning_page';
@@ -381,7 +381,9 @@ function gen_directList(trialType, structure) {
     room_gen_direct_correct.push(genCorrect[genarr[i]])
   }
   room_direct_correct = room_gen_direct_correct
-  console.log(room_direct_correct)
+  room_gen_direct_up = ensureNoConsecutiveDuplicates(room_gen_direct_up);
+
+  console.log(room_gen_direct_up);
 }
 
 function shuffle(array) {

@@ -16,7 +16,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= true
+debugmode= false
 if (debugmode==true){
   ac_colortotal=6
   n_learning_trial=5 //This determine the number of learning trial you want in total
@@ -72,7 +72,7 @@ instruct={instruct_1,instruct_2,instruct_3,instruct_4,instruct_5,instruct_6,inst
 
 // practice trials
 
-post_instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Thank you for completing the practice, we will start the first learning block now. Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Only the first response will be taken, and please try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+post_instruct_1="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>We will start the first learning block now. Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Only the first response will be taken, and please try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 post_instruct_2=learning_text
 post_instructnames = ["post_instruct_1","post_instruct_2"]
 post_instruct = {post_instruct_1,post_instruct_2}
@@ -481,6 +481,21 @@ for(let i = 0;i<directLeft.length;i++){
   room_direct_correct.push(directCorrect[directarr[i]])
 }
 
+function ensureNoConsecutiveDuplicates(arr) {
+  for (let i = 1; i < arr.length; i++) {
+      if (arr[i] === arr[i - 1]) {
+          for (let j = i + 1; j < arr.length; j++) {
+              if (arr[j] !== arr[i] && arr[j - 1] !== arr[i]) {
+                  [arr[i], arr[j]] = [arr[j], arr[i]];
+                  break;
+              }
+          }
+      }
+  }
+  return arr;
+}
+
+
 let correctShortList = []
 let upList = []
 let leftList = []
@@ -554,6 +569,10 @@ for (let i = 0;i<n_shortest_trial;i++){
   room_shortest_right.push(rightList[shortarr[i]])
   room_shortest_correct.push(correctShortList[shortarr[i]])
 }
+
+room_shortest_up = ensureNoConsecutiveDuplicates(room_shortest_up);
+
+console.log(room_shortest_up);
 
 //color for the plus sign
 atcheckcolor=['blue','green']
