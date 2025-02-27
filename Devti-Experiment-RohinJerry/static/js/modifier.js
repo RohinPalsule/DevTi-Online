@@ -22,7 +22,7 @@ if (debugmode==true){
   n_learning_trial=5 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct tests you want
   n_shortest_trial=1 //how many inference trials you want
-  n_prac_learning_trial = 1
+  n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
   ac_colortotal=6

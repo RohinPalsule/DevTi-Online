@@ -398,55 +398,111 @@ var prac_learn_phase_color = {
 
 
 // practice remembering
-prac_directcorrectness = []
-prac_curr_direct_trial = 0
-  prac_directmemory_phase = {
-    type: 'html-keyboard-response',
-    choices: ['1','2','3'],
-    response_ends_trial: true,
-    stimulus:create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial),
-    stimulus_duration:15000,
-    trial_duration:15000,
-    on_load: function() {
-      // Reveal other rooms after 1500 ms
-      setTimeout(function() {
-        for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
-          document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
-        }
-      }, randomDelay);
-    },
-    
-    on_finish: function(data) {
-      data.trial_type = 'prac_directmemory_phase';
-      data.stimulus=room_prac_direct_up[prac_curr_direct_trial];
-      data.stimulus_down_left=room_prac_direct_left[prac_curr_direct_trial],
-      data.stimulus_down_mid=room_prac_direct_mid[prac_curr_direct_trial]
-      data.stimulus_down_right=room_prac_direct_right[prac_curr_direct_trial];
-      data.stimulus_correct=room_direct_correct[prac_curr_direct_trial];
-      if ((data.key_press == 49 && data.stimulus_down_left == data.stimulus_correct)||
-      (data.key_press == 50 && data.stimulus_down_mid == data.stimulus_correct) ||(data.key_press == 51 && data.stimulus_down_right == data.stimulus_correct)) {
-        data.accuracy = 1
-        prac_directcorrectness.push(1)
-        data.weighted_accuracy = 1
-      } else {
-        data.accuracy = 0
-        prac_directcorrectness.push(0)
-        data.weighted_accuracy = 0
+let prac_feedback = {}
+let correct_prac = 0
+let prac_directmemory_phase = {}
+var prac_directcorrectness = []
+var prac_curr_direct_trial = 0
+prac_directmemory_phase = {
+  type: 'html-keyboard-response',
+  choices: ['1','2','3'],
+  response_ends_trial: true,
+  stimulus:create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial),
+  stimulus_duration:15000,
+  trial_duration:15000,
+  on_load: function() {
+    // Reveal other rooms after 1500 ms
+    setTimeout(function() {
+      for(let i = 0;i<document.getElementsByClassName('bottom').length;i++){
+        document.getElementsByClassName('bottom')[i].style.visibility = 'visible';
       }
-      
-      let directsum = 0;
-      prac_directcorrectness.forEach(function(value) {
-        directsum += value;
-      });
-
-      data.cumulative_accuracy = directsum / prac_directcorrectness.length;
-      sfa=data.key_press,
-      prac_curr_direct_trial=prac_curr_direct_trial+1,
-      prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
-      attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break)    
+    }, randomDelay);
+  },
+  
+  on_finish: function(data) {
+    data.trial_type = 'prac_directmemory_phase';
+    sfa=data.key_press
+    console.log(sfa)
+    data.stimulus=room_prac_direct_up[prac_curr_direct_trial];
+    data.stimulus_down_left=room_prac_direct_left[prac_curr_direct_trial],
+    data.stimulus_down_mid=room_prac_direct_mid[prac_curr_direct_trial]
+    data.stimulus_down_right=room_prac_direct_right[prac_curr_direct_trial];
+    data.stimulus_correct=room_prac_direct_correct[prac_curr_direct_trial];
+    if ((data.key_press == 49 && room_prac_direct_left[prac_curr_direct_trial] == room_prac_direct_correct[prac_curr_direct_trial])||
+    (data.key_press == 50 && room_prac_direct_mid[prac_curr_direct_trial] == room_prac_direct_correct[prac_curr_direct_trial]) ||
+    (data.key_press == 51 && room_prac_direct_right[prac_curr_direct_trial] == room_prac_direct_correct[prac_curr_direct_trial])) {
+      data.accuracy = 1
+      prac_directcorrectness.push(1)
+      data.prac_weighted_accuracy = 1
+      correct_prac +=1
+      console.log("correct")
+    } else {
+      data.accuracy = 0
+      prac_directcorrectness.push(0)
+      data.prac_weighted_accuracy = 0
+      console.log("incorrect")
     }
+    let directsum = 0;
+    prac_directcorrectness.forEach(function(value) {
+      directsum += value;
+    });
+    getPRACvalues()
+    data.cumulative_accuracy = directsum / prac_directcorrectness.length;
+    
+    prac_curr_direct_trial=prac_curr_direct_trial+1
+    prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
+    attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,prac_feedback)    
   }
-
+}
+  
+function getPRACvalues() {
+  prac_feedback = {
+    type: 'html-button-response',
+    stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                  <p style='font-size: 30px; line-height:1.5'>
+                    Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}.
+                  </p><br>
+                </div>`,
+    choices: ['Try Again', 'Continue'],
+    button_html: [
+      '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+      '<button id="prac-continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+    ],
+    response_ends_trial: true, 
+    on_load: function() {
+      document.getElementById("prac-continue-button").addEventListener("click", function() {
+        attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break) 
+      });
+  
+      document.getElementById("prac-retry-button").addEventListener("click", function() {
+        correct_prac = 0
+        prac_curr_direct_trial = 0
+        prac_directcorrectness = []
+        prac_curr_learning_trial = 0
+        timetakenforpluswindow=removecolor
+        colordetretime=colorStart()
+        removecolor=colorStop(colordetretime)
+        prac_learn_phase_color.stimulus_duration= removecolor
+        prac_learn_phase_color.trial_duration=removecolor
+        prac_thecrossant_black.stimulus_duration= 2000-removecolor
+        prac_thecrossant_black.trial_duration=2000-removecolor
+        prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
+        prac_learn_phase.trial_duration=3500
+        prac_learn_phase.stimulus_duration=3500
+        prac_thecrossant_black.stimulus=create_memory_ten('black')
+        prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
+        prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      });
+    },
+    on_finish: function(data) {
+      data.trial_type = 'practice_feedback';
+      data.stimulus = 'practice_feedback';
+    }
+  };
+}
 
 // practice phase end
 
