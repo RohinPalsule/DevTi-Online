@@ -753,7 +753,6 @@ var prac_attentioncheck_thethird={
           timeline: [prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
       }else{
-        ac_colornumber=0
         jsPsych.addNodeToEndOfTimeline({
           timeline: [helpofattentioncheck,prac_attentioncheck_blackplus],
         }, jsPsych.resumeExperiment)
@@ -764,10 +763,16 @@ var prac_attentioncheck_thethird={
       }
       total_ac += 1
       getACvalues()
-      jsPsych.addNodeToEndOfTimeline({
-        timeline: [ac_feedback],
-      }, jsPsych.resumeExperiment)
-    }
+      if (kickout_record>kickout_total){
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [TaskFailed],
+          }, jsPsych.resumeExperiment)
+      }else{
+          jsPsych.addNodeToEndOfTimeline({
+            timeline: [ac_feedback],
+          }, jsPsych.resumeExperiment)
+      }
+  }
     ac_colornumber+=1
     total_ac +=1
     csfa=[]
@@ -781,6 +786,8 @@ var prac_attentioncheck_thethird={
 }
 
 function getACvalues() {
+  if (correct_ac/total_ac<0.7){
+  kickout_record+=1
   ac_feedback = {
     type: 'html-button-response',
     stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
@@ -789,22 +796,14 @@ function getACvalues() {
                    <br><br> 
                    Please try to respond to each color change as accurately as possible during the task. 
                    If you miss too many color change trials, the experiment may abort early. If you would like more practice, click 'Try Again'. 
-                   If you are ready to continue to the next practice, press 'Continue'.
                  </p><br>
                </div>`,
-    choices: ['Try Again', 'Continue'],
+    choices: ['Try Again'],
     button_html: [
       '<button id="retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
-      '<button id="continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
     ],
     response_ends_trial: true, 
     on_load: function() {
-      document.getElementById("continue-button").addEventListener("click", function() {
-        jsPsych.addNodeToEndOfTimeline({
-          timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
-        }, jsPsych.resumeExperiment)
-      });
-  
       document.getElementById("retry-button").addEventListener("click", function() {
         ac_colornumber = 0
         total_ac = 0
@@ -820,6 +819,35 @@ function getACvalues() {
       data.stimulus = 'cross_check_feedback';
     }
   };
+}else{
+  ac_feedback = {
+    type: 'html-button-response',
+    stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                 <p style='font-size: 30px; line-height:1.5'>
+                   Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
+                   <br><br> 
+                   Please try to respond to each color change as accurately as possible during the task. 
+                   If you are ready to continue to the next practice, press 'Continue'.
+                 </p><br>
+               </div>`,
+    choices: ['Continue'],
+    button_html: [
+      '<button id="continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+    ],
+    response_ends_trial: true, 
+    on_load: function() {
+      document.getElementById("continue-button").addEventListener("click", function() {
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+        }, jsPsych.resumeExperiment)
+      });
+    },
+    on_finish: function(data) {
+      data.trial_type = 'attentioncheck_feedback';
+      data.stimulus = 'cross_check_feedback';
+    }
+  };
+}
 }
 
 

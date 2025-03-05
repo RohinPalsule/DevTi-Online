@@ -17,14 +17,18 @@ else if (taskStructure == "interleaved"){
 
 debugmode= false
 if (debugmode==true){
-  ac_colortotal=6
+  kickout_record=0
+  kickout_total=2
+  ac_colortotal=9
   n_learning_trial=5 //This determine the number of learning trial you want in total
   n_direct_trial=1 //how many direct tests you want
   n_shortest_trial=1 //how many inference trials you want
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
-  ac_colortotal=6
+  kickout_record=0
+  kickout_total=2
+  ac_colortotal=9
   n_shortest_trial=15 //how many inference trials you want
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
