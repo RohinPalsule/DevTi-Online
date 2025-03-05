@@ -457,7 +457,7 @@ prac_directmemory_phase = {
 }
 let restart_num = 0
 function getPRACvalues() {
-  if (correct_prac > 1){
+  if (correct_prac >= prac_directcorrectness.length){
       prac_feedback = {
         type: 'html-button-response',
         stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
@@ -507,7 +507,7 @@ function getPRACvalues() {
     
   } else {
     restart_num += 1
-    if (restart_num > 1){
+    if (restart_num > practice_threshold){
       jsPsych.addNodeToEndOfTimeline({
         timeline: [TaskFailed],
       }, jsPsych.resumeExperiment)
