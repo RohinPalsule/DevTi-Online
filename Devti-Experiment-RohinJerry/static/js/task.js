@@ -457,101 +457,103 @@ prac_directmemory_phase = {
 }
 let restart_num = 0
 function getPRACvalues() {
-  if (correct_prac >= prac_directcorrectness.length){
-      prac_feedback = {
-        type: 'html-button-response',
-        stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
-                      <p style='font-size: 30px; line-height:1.5'>
-                        Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. If you would like to practice some more, please click 'Try Again'. Otherwise, press 'Continue' to start the real task.
-                      </p><br>
-                    </div>`,
-        choices: ['Try Again', 'Continue'],
-        button_html: [
-          '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
-          '<button id="prac-continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
-        ],
-        response_ends_trial: true, 
-        on_load: function() {
-          document.getElementById("prac-continue-button").addEventListener("click", function() {
-            attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break) 
-          });
-      
-          document.getElementById("prac-retry-button").addEventListener("click", function() {
-            correct_prac = 0
-            prac_curr_direct_trial = 0
-            prac_directcorrectness = []
-            prac_curr_learning_trial = 0
-            timetakenforpluswindow=removecolor
-            colordetretime=colorStart()
-            removecolor=colorStop(colordetretime)
-            prac_learn_phase_color.stimulus_duration= removecolor
-            prac_learn_phase_color.trial_duration=removecolor
-            prac_thecrossant_black.stimulus_duration= 2000-removecolor
-            prac_thecrossant_black.trial_duration=2000-removecolor
-            prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
-            prac_learn_phase.trial_duration=3500
-            prac_learn_phase.stimulus_duration=3500
-            prac_thecrossant_black.stimulus=create_memory_ten('black')
-            prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
-            prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
-            jsPsych.addNodeToEndOfTimeline({
-              timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
-            }, jsPsych.resumeExperiment)
-        });
-      },
-      on_finish: function(data) {
-        data.trial_type = 'practice_feedback';
-        data.stimulus = 'practice_feedback';
-      }
-    };
-    
-  } else {
-    restart_num += 1
-    if (restart_num > practice_threshold){
-      jsPsych.addNodeToEndOfTimeline({
-        timeline: [TaskFailed],
-      }, jsPsych.resumeExperiment)
-    }else {
-      prac_feedback = {
-        type: 'html-button-response',
-        stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
-                      <p style='font-size: 30px; line-height:1.5'>
-                        Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. Please try again to learn the pairs and respond as accurately as possible, if you do not answer more than one question correctly, you will be disqualified from participating further.
-                      </p><br>
-                    </div>`,
-        choices: ['Try Again'],
-        button_html: '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
-        response_ends_trial: true, 
-        on_load: function() {
-      
-          document.getElementById("prac-retry-button").addEventListener("click", function() {
-            correct_prac = 0
-            prac_curr_direct_trial = 0
-            prac_directcorrectness = []
-            prac_curr_learning_trial = 0
-            timetakenforpluswindow=removecolor
-            colordetretime=colorStart()
-            removecolor=colorStop(colordetretime)
-            prac_learn_phase_color.stimulus_duration= removecolor
-            prac_learn_phase_color.trial_duration=removecolor
-            prac_thecrossant_black.stimulus_duration= 2000-removecolor
-            prac_thecrossant_black.trial_duration=2000-removecolor
-            prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
-            prac_learn_phase.trial_duration=3500
-            prac_learn_phase.stimulus_duration=3500
-            prac_thecrossant_black.stimulus=create_memory_ten('black')
-            prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
-            prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
-            jsPsych.addNodeToEndOfTimeline({
-              timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
-            }, jsPsych.resumeExperiment)
+  if (prac_directcorrectness.length == 4){
+    if (correct_prac >= prac_directcorrectness.length){
+        prac_feedback = {
+          type: 'html-button-response',
+          stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                        <p style='font-size: 30px; line-height:1.5'>
+                          Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. If you would like to practice some more, please click 'Try Again'. Otherwise, press 'Continue' to start the real task.
+                        </p><br>
+                      </div>`,
+          choices: ['Try Again', 'Continue'],
+          button_html: [
+            '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+            '<button id="prac-continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+          ],
+          response_ends_trial: true, 
+          on_load: function() {
+            document.getElementById("prac-continue-button").addEventListener("click", function() {
+              attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break) 
+            });
+        
+            document.getElementById("prac-retry-button").addEventListener("click", function() {
+              correct_prac = 0
+              prac_curr_direct_trial = 0
+              prac_directcorrectness = []
+              prac_curr_learning_trial = 0
+              timetakenforpluswindow=removecolor
+              colordetretime=colorStart()
+              removecolor=colorStop(colordetretime)
+              prac_learn_phase_color.stimulus_duration= removecolor
+              prac_learn_phase_color.trial_duration=removecolor
+              prac_thecrossant_black.stimulus_duration= 2000-removecolor
+              prac_thecrossant_black.trial_duration=2000-removecolor
+              prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
+              prac_learn_phase.trial_duration=3500
+              prac_learn_phase.stimulus_duration=3500
+              prac_thecrossant_black.stimulus=create_memory_ten('black')
+              prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
+              prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
+              jsPsych.addNodeToEndOfTimeline({
+                timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+              }, jsPsych.resumeExperiment)
           });
         },
         on_finish: function(data) {
-          data.trial_type = 'practice_feedback_force_restart';
+          data.trial_type = 'practice_feedback';
           data.stimulus = 'practice_feedback';
         }
       };
+      
+    } else {
+      restart_num += 1
+      if (restart_num > practice_threshold){
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [TaskFailed],
+        }, jsPsych.resumeExperiment)
+      }else {
+        prac_feedback = {
+          type: 'html-button-response',
+          stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
+                        <p style='font-size: 30px; line-height:1.5'>
+                          Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. Please try again to learn the pairs and respond as accurately as possible, if you do not answer more than one question correctly, you will be disqualified from participating further.
+                        </p><br>
+                      </div>`,
+          choices: ['Try Again'],
+          button_html: '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+          response_ends_trial: true, 
+          on_load: function() {
+        
+            document.getElementById("prac-retry-button").addEventListener("click", function() {
+              correct_prac = 0
+              prac_curr_direct_trial = 0
+              prac_directcorrectness = []
+              prac_curr_learning_trial = 0
+              timetakenforpluswindow=removecolor
+              colordetretime=colorStart()
+              removecolor=colorStop(colordetretime)
+              prac_learn_phase_color.stimulus_duration= removecolor
+              prac_learn_phase_color.trial_duration=removecolor
+              prac_thecrossant_black.stimulus_duration= 2000-removecolor
+              prac_thecrossant_black.trial_duration=2000-removecolor
+              prac_learn_phase.stimulus=create_learning_trial(prac_learn_left,prac_learn_right,prac_curr_learning_trial)
+              prac_learn_phase.trial_duration=3500
+              prac_learn_phase.stimulus_duration=3500
+              prac_thecrossant_black.stimulus=create_memory_ten('black')
+              prac_thecrossant.stimulus=create_learningcolor_trial(prac_curr_learning_trial,prac_pluscolor[prac_curr_learning_trial])
+              prac_directmemory_phase.stimulus=create_direct_trial(room_prac_direct_up,room_prac_direct_left,room_prac_direct_mid,room_prac_direct_right,prac_curr_direct_trial)
+              jsPsych.addNodeToEndOfTimeline({
+                timeline: [instruct_lastonebefore_practice,prac_learn_phase,prac_learn_phase_color,prac_thecrossant,prac_thecrossant_black,prac_thecrossant_break],
+              }, jsPsych.resumeExperiment)
+            });
+          },
+          on_finish: function(data) {
+            data.trial_type = 'practice_feedback_force_restart';
+            data.stimulus = 'practice_feedback';
+          }
+        };
+      }
     }
   }
 }
@@ -792,10 +794,10 @@ function getACvalues() {
     type: 'html-button-response',
     stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
                  <p style='font-size: 30px; line-height:1.5'>
-                   Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
+                   Your score is ${correct_ac}/${total_ac}. 
                    <br><br> 
                    Please try to respond to each color change as accurately as possible during the task. 
-                   If you miss too many color change trials, the experiment may abort early. If you would like more practice, click 'Try Again'. 
+                   To continue this experiment, please make sure to get at least 7 of the 10 trials correct. When you are ready press 'Try Again'. 
                  </p><br>
                </div>`,
     choices: ['Try Again'],
@@ -817,6 +819,7 @@ function getACvalues() {
     on_finish: function(data) {
       data.trial_type = 'attentioncheck_feedback';
       data.stimulus = 'cross_check_feedback';
+      data.failed_practice = kickout_record
     }
   };
 }else{

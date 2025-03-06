@@ -15,14 +15,14 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= false
+debugmode= true
 if (debugmode==true){
   kickout_record=0
   kickout_total=2
   ac_colortotal=9
   n_learning_trial=5 //This determine the number of learning trial you want in total
-  n_direct_trial=1 //how many direct tests you want
-  n_shortest_trial=1 //how many inference trials you want
+  n_direct_trial=5 //how many direct tests you want
+  n_shortest_trial=5 //how many inference trials you want
   n_prac_learning_trial = 4
   n_prac_direct_trial = 4
 }else{
@@ -66,7 +66,7 @@ instruct_3="<div style='margin-left:200px ;margin-right: 200px ;text-justify: au
 instruct_4="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>For example, if you are presented with this pair:</p><img src= '../static/images/introEX.png' width='600' height='400'></img><p style ='font-size: 30px;line-height:1.5'>It may help you to imagine the two items interacting. For example, you could imagine them being stacked on top of one another. Or, you might like use a short story to help you remember the pair. For example, you could imagine the images above as a porcupine (left object) trying to eat a cactus (right object). The story does not have to be realistic or make sense, as long as it’s memorable!</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 instruct_5=`<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>You will see each pair 4 times while playing this game, which means you will have four chances to teach each pair to yourself. The game will be broken into ${blocks} <strong>LEARNING</strong> and <strong>REMEMBERING</strong> parts. Each learning part will be followed by a remembering part.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>`,
 instruct_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>In the <strong>REMEMBERING</strong> phase, you will be tested on your memory of these pairs, so try your best to remember these pairs.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
-instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the object pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>o make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the pairs. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get all the color changes correct.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+instruct_7="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>While you are learning to remember the object pairs, you will also see a cross on the center of your screen like the one below:</p><img src= '../static/images/isi.png' width='150' height='150'><p style ='font-size: 30px;line-height:1.5'>o make sure that you are paying attention on each trial, we will have you do a simple color detection task in addition to learning the pairs. If the cross flashes <span style='color: blue;'>blue,</span> press the '1' key on your keyboard, if it flashes <span style='color: green;'>green,</span> press '2'.<br><br>Now we will do a short practice on these color changes. You will be unable to advance until you get enough of the color check trials correct.<p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 
 
 
