@@ -1,5 +1,5 @@
 // Task structure (IF BLOCKED TYPE "blocked" IF INTERLEAVED TYPE "interleaved")
-taskStructure = "interleaved"
+taskStructure = "blocked"
 let blocks = null
 if (taskStructure == "blocked"){
   blocks = 8
@@ -15,7 +15,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= true
+debugmode= false
 if (debugmode==true){
   kickout_record=0
   kickout_total=2
