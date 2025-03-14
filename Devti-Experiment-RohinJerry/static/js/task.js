@@ -458,7 +458,7 @@ prac_directmemory_phase = {
 let restart_num = 0
 function getPRACvalues() {
   if (prac_directcorrectness.length == 4){
-    if (correct_prac >= prac_directcorrectness.length){
+    if (correct_prac >= prac_directcorrectness.length-1){
         prac_feedback = {
           type: 'html-button-response',
           stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
@@ -517,7 +517,7 @@ function getPRACvalues() {
           type: 'html-button-response',
           stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
                         <p style='font-size: 30px; line-height:1.5'>
-                          Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. Please try again to learn the pairs and respond as accurately as possible, if you do not answer more than one question correctly, you will be disqualified from participating further.
+                          Thank you for completing the practice, your score is ${correct_prac}/${prac_directcorrectness.length}. Please try again to learn the pairs and respond as accurately as possible. We would like you to practice again to try to improve your accuracy.
                         </p><br>
                       </div>`,
           choices: ['Try Again'],
@@ -794,7 +794,7 @@ function getACvalues() {
     type: 'html-button-response',
     stimulus: `<div style='margin-left:200px; margin-right: 200px; text-align: center;'>
                  <p style='font-size: 30px; line-height:1.5'>
-                   Your score is ${correct_ac}/${total_ac}. 
+                   Thank you for completing the practice, your score is ${correct_ac}/${total_ac}. 
                    <br><br> 
                    Please try to respond to each color change as accurately as possible during the task. 
                    To continue this experiment, please make sure to get at least 7 of the 10 trials correct. When you are ready press 'Try Again'. 

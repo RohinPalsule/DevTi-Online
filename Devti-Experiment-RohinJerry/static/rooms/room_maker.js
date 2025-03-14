@@ -169,19 +169,14 @@ function generate_random_color(){
 } 
 
 var warning_page = {
-  type: 'html-button-response',
-  stimulus: '<h1 style="color: red;">Please make sure to respond to the questions accurately.</h1>' +
-    '<h1 style="color: red;">Continued failure to respond will</h1>' +
-    '<h1 style="color: red;">result in the task ending early</h1>' +
-    '<h1 style="color: red;">You can resume the experiment in 5 seconds</h1>',
-  choices: ['Continue'], 
-  button_html: '<button id="continue-button" style="font-size: 20px; padding: 10px; display: none;">%choice%</button>',
-  response_ends_trial: true,
-  on_load: function() {
-    setTimeout(function() {
-      document.getElementById("continue-button").style.display = "block";
-    }, 5000);
-  },
+  type: 'html-keyboard-response',
+  stimulus: '<h1 style="color: red; font-size: 50px">Please make sure to respond to the questions accurately.</h1><br>' +
+    '<h1 style="color: red;font-size: 50px">Continued failure to respond will</h1><br>' +
+    '<h1 style="color: red;font-size: 50px">result in the task ending early</h1><br>' +
+    '<h1 style="color: red;font-size: 50px">The experiment will resume in 5 seconds</h1><br>',
+  choices: jsPsych.NO_KEYS,
+  stimulus_duration: 5000,
+  trial_duration: 5000,
   on_finish: function(data) {
     data.trial_type = 'warning_page';
     data.stimulus = 'warning';
@@ -640,8 +635,8 @@ let intervalId = null
 
 var too_quick={
   type: 'html-keyboard-response',
-  stimulus: '<h1 style="color: red;">Your response was too quick. Please take your time to carefully consider your answer before responding.</h1>' +
-            '<p style="color: red;">This screen will disappear in 10 seconds.</p>',
+  stimulus: '<h1 style="color: red;font-size: 50px">Your response was too quick. Please take your time to carefully consider your answer before responding.</h1>' +
+            '<p style="color: red;font-size: 50px">The experiment will continue in 10 seconds.</p>',
   choices: jsPsych.NO_KEYS, // Prevent responses
   trial_duration: 10000, // Stay on screen for 10 seconds
   on_finish: function(data) {
