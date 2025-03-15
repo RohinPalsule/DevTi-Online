@@ -2,7 +2,7 @@
 taskStructure = "blocked"
 let blocks = null
 if (taskStructure == "blocked"){
-  blocks = 8
+  blocks = 1
   n_learning_trial=15 //This determine the number of learning trial you want in total
   n_direct_trial=15 //how many direct trial you want
 }
@@ -15,7 +15,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= true
+debugmode= false
 if (debugmode==true){
   kickout_record=0
   kickout_total=2
@@ -133,6 +133,49 @@ instruct_mem_5="<div style='margin-left:200px ;margin-right: 200px ;text-justify
 instruct_mem_6="<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>To remove a flight path, simply click on the two locations again and it will disappear. To remove a city from the itinerary, click on the image and then the return button in the bottom right.</p><br /><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
 mem_instructnames = ["instruct_mem_1","instruct_mem_2","instruct_mem_3","instruct_mem_4","instruct_mem_5","instruct_mem_6"]
 mem_instruct={instruct_mem_1,instruct_mem_2,instruct_mem_3,instruct_mem_4,instruct_mem_5,instruct_mem_6} 
+
+// Survey questions
+
+let survey_questions = `
+<form id="survey">
+<p>Did the experiment go smoothly or were there problems? (Note: Your compensation will not depend on your answer below, so please be honest!!!) <span style="color: red;">*</span></p>
+<label><input type="radio" name="smooth" value="high" required> It went smoothly</label><br>
+<label><input type="radio" name="smooth" value="med"> There were minor bumps</label><br>
+<label><input type="radio" name="smooth" value="low"> There were significant problems. I don't think my responses should be included in the data.</label>
+
+<hr>
+
+<p>Which of the following problems did you have? <span style="color: red;">*</span></p>
+<label><input type="checkbox" name="problems" value="reload"> Sometimes a page wouldn't load and I would have to reload the page</label><br>
+<label><input type="checkbox" name="problems" value="connection"> During the experiment I experienced problems with my internet connection</label><br>
+<label><input type="checkbox" name="problems" value="none"> none--Everything ran smoothly</label>
+
+<hr>
+
+<p>Were you doing anything else while participating in this study? PLEASE BE HONEST--your compensation will not depend on your answer to this question. <span style="color: red;">*</span></p>
+<textarea id="distraction" name="distraction" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Please include any strategies you used to help learn during the task. Please be as specific as possible. <span style="color: red;">*</span></p>
+<textarea id="strategies" name="strategies" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Were some trials easier to learn than others? Please explain in detail if so. <span style="color: red;">*</span></p>
+<textarea id="easier" name="easier" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Have you participated in a similar study on another platform? If so, please provide the platform name (Mturk, Prolific, etc.) and your user ID for that platform. <br>PLEASE BE HONEST--your compensation will not depend on your answer to this question. <span style="color: red;">*</span></p>
+<textarea id="similar" name="similar" rows="3" style="width: 70%;" required></textarea>
+
+<hr>
+
+<p>Is there anything you would like the experimenters to know? For instance, was the task too difficult, boring, etc?</p>
+<textarea id="comments" name="comments" rows="3" style="width: 70%;"></textarea>
+<br><br></form>`;
+
 
 //learning phase
 

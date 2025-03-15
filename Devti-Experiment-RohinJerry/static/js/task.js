@@ -637,7 +637,7 @@ var shortestpath_phase = {
     shortestpath_phase.stimulus=create_direct_trial(room_shortest_up,room_shortest_left,room_shortest_mid, room_shortest_right,curr_shortest_trial)
     if (curr_shortest_trial == n_shortest_trial){
       jsPsych.addNodeToEndOfTimeline({
-        timeline: [thank_you],
+        timeline: [end_questions,thank_you],
       }, jsPsych.resumeExperiment)
     } else {
       attentioncheck_end(shortestpath_phase,sfa,curr_shortest_trial,n_shortest_trial)
@@ -988,6 +988,74 @@ var instruct_dir_04 = {
 
 //instruction part 2 end
 
+
+var end_questions = {
+  type: 'survey-html-form',
+  preamble: "<br><br><h1>Post-Task Survey</h1><p style='font-size: 16px'>Thank you for completing the task! We would like you to answer the following questions before the experiment ends. <br>Note: <span style='color: red;'>*</span> = required</p><hr>",
+  html: survey_questions + `
+        <button id="submit" class="custom-button">Submit Answers</button><br><br>`,
+  on_load: function() {
+    document.querySelector('.jspsych-btn').style.display = 'none';
+    document.getElementById("submit").addEventListener("click", function(event) {
+      
+      event.preventDefault();
+      problems = []
+      for (i=0;i<3;i++){
+          var response1=document.getElementsByName("smooth")[i].checked
+          if (response1){
+              smooth = document.getElementsByName("smooth")[i].value
+          }
+          var response2=document.getElementsByName("problems")[i].checked
+          if (response2){
+              problems.push(document.getElementsByName("problems")[i].value)
+          }
+      }
+    
+      distraction = document.getElementById("distraction").value
+      strategies = document.getElementById("strategies").value
+      easier = document.getElementById('easier').value
+      similar = document.getElementById('similar').value
+      comments = document.getElementById('comments').value
+      let checked = validateForm()
+      if (checked){
+        jsPsych.finishTrial()
+      }
+  
+  });
+  },
+  on_finish: function(data) {
+    data.trial_type = "survey"
+    data.stimulus = "survey-questions"
+    data.problems = problems
+    data.smooth = smooth
+    data.distraction = distraction
+    data.strategies = strategies
+    data.easier = easier
+    data.similar = similar
+    data.comments = comments
+    console.log(problems,smooth,distraction,strategies,easier,similar,comments)
+  }
+};
+function validateForm() {
+  let requiredFields = document.querySelectorAll("[required]");
+  let allFilled = true;
+
+
+  if (allFilled) {
+      console.log("Form is valid!");
+      return true;
+  } else {
+      alert("Please fill out all required fields.");
+      return false;
+  }
+}
+var problems = []
+var smooth = 0 
+var distraction = 0 
+var strategies = 0 
+var easier = 0 
+var similar = 0 
+var comments = 0 
 
 // const preload = {
 //   type: 'jsPsychPreload',
