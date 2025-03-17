@@ -59,9 +59,9 @@ var welcome = {
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
-    data.identifier_a = aList
-    data.identifier_b = bList
-    data.identifier_c = cList
+    data.identifier_a = JSON.stringify(aList)
+    data.identifier_b = JSON.stringify(bList)
+    data.identifier_c = JSON.stringify(cList)
     subject_id=useridtouse
   }
 }
@@ -108,8 +108,10 @@ var enterFullscreen = {
         <p>When you are ready to take the experiment, click 'Enter Fullscreen' to begin.</p> <br />
     `,
   choices: ['Enter Fullscreen'],
-  on_finish: function() {
+  on_finish: function(data) {
       // Trigger fullscreen mode when the button is clicked
+      data.trial_type = "make_fullscreen"
+      data.stimulus = "fullscreen"
       document.documentElement.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
       });
@@ -503,6 +505,7 @@ function getPRACvalues() {
         on_finish: function(data) {
           data.trial_type = 'practice_feedback';
           data.stimulus = 'practice_feedback';
+
         }
       };
       
@@ -551,6 +554,7 @@ function getPRACvalues() {
           on_finish: function(data) {
             data.trial_type = 'practice_feedback_force_restart';
             data.stimulus = 'practice_feedback';
+            data.failed_practice = restart_num
           }
         };
       }
