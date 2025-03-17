@@ -59,9 +59,9 @@ var welcome = {
     data.trial_type = "id_enter"
     window.useridtouse=data.responses
     window.useridtouse = useridtouse.split('"')[3];
-    data.identifier_a = JSON.stringify(aList)
-    data.identifier_b = JSON.stringify(bList)
-    data.identifier_c = JSON.stringify(cList)
+    data.identifier_a = `"${aList.join("; ")}"`
+    data.identifier_b = `"${bList.join("; ")}"`
+    data.identifier_c = `"${cList.join("; ")}"`
     subject_id=useridtouse
   }
 }
