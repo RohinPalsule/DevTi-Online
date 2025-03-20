@@ -278,7 +278,7 @@ var prac_thecrossant_black={
       }else if(checkfail>4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
-        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        timeline:[TaskEarlyFail],},jsPsych.resumeExperiment)
         //end experiment
       }
     }else{
@@ -300,7 +300,7 @@ var prac_thecrossant_black={
       }else if(checkfail>4){
         jsPsych.endCurrentTimeline(),
         jsPsych.addNodeToEndOfTimeline({
-        timeline:[TaskFailed],},jsPsych.resumeExperiment)
+        timeline:[TaskEarlyFail],},jsPsych.resumeExperiment)
         //end experiment
       }
     }else{
@@ -318,7 +318,7 @@ var prac_thecrossant_black={
     }else if(checkfail>4){
       jsPsych.endCurrentTimeline(),
       jsPsych.addNodeToEndOfTimeline({
-      timeline:[TaskFailed],},jsPsych.resumeExperiment)
+      timeline:[TaskEarlyFail],},jsPsych.resumeExperiment)
       //end experiment
     }
   }
@@ -331,17 +331,17 @@ var prac_thecrossant_black={
 }
 }
 
-var TaskFailed = {
-  type: 'html-keyboard-response',
-  stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is ${failed_code}</p>` +
-            '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
-  choices: ['Esc'],
-  on_finish: function(data){
-    data.completion_code = failed_code
-    save_data(True)
-    window.close();
-  }
-};
+// var TaskFailed = {
+//   type: 'html-keyboard-response',
+//   stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is ${failed_code}</p>` +
+//             '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
+//   choices: ['Esc'],
+//   on_finish: function(data){
+//     data.completion_code = failed_code
+//     save_data(True)
+//     window.close();
+//   }
+// };
 
 var prac_thecrossant_break={
   type: 'html-keyboard-response',
@@ -485,7 +485,7 @@ function getPRACvalues() {
             document.getElementById("prac-continue-button").addEventListener("click", function() {
               failed_code = midwayFail
               console.log(failed_code)
-              attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break) 
+              attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,proceed_actualTask) 
             });
         
             document.getElementById("prac-retry-button").addEventListener("click", function() {
@@ -522,7 +522,7 @@ function getPRACvalues() {
       restart_num += 1
       if (restart_num > practice_threshold){
         jsPsych.addNodeToEndOfTimeline({
-          timeline: [TaskFailed],
+          timeline: [TaskEarlyFail],
         }, jsPsych.resumeExperiment)
       }else {
         prac_feedback = {
@@ -666,6 +666,44 @@ remembering_instruct_break=createbreak(remembering_prac,dir_instructnames,prac_d
 short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 //Goal directed planning end
 
+//The proceed page from practice to actual experiment
+proceed_actualTask = {
+  type: 'html-button-response',
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Thank you for completing the practice, you will be compensated for 2$ and if you wish to end early you can click the button below. If you would like to continue the task (30 mins) to receive up to 10$ in bonus payments, please press continue.</p><br>",
+  choices: ['End Early', 'Continue'],
+  button_html: [
+    '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
+    '<button id="prac-continue-button" class="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>'
+  ],
+  response_ends_trial: true, 
+on_finish: function(data) {
+  data.trial_type = 'proceed_actualTask';
+  data.stimulus = 'proceed_actualTask';
+  if (data.button_pressed == 0) {
+    data.response = 'End Early';
+    jsPsych.addNodeToEndOfTimeline({
+        timeline: [TaskEndEarly],
+      }, jsPsych.resumeExperiment)
+  } else if (data.button_pressed == 1) {
+    data.response = 'Continue';
+    jsPsych.addNodeToEndOfTimeline({
+        timeline: [last_inst,learn_phase,learn_phase_color,thecrossant,thecrossant_black,thecrossant_break],
+      }, jsPsych.resumeExperiment)
+  }
+}
+};
+
+var last_inst = {
+  type: 'html-keyboard-response',
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>We will start the first learning block now. Please make sure to respond to every trial, as too many missed trials will disqualify you from participating. Only the first response will be taken, and please try to respond as quickly and as accurately as possible.</p><p style= 'font-size:25px;margin-top:100px'>[press the spacebar to continue]</p>",
+  choices: ["Space"],
+  on_finish: function (data){
+    data.trial_type = 'last_inst'
+    data.stimulus = 'last_inst'
+  }
+}
+
+
 // final thank you
 var thank_you = {
   type: 'html-keyboard-response',
@@ -781,7 +819,7 @@ var prac_attentioncheck_thethird={
       getACvalues()
       if (kickout_record>kickout_total){
           jsPsych.addNodeToEndOfTimeline({
-            timeline: [TaskFailed],
+            timeline: [TaskEarlyFail],
           }, jsPsych.resumeExperiment)
       }else{
           jsPsych.addNodeToEndOfTimeline({
