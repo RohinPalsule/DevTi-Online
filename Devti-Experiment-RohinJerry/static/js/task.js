@@ -6,6 +6,11 @@ var data_save_method = 'csv_server_py';
 var normal_exit = false;
 var window_height = window.screen.height;
 
+var initialCode = "C92G9ZV5"
+var midwayFail = "C11XXPD2"
+
+let failed_code = initialCode
+console.log(failed_code)
 
 
 //this is to test if the user leave the webpage
@@ -328,10 +333,12 @@ var prac_thecrossant_black={
 
 var TaskFailed = {
   type: 'html-keyboard-response',
-  stimulus: '<p>Unfortunately, you do not qualify to continue this experiment.</p>' +
+  stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is ${failed_code}</p>` +
             '<p>Please press <strong>Escape</strong> to close the window. You will be paid for your time up to now.</p>',
   choices: ['Esc'],
   on_finish: function(data){
+    data.completion_code = failed_code
+    save_data(True)
     window.close();
   }
 };
@@ -476,6 +483,8 @@ function getPRACvalues() {
           response_ends_trial: true, 
           on_load: function() {
             document.getElementById("prac-continue-button").addEventListener("click", function() {
+              failed_code = midwayFail
+              console.log(failed_code)
               attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,post_break) 
             });
         
@@ -661,11 +670,12 @@ short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: AJFHBG897</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C11XXPD2</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
+    data.completion_code = "C11XXPD2"
     save_data(true)
   }
 }

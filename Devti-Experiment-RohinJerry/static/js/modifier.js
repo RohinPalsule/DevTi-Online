@@ -2,7 +2,7 @@
 taskStructure = "blocked"
 let blocks = null
 if (taskStructure == "blocked"){
-  blocks = 1
+  blocks = 8
   n_learning_trial=15 //This determine the number of learning trial you want in total
   n_direct_trial=15 //how many direct trial you want
 }
