@@ -708,7 +708,7 @@ var last_inst = {
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C11XXPD2</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C1J394KK</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
