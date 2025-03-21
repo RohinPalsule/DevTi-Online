@@ -7,7 +7,7 @@ var normal_exit = false;
 var window_height = window.screen.height;
 
 var initialCode = "C92G9ZV5"
-var midwayFail = "C11XXPD2"
+var midwayFail = "CHULV336"
 
 let failed_code = initialCode
 console.log(failed_code)
@@ -708,12 +708,12 @@ var last_inst = {
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C1J394KK</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
+  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C78LSMTN</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
-    data.completion_code = "C11XXPD2"
+    data.completion_code = "C78LSMTN"
     save_data(true)
   }
 }
