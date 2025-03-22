@@ -8,9 +8,10 @@ var window_height = window.screen.height;
 
 var initialCode = "C92G9ZV5"
 var midwayFail = "CHULV336"
+var endCode = "C78LSMTN"
 
 let failed_code = initialCode
-console.log(failed_code)
+
 
 
 //this is to test if the user leave the webpage
@@ -483,8 +484,6 @@ function getPRACvalues() {
           response_ends_trial: true, 
           on_load: function() {
             document.getElementById("prac-continue-button").addEventListener("click", function() {
-              failed_code = midwayFail
-              console.log(failed_code)
               attentioncheck(prac_directmemory_phase,sfa,prac_curr_direct_trial,n_prac_direct_trial,proceed_actualTask) 
             });
         
@@ -708,7 +707,7 @@ var last_inst = {
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: "<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: C78LSMTN</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>",
+  stimulus: `<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: ${endCode}</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p>`,
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
