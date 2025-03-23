@@ -6,9 +6,9 @@ var data_save_method = 'csv_server_py';
 var normal_exit = false;
 var window_height = window.screen.height;
 
-var initialCode = "C92G9ZV5"
+var initialCode = "C78LSMTN"
 var midwayFail = "CHULV336"
-var endCode = "C78LSMTN"
+var endCode = "CIMBPENS"
 
 let failed_code = initialCode
 
