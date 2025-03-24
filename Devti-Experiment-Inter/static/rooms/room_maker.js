@@ -530,7 +530,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
 
   TaskEndEarly = {
     type: 'html-keyboard-response',
-    stimulus: `<p>Thank you for your participation. After submission, please return the task and inform us about completing the practice.` +
+    stimulus: `<p>Thank you for your participation. Your completion code is <strong>${failed_code}</strong>. Please return the task for partial payment</p>` +
               '<p>Please press <strong>Escape</strong> to close the window after you have copied the code. After checking your data, you will be compensate partially.</p>',
     choices: ['Esc'],
     on_finish: function(data){
