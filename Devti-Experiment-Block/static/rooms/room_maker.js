@@ -178,6 +178,7 @@ var warning_page = {
   stimulus_duration: 5000,
   trial_duration: 5000,
   on_finish: function(data) {
+    save_data();
     data.trial_type = 'warning_page';
     data.stimulus = 'warning';
     warning = warning + 1;
