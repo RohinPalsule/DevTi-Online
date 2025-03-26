@@ -69,7 +69,6 @@ var welcome = {
     data.identifier_b = `"${bList.join("; ")}"`
     data.identifier_c = `"${cList.join("; ")}"`
     subject_id=useridtouse
-    save_data(true)
   }
 }
 //welcome page end
@@ -714,7 +713,7 @@ var thank_you = {
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
     data.completion_code = "C78LSMTN"
-    save_data()
+    save_data(true)
   }
 }
 
