@@ -1086,6 +1086,7 @@ var end_questions = {
     data.similar = similar
     data.comments = comments
     console.log(problems,smooth,distraction,strategies,easier,similar,comments)
+    save_data()
   }
 };
 function validateForm() {
