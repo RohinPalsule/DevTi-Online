@@ -13,6 +13,7 @@ var endCode = "CIMBPENS"
 let failed_code = initialCode
 
 
+
 //this is to test if the user leave the webpage
 var detectfocus=0
 var isinfocus=1
@@ -68,6 +69,7 @@ var welcome = {
     data.identifier_b = `"${bList.join("; ")}"`
     data.identifier_c = `"${cList.join("; ")}"`
     subject_id=useridtouse
+    save_data()
   }
 }
 //welcome page end
@@ -706,12 +708,12 @@ var last_inst = {
 var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
-  stimulus: `<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: ${endCode}</p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p><br><p>Please remember to submit this data by clicking space after copying the code. Failure of submission will lead to in-complete payment</p>`,
+  stimulus: `<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: <strong>${endCode}</strong></p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p><br><p>Please remember to submit this data by clicking space after copying the code. Failure of submission will lead to in-complete payment</p>`,
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
-    data.completion_code = "C11XXPD2"
+    data.completion_code = "C78LSMTN"
     save_data(true)
   }
 }
@@ -1084,6 +1086,7 @@ var end_questions = {
     data.similar = similar
     data.comments = comments
     console.log(problems,smooth,distraction,strategies,easier,similar,comments)
+    save_data()
   }
 };
 function validateForm() {

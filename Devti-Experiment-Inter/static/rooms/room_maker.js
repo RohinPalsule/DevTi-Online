@@ -178,6 +178,7 @@ var warning_page = {
   stimulus_duration: 5000,
   trial_duration: 5000,
   on_finish: function(data) {
+    save_data();
     data.trial_type = 'warning_page';
     data.stimulus = 'warning';
     warning = warning + 1;
@@ -515,12 +516,14 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
   }
   }
 
-
   TaskEarlyFail = {
     type: 'html-keyboard-response',
     stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Please return the experiment` +
-              '<p>Please press <strong>Escape</strong> to close the window.</p>',
-    choices: ['Esc'],
+              '<p>Please press <strong>SpaceBar</strong> to close the window.</p>',
+    choices: ['space'],
+    on_load: function() {
+      save_data()
+    },
     on_finish: function(data){
       data.completion_code = initialCode
       save_data(true)
@@ -531,8 +534,11 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
   TaskEndEarly = {
     type: 'html-keyboard-response',
     stimulus: `<p>Thank you for your participation. Your completion code is <strong>${failed_code}</strong>. Please return the task for partial payment</p>` +
-              '<p>Please press <strong>Escape</strong> to close the window after you have copied the code. After checking your data, you will be compensate partially.</p>',
-    choices: ['Esc'],
+              '<p>Please press <strong>SpaceBar</strong> to close the window after you have copied the code. After checking your data, you will be compensate partially.</p>',
+    choices: ['space'],
+    on_load: function() {
+      save_data()
+    },
     on_finish: function(data){
       data.completion_code = initialCode
       save_data(true)
@@ -543,8 +549,11 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
   TaskFailed = {
     type: 'html-keyboard-response',
     stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is <strong>${midwayFail}</strong>. Please return the task after you receive the partially payment</p>` +
-              '<p>Please press <strong>Escape</strong> to close the window after you have copied the code. You will be paid for your time up to now.</p>',
-    choices: ['Esc'],
+              '<p>Please press <strong>SpaceBar</strong> to close the window after you have copied the code. You will be paid for your time up to now.</p>',
+    choices: ['space'],
+    on_load: function() {
+      save_data()
+    },
     on_finish: function(data){
       data.completion_code = midwayFail
       save_data(true)
