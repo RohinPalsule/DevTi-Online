@@ -714,7 +714,7 @@ var thank_you = {
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
     data.completion_code = "C78LSMTN"
-    save_data(true)
+    save_data()
   }
 }
 

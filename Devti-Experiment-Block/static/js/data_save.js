@@ -29,6 +29,8 @@ var save_data = function(final) {
               psiturk.completeHIT(); // when finished saving compute bonus, the quit
             },
             error: prompt_resubmit});
+    }else{
+      psiturk.saveData()
     }
   }
   /* Save participant data file */
