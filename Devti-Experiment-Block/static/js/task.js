@@ -69,6 +69,7 @@ var welcome = {
     data.identifier_b = `"${bList.join("; ")}"`
     data.identifier_c = `"${cList.join("; ")}"`
     subject_id=useridtouse
+    save_data(true)
   }
 }
 //welcome page end
