@@ -598,7 +598,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
 
 
         if (taskStructure == "blocked"){
-          if (num_of_learn_blocks % 2 == 0) {
+          if (num_of_learn_blocks > 4) {
             gen_directList('bc', 'blocked')
           } else {
             gen_directList('ab', 'blocked')
