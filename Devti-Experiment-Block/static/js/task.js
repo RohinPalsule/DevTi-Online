@@ -1133,7 +1133,7 @@ timeline.push(instruct_01)
 jsPsych.init({
   timeline: timeline,
   preload_images: all_images,
-  max_load_time: 5000,
+  max_load_time: 20000,
   on_load: function() {
     console.log('loaded!')
   },
