@@ -548,7 +548,7 @@ function generate_learning_block(img_left, img_right, num_of_trials,num_of_rem_b
 
   TaskFailed = {
     type: 'html-keyboard-response',
-    stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is <strong>${midwayFail}</strong>. Please return the task after you receive the partially payment</p>` +
+    stimulus: `<p>Unfortunately, you do not qualify to continue this experiment. Your completion code is <strong>${midwayFail}</strong>. Please return the task for the partially payment</p>` +
               '<p>Please press <strong>SpaceBar</strong> to close the window after you have copied the code. You will be paid for your time up to now.</p>',
     choices: ['space'],
     on_load: function() {
