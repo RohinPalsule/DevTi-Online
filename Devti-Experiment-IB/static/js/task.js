@@ -75,7 +75,6 @@ var welcome = {
     data.local_time = new Date().toLocaleString();
     console.log(navigator.userAgent)
     subject_id = useridtouse;
-    save_data();
   }
 };
 
@@ -1148,7 +1147,6 @@ jsPsych.init({
     /* Retrieve the participant's data from jsPsych */
     // Determine and save participant bonus payment
     psiturk.recordUnstructuredData("subject_id", subject_id);
-    save_data(true)
     console.log('loaded!')
   },
 })
