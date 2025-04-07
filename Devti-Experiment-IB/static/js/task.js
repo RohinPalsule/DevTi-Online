@@ -75,6 +75,7 @@ var welcome = {
     data.local_time = new Date().toLocaleString();
     console.log(navigator.userAgent)
     subject_id = useridtouse;
+    save_data()
   }
 };
 
@@ -715,12 +716,15 @@ var thank_you = {
   type: 'html-keyboard-response',
   choices: ['space'],
   stimulus: `<p> Congratulations, you are all done!</p><p> <strong>Please click space on your keyboard to end the experiment!</strong> The secret code to enter at the beginning screen is: <strong>${endCode}</strong></p><p> Please make sure to submit the HIT and email uciccnl@gmail.com if you had any issues! </p><br><p>Please remember to submit this data by clicking space after copying the code. Failure of submission will lead to in-complete payment</p>`,
+  on_start: function(data){
+    save_data()
+  },
   on_finish: function (data) {
     data.trial_type = 'thank_you';
     data.detectfocus = detectfocus;
     data.breakfocus = blurNUM
     data.completion_code = "C78LSMTN"
-    save_data(true)
+    save_data()
   }
 }
 
