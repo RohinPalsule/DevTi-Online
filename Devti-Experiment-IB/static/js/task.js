@@ -675,7 +675,7 @@ short_break=createbreak(intro_short,short_instructnames,shortestpath_phase)
 //The proceed page from practice to actual experiment
 proceed_actualTask = {
   type: 'html-button-response',
-  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Thank you for completing the practice, you will be compensated for 2$ and if you wish to end early you can click the button below. If you would like to continue the task (30 mins) to receive up to 10$ in bonus payments, please press continue.</p><br>",
+  stimulus: "<div style='margin-left:200px ;margin-right: 200px ;text-justify: auto'><p style ='font-size: 30px;line-height:1.5'>Thank you for completing the practice, you will be compensated for 1$ and if you wish to end early you can click the button below. If you would like to continue the task (30 mins) to receive up to 10$ in bonus payments, please press continue.</p><br>",
   choices: ['End Early', 'Continue'],
   button_html: [
     '<button id="prac-retry-button" class ="custom-button" style="font-size: 20px; padding: 10px; margin: 10px;">%choice%</button>',
