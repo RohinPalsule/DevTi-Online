@@ -522,21 +522,6 @@ for(let i = 0;i<directLeft.length;i++){
   room_direct_correct.push(directCorrect[directarr[i]])
 }
 
-function ensureNoConsecutiveDuplicates(arr) {
-  for (let i = 1; i < arr.length; i++) {
-      if (arr[i] === arr[i - 1]) {
-          for (let j = i + 1; j < arr.length; j++) {
-              if (arr[j] !== arr[i] && arr[j - 1] !== arr[i]) {
-                  [arr[i], arr[j]] = [arr[j], arr[i]];
-                  break;
-              }
-          }
-      }
-  }
-  return arr;
-}
-
-
 let correctShortList = []
 let upList = []
 let leftList = []
@@ -591,10 +576,6 @@ for (let i = 0;i<n_shortest_trial;i++){
   room_shortest_right.push(rightList[shortarr[i]])
   room_shortest_correct.push(correctShortList[shortarr[i]])
 }
-
-room_shortest_up = ensureNoConsecutiveDuplicates(room_shortest_up);
-
-console.log(room_shortest_up);
 
 //color for the plus sign
 atcheckcolor=['blue','green']
