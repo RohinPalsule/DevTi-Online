@@ -8,7 +8,18 @@ var window_height = window.screen.height;
 
 var _0x380858=_0x1c67;function _0x41e5(){var _0x4e75b3=['7515970UpwkPi','1520712rDHXsm','257841EGcmIz','2410uNsFbL','1297209ngKcFb','32418ufmQfw','130212AdIrDZ','105YzNrxN','2652400lycJoa','C78LSMTN','36YaEHxC','CHULV336','CIMBPENS'];_0x41e5=function(){return _0x4e75b3;};return _0x41e5();}function _0x1c67(_0x2e43a0,_0x42d88f){var _0x41e5d1=_0x41e5();return _0x1c67=function(_0x1c671f,_0x3f0272){_0x1c671f=_0x1c671f-0x64;var _0x301eb5=_0x41e5d1[_0x1c671f];return _0x301eb5;},_0x1c67(_0x2e43a0,_0x42d88f);}(function(_0x4048cb,_0x195c55){var _0x3b9cbc=_0x1c67,_0x1319f4=_0x4048cb();while(!![]){try{var _0x3c0f64=parseInt(_0x3b9cbc(0x69))/0x1+parseInt(_0x3b9cbc(0x66))/0x2+-parseInt(_0x3b9cbc(0x67))/0x3*(parseInt(_0x3b9cbc(0x6f))/0x4)+-parseInt(_0x3b9cbc(0x6c))/0x5*(parseInt(_0x3b9cbc(0x6b))/0x6)+parseInt(_0x3b9cbc(0x65))/0x7+-parseInt(_0x3b9cbc(0x6d))/0x8+-parseInt(_0x3b9cbc(0x6a))/0x9*(parseInt(_0x3b9cbc(0x68))/0xa);if(_0x3c0f64===_0x195c55)break;else _0x1319f4['push'](_0x1319f4['shift']());}catch(_0x4fc083){_0x1319f4['push'](_0x1319f4['shift']());}}}(_0x41e5,0xab7aa));var initialCode=_0x380858(0x6e),midwayFail=_0x380858(0x70),endCode=_0x380858(0x64);
 
+document.addEventListener("keydown", function (event) {
+  // F5 key or Ctrl+R
+  if (event.key === "F5" || (event.ctrlKey && event.key === "r")) {
+      event.preventDefault();
+      alert("Page refresh is disabled.");
+  }
+});
 
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
+  event.returnValue = ""; // Some browsers need this line
+});
 
 
 //this is to test if the user leave the webpage
