@@ -68,7 +68,7 @@ var directmemory_phase = {}
 //welcome page
 var welcome = {
   type: 'survey-html-form',
-  html: "<label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br>",
+  html: "<label for='worker_id'>Enter your Prolific Worker ID. Please make sure this is correct! </label><br><input type='text' id='worker_id' name='worker_id' required><br><br><p>During The task, Do not press Refresh Page</p><br><p>Pressing Refresh Page Will lead to unable to continue the task</p>",
   on_finish: function (data) {
     data.trial_type = "id_enter";
     window.useridtouse = data.responses;
@@ -86,6 +86,7 @@ var welcome = {
     console.log(data.UTC_time)
     subject_id = useridtouse;
     save_data()
+    localStorage.setItem('RefreshCheck', '1')
   }
 };
 
@@ -1145,6 +1146,10 @@ var comments = 0
 
 
 //time line here
+let RefreshCheck = localStorage.getItem('RefreshCheck');
+if(RefreshCheck=='1'){
+  timeline.end()
+}
 timeline.push(welcome, enterFullscreen)
 timeline.push(instruct_01)
 // timelinepushintro(postprac_learn,post_instructnames)
