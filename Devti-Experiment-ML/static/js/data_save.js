@@ -14,7 +14,7 @@ function generateRandomIdentifier() {
     return randomIdentifier;
 }
 
-let randomidentifier = generateRandomIdentifier();
+let randomidentifier;
 
 var resubmit = function() {
 		document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
@@ -61,8 +61,10 @@ var resubmit = function() {
     //var timestamp = (new Date).toISOString().replace(/z|t/gi,' ').trim();
   //  var data_file_name =  'S_' + subject_id +'-'+timestamp +'.csv';
   if (save_final_deter=='final'){
+    randomidentifier = generateRandomIdentifier();
     var data_file_name =  'final_S_' + useridtouse +'_'+randomidentifier+ '.csv';
   }else{
+    randomidentifier = generateRandomIdentifier();
     var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
   }
   }
