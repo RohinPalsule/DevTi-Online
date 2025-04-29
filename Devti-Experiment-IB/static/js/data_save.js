@@ -60,7 +60,11 @@ var resubmit = function() {
   } else {
     //var timestamp = (new Date).toISOString().replace(/z|t/gi,' ').trim();
   //  var data_file_name =  'S_' + subject_id +'-'+timestamp +'.csv';
-    var data_file_name =  useridtouse+'/S_' + useridtouse +'_'+randomidentifier+ '.csv';
+    if (save_final_deter=='final'){
+      var data_file_name =  'final_S_' + useridtouse +'_'+randomidentifier+ '.csv';
+    }else{
+      var data_file_name =  'S_' + useridtouse +'_'+randomidentifier+ '.csv';
+    }
   }
 
   // Save participant data file as a download in the web browser
