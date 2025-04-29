@@ -21,7 +21,7 @@ else if (taskStructure == "interleaved"){
 
 //debug moode on/off
 
-debugmode= false
+debugmode= true
 if (debugmode==true){
   kickout_record=0
   kickout_total=2
