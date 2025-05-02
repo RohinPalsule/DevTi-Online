@@ -4,7 +4,7 @@ var data_save_method = 'csv_server_py';
 
 
 //csv writer deter for finish only
-let save_final_deter
+let save_final_deter;
 //csv writer deter for finish only
 
 
