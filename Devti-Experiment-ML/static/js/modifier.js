@@ -4,7 +4,8 @@ function generateRandomType() {
   const randomIndex = Math.floor(Math.random() * types.length);
   return types[randomIndex];
 }
-taskStructure = generateRandomType() 
+// taskStructure = generateRandomType() 
+taskStructure = 'blocked'
 let n_learning_trial,n_direct_trial
 let blocks = null
 if (taskStructure == "blocked"){
